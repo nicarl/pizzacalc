@@ -40,4 +40,4 @@ jobs:
       - name: CheckTs
         run: yarn checkTs
       - name: Prettify
-        run: yarn prettify
+        run: yarn prettify -c
