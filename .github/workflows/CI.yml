@@ -34,7 +34,7 @@ jobs:
       - name: Build project
         run: yarn build
       - name: Run tests
-        run: yarn test --coverage
+        run: yarn test --coverage --watchAll=false
       - name: Run eslint
         run: yarn lint
       - name: CheckTs

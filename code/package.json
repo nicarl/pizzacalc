@@ -67,7 +67,9 @@
       "!src/**/*/Loadable.{js,jsx,ts,tsx}",
       "!src/**/*/types.ts",
       "!src/index.tsx",
-      "!src/serviceWorker.ts"
+      "!src/serviceWorker.ts",
+      "!src/reportWebVitals.ts",
+      "!src/react-app-env.d.ts"
     ],
     "coverageThreshold": {
       "global": {
