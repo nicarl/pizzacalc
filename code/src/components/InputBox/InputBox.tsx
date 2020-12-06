@@ -1,69 +1,34 @@
 import { ReactElement, useState } from 'react';
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import { PizzaNumberForm } from '../PizzaNumberForm/PizzaNumberForm';
+import { WaterContentForm } from '../WaterContentForm/WaterContentForm';
+import { DoughballWeightForm } from '../DoughballWeightForm/DoughballWeightForm';
+import { YeastContentForm } from '../YeastContentForm/YeastContentForm';
 
 export function InputBox(): ReactElement {
+  const [pizzaNumber, setPizzaNumber] = useState<number>(2);
   const [waterContent, setWaterContent] = useState<number>(62);
-  const [weightDoughball, setWeightDoughBall] = useState<number>(270);
-  const [numPizza, setNumPizza] = useState<number>(2);
-
-  function handleWaterContentChange(
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void {
-    setWaterContent(parseFloat(event.target.value));
-  }
-
-  function handleWeightDoughballChange(
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void {
-    setWeightDoughBall(parseFloat(event.target.value));
-  }
-
-  function handleNumPizzaChange(
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void {
-    setNumPizza(parseInt(event.target.value));
-  }
+  const [doughballWeight, setDoughballWeight] = useState<number>(270);
+  const [yeastContent, setYeastContent] = useState<number>(0.02);
 
   return (
     <div>
-      <div>
-        <TextField
-          id="standard-number"
-          label="Number of pizzas"
-          type="number"
-          defaultValue={numPizza}
-          onChange={handleNumPizzaChange}
-          required={true}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField
-          id="standard-number"
-          label="Weight of doughball"
-          type="number"
-          defaultValue={weightDoughball}
-          onChange={handleWeightDoughballChange}
-          required={true}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </div>
-      <div>
-        <TextField
-          id="standard-number"
-          label="Water content"
-          type="number"
-          defaultValue={waterContent}
-          onChange={handleWaterContentChange}
-          required={true}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </div>
+      <PizzaNumberForm
+        pizzaNumber={pizzaNumber}
+        setPizzaNumber={setPizzaNumber}
+      />
+      <DoughballWeightForm
+        doughballWeight={doughballWeight}
+        setDoughballWeight={setDoughballWeight}
+      />
+      <WaterContentForm
+        waterContent={waterContent}
+        setWaterContent={setWaterContent}
+      />
+      <YeastContentForm
+        yeastContent={yeastContent}
+        setYeastContent={setYeastContent}
+      />
     </div>
   );
 }
