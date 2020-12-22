@@ -19,5 +19,9 @@ describe('The Recipe', () => {
     expect(getByText('Yeast'));
     expect(getByText('Salt'));
     expect(getByText('Water'));
+    expect(getByText('0.0'));
+    expect(getByText('0.3'));
+    expect(getByText('5.0'));
+    expect(getByText('100.0'));
   });
 });
