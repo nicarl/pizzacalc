@@ -14,7 +14,6 @@ interface Props {
 }
 
 export function Recipe(props: Props): ReactElement {
-  //return <div>{props.recipe.flourMass}</div>;
   return (
     <TableContainer component={Paper}>
       <Table aria-label="recipe table">
