@@ -10,6 +10,7 @@ interface Props {
   validation: (value: string) => boolean;
   dialButton?: boolean;
   testId?: string;
+  endAdornment?: JSX.Element;
 }
 
 export function InputForm(props: Props): ReactElement {
@@ -38,6 +39,8 @@ export function InputForm(props: Props): ReactElement {
         defaultValue={props.value}
         required={true}
         helperText={inputIsCorrect ? ' ' : props.helpText}
+        InputProps={{ endAdornment: props.endAdornment }}
+        fullWidth
       />
     </div>
   );

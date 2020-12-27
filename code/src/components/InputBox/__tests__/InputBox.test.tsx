@@ -1,9 +1,11 @@
 import { fireEvent, render } from '@testing-library/react';
+import { PizzaRecipe } from '../../../util/calculations';
 import { InputBox } from '../InputBox';
 
 describe('InputBox', () => {
   test('renders', () => {
-    const { getByText } = render(<InputBox />);
+    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    const { getByText } = render(<InputBox setPizzaRecipe={setPizzaRecipe} />);
 
     expect(getByText('Number of pizzas'));
     expect(getByText('Doughball weight'));
@@ -12,7 +14,10 @@ describe('InputBox', () => {
     expect(getByText('Yeast content'));
   });
   test('changes number of pizzas', () => {
-    const { getByText, queryByText } = render(<InputBox />);
+    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    const { getByText, queryByText } = render(
+      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+    );
 
     const pizzaLabel = getByText('Number of pizzas')
       .parentElement as HTMLElement;
@@ -22,15 +27,18 @@ describe('InputBox', () => {
     fireEvent.change(form, {
       target: { value: '-2' },
     });
-    expect(getByText('Please insert a whole positive number.'));
+    expect(getByText('Please insert a positive integer.'));
 
     fireEvent.change(form, {
       target: { value: '2' },
     });
-    expect(queryByText('Please insert a whole positive number.')).toBeFalsy();
+    expect(queryByText('Please insert a positive integer.')).toBeFalsy();
   });
   test('changes doughball weight', () => {
-    const { getByText, queryByText } = render(<InputBox />);
+    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    const { getByText, queryByText } = render(
+      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+    );
 
     const doughballLabel = getByText('Doughball weight')
       .parentElement as HTMLElement;
@@ -48,7 +56,10 @@ describe('InputBox', () => {
     expect(queryByText('Please insert a positive number.')).toBeFalsy();
   });
   test('changes water content', () => {
-    const { getByText, queryByText } = render(<InputBox />);
+    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    const { getByText, queryByText } = render(
+      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+    );
 
     const waterContentLabel = getByText('Water content')
       .parentElement as HTMLElement;
@@ -66,7 +77,10 @@ describe('InputBox', () => {
     expect(queryByText('Please insert a positive number.')).toBeFalsy();
   });
   test('changes salt content', () => {
-    const { getByText, queryByText } = render(<InputBox />);
+    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    const { getByText, queryByText } = render(
+      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+    );
 
     const saltContentLabel = getByText('Salt content')
       .parentElement as HTMLElement;
@@ -84,7 +98,10 @@ describe('InputBox', () => {
     expect(queryByText('Please insert a positive number.')).toBeFalsy();
   });
   test('changes yeast content', () => {
-    const { getByText, queryByText } = render(<InputBox />);
+    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    const { getByText, queryByText } = render(
+      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+    );
 
     const yeastContentLabel = getByText('Yeast content')
       .parentElement as HTMLElement;

@@ -13,8 +13,9 @@ export function calculateFlourMass(
   doughballWeight: number,
 ): number {
   return (
-    (doughballWeight * pizzaNumber) /
-    (1 + waterContent + yeastContent + saltContent)
+    ((doughballWeight * pizzaNumber) /
+      (100 + waterContent + yeastContent + saltContent)) *
+    100
   );
 }
 
@@ -22,7 +23,7 @@ export function calculateFractionalMass(
   flourMass: number,
   fraction: number,
 ): number {
-  return flourMass * fraction;
+  return (flourMass * fraction) / 100;
 }
 
 export function calculateRecipe(
@@ -49,3 +50,27 @@ export function calculateRecipe(
     saltMass: saltMass,
   };
 }
+
+export interface FormInput {
+  pizzaNumber: number;
+  waterContent: number;
+  doughballWeight: number;
+  yeastContent: number;
+  saltContent: number;
+}
+
+export const defaultFormInput: FormInput = {
+  pizzaNumber: 2,
+  waterContent: 62.0,
+  doughballWeight: 270,
+  yeastContent: 0.2,
+  saltContent: 3.0,
+};
+
+export const defaultRecipe: PizzaRecipe = calculateRecipe(
+  defaultFormInput.pizzaNumber,
+  defaultFormInput.waterContent,
+  defaultFormInput.doughballWeight,
+  defaultFormInput.yeastContent,
+  defaultFormInput.saltContent,
+);
