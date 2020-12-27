@@ -1,32 +1,42 @@
 import { ReactElement, useEffect, useState } from 'react';
 import React from 'react';
-import { calculateRecipe, PizzaRecipe } from '../../util/calculations';
+import {
+  calculateRecipe,
+  defaultFormInput,
+  PizzaRecipe,
+} from '../../util/calculations';
 import { InputForm } from '../InputForm/InputForm';
 import {
   validatePositiveFloat,
   validatePositiveInt,
 } from '../../util/validation';
 import validator from 'validator';
+import { InputAdornment } from '@material-ui/core';
 
-export function InputBox(): ReactElement {
-  const [pizzaNumber, setPizzaNumber] = useState<number>(2);
-  const [waterContent, setWaterContent] = useState<number>(0.62);
-  const [doughballWeight, setDoughballWeight] = useState<number>(270);
-  const [yeastContent, setYeastContent] = useState<number>(0.002);
-  const [saltContent, setSaltContent] = useState<number>(0.03);
+interface InputBoxProps {
+  setPizzaRecipe: (pizzaRecipe: PizzaRecipe) => void;
+}
 
-  const [, setPizzaRecipe] = useState<PizzaRecipe>(
-    calculateRecipe(
-      pizzaNumber,
-      waterContent,
-      yeastContent,
-      saltContent,
-      doughballWeight,
-    ),
+export function InputBox(props: InputBoxProps): ReactElement {
+  const [pizzaNumber, setPizzaNumber] = useState<number>(
+    defaultFormInput.pizzaNumber,
   );
+  const [waterContent, setWaterContent] = useState<number>(
+    defaultFormInput.waterContent,
+  );
+  const [doughballWeight, setDoughballWeight] = useState<number>(
+    defaultFormInput.doughballWeight,
+  );
+  const [yeastContent, setYeastContent] = useState<number>(
+    defaultFormInput.yeastContent,
+  );
+  const [saltContent, setSaltContent] = useState<number>(
+    defaultFormInput.saltContent,
+  );
+  const setRecipe = props.setPizzaRecipe;
 
   useEffect(() => {
-    setPizzaRecipe(
+    setRecipe(
       calculateRecipe(
         pizzaNumber,
         waterContent,
@@ -35,61 +45,73 @@ export function InputBox(): ReactElement {
         doughballWeight,
       ),
     );
-  }, [pizzaNumber, waterContent, doughballWeight, yeastContent, saltContent]);
+  }, [
+    pizzaNumber,
+    waterContent,
+    doughballWeight,
+    yeastContent,
+    saltContent,
+    setRecipe,
+  ]);
 
   const helpTextFloat = 'Please insert a positive number.';
-  const helpTextInt = 'Please insert a whole positive number.';
+  const helpTextInt = 'Please insert a positive integer.';
+
+  const massAdornment = <InputAdornment position="end">g</InputAdornment>;
+  const percentAdornment = <InputAdornment position="end">%</InputAdornment>;
 
   return (
     <div>
-      <div>
-        <InputForm
-          label={'Number of pizzas'}
-          helpText={helpTextInt}
-          value={pizzaNumber}
-          setValue={(value: string) => {
-            setPizzaNumber(validator.toInt(value));
-          }}
-          validation={validatePositiveInt}
-          dialButton={true}
-        />
-        <InputForm
-          label={'Doughball weight'}
-          helpText={helpTextFloat}
-          value={doughballWeight}
-          setValue={(value: string) => {
-            setDoughballWeight(validator.toFloat(value));
-          }}
-          validation={validatePositiveFloat}
-        />
-        <InputForm
-          label={'Water content'}
-          helpText={helpTextFloat}
-          value={waterContent}
-          setValue={(value: string) => {
-            setWaterContent(validator.toFloat(value));
-          }}
-          validation={validatePositiveFloat}
-        />
-        <InputForm
-          label={'Salt content'}
-          helpText={helpTextFloat}
-          value={saltContent}
-          setValue={(value: string) => {
-            setSaltContent(validator.toFloat(value));
-          }}
-          validation={validatePositiveFloat}
-        />
-        <InputForm
-          label={'Yeast content'}
-          helpText={helpTextFloat}
-          value={yeastContent}
-          setValue={(value: string) => {
-            setYeastContent(validator.toFloat(value));
-          }}
-          validation={validatePositiveFloat}
-        />
-      </div>
+      <InputForm
+        label={'Number of pizzas'}
+        helpText={helpTextInt}
+        value={pizzaNumber}
+        setValue={(value: string) => {
+          setPizzaNumber(validator.toInt(value));
+        }}
+        validation={validatePositiveInt}
+        dialButton={true}
+      />
+      <InputForm
+        label={'Doughball weight'}
+        helpText={helpTextFloat}
+        value={doughballWeight}
+        setValue={(value: string) => {
+          setDoughballWeight(validator.toFloat(value));
+        }}
+        validation={validatePositiveFloat}
+        endAdornment={massAdornment}
+      />
+      <InputForm
+        label={'Water content'}
+        helpText={helpTextFloat}
+        value={waterContent}
+        setValue={(value: string) => {
+          setWaterContent(validator.toFloat(value));
+        }}
+        validation={validatePositiveFloat}
+        endAdornment={percentAdornment}
+      />
+      <InputForm
+        label={'Salt content'}
+        helpText={helpTextFloat}
+        value={saltContent}
+        setValue={(value: string) => {
+          setSaltContent(validator.toFloat(value));
+        }}
+        validation={validatePositiveFloat}
+        endAdornment={percentAdornment}
+      />
+      <InputForm
+        label={'Yeast content'}
+        helpText={helpTextFloat}
+        value={yeastContent}
+        setValue={(value: string) => {
+          setYeastContent(validator.toFloat(value));
+        }}
+        validation={validatePositiveFloat}
+        endAdornment={percentAdornment}
+      />
     </div>
   );
 }

@@ -8,11 +8,11 @@ import each from 'jest-each';
 
 describe('calculateFractionalMass', () => {
   each([
-    [1000, 1000, 1.0],
-    [100, 1000, 0.1],
-    [900, 1000, 0.9],
-    [10000, 1000, 10],
-    [152, 1000, 0.152],
+    [1000, 1000, 100],
+    [100, 1000, 10],
+    [900, 1000, 90],
+    [10000, 1000, 1000],
+    [152, 1000, 15.2],
   ]).it(
     'yields %s for %s gramm and a percentage of %s',
     (expected: number, flourMass: number, fraction: number) => {
@@ -25,10 +25,10 @@ describe('calculateFlourMass', () => {
   each([
     [1000, 1, 0, 0, 0, 1000],
     [0, 0, 0, 0, 0, 1000],
-    [500, 1, 1.0, 0, 0, 1000],
-    [500, 1, 0, 1.0, 0, 1000],
-    [500, 1, 0, 0, 1.0, 1000],
-    [500, 1, 0.2, 0.2, 0.6, 1000],
+    [500, 1, 100, 0, 0, 1000],
+    [500, 1, 0, 100, 0, 1000],
+    [500, 1, 0, 0, 100, 1000],
+    [500, 1, 20, 20, 60, 1000],
   ]).it(
     'yields %s for %s pizza, %s waterContent, %s yeastContent, %s saltContent, %s doughballWeight',
     (
@@ -81,7 +81,7 @@ describe('calculateRecipe', () => {
     [
       { flourMass: 50, saltMass: 0, waterMass: 50, yeastMass: 0 },
       1,
-      1.0,
+      100,
       0.0,
       0.0,
       100,

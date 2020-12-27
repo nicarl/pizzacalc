@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputBox } from '../InputBox/InputBox';
 import { makeStyles } from '@material-ui/core/styles';
+import { ExpertView } from '../ExpertView/ExpertView';
 
 const useStyles = makeStyles({
   root: {
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <InputBox />
+      <ExpertView />
     </div>
   );
 }
