@@ -1,11 +1,23 @@
 import { fireEvent, render } from '@testing-library/react';
-import { PizzaRecipe } from '../../../util/calculations';
+import { defaultFormInput } from '../../../util/calculations';
 import { InputBox } from '../InputBox';
 
 describe('InputBox', () => {
   test('renders', () => {
-    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
-    const { getByText } = render(<InputBox setPizzaRecipe={setPizzaRecipe} />);
+    const { getByText } = render(
+      <InputBox
+        pizzaNumber={defaultFormInput.pizzaNumber}
+        setPizzaNumber={() => {}}
+        waterContent={defaultFormInput.waterContent}
+        setWaterContent={() => {}}
+        yeastContent={defaultFormInput.yeastContent}
+        setYeastContent={() => {}}
+        saltContent={defaultFormInput.saltContent}
+        setSaltContent={() => {}}
+        doughballWeight={defaultFormInput.doughballWeight}
+        setDoughballWeight={() => {}}
+      />,
+    );
 
     expect(getByText('Number of pizzas'));
     expect(getByText('Doughball weight'));
@@ -14,9 +26,22 @@ describe('InputBox', () => {
     expect(getByText('Yeast content'));
   });
   test('changes number of pizzas', () => {
-    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    let pizzaNumber = defaultFormInput.pizzaNumber;
     const { getByText, queryByText } = render(
-      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+      <InputBox
+        pizzaNumber={pizzaNumber}
+        setPizzaNumber={newValue => {
+          pizzaNumber = newValue;
+        }}
+        waterContent={defaultFormInput.waterContent}
+        setWaterContent={() => {}}
+        yeastContent={defaultFormInput.yeastContent}
+        setYeastContent={() => {}}
+        saltContent={defaultFormInput.saltContent}
+        setSaltContent={() => {}}
+        doughballWeight={defaultFormInput.doughballWeight}
+        setDoughballWeight={() => {}}
+      />,
     );
 
     const pizzaLabel = getByText('Number of pizzas')
@@ -30,14 +55,28 @@ describe('InputBox', () => {
     expect(getByText('Please insert a positive integer.'));
 
     fireEvent.change(form, {
-      target: { value: '2' },
+      target: { value: '4' },
     });
     expect(queryByText('Please insert a positive integer.')).toBeFalsy();
+    expect(pizzaNumber).toBe(4);
   });
   test('changes doughball weight', () => {
-    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    let dougballWeight = defaultFormInput.doughballWeight;
     const { getByText, queryByText } = render(
-      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+      <InputBox
+        pizzaNumber={defaultFormInput.pizzaNumber}
+        setPizzaNumber={() => {}}
+        waterContent={defaultFormInput.waterContent}
+        setWaterContent={() => {}}
+        yeastContent={defaultFormInput.yeastContent}
+        setYeastContent={() => {}}
+        saltContent={defaultFormInput.saltContent}
+        setSaltContent={() => {}}
+        doughballWeight={dougballWeight}
+        setDoughballWeight={newValue => {
+          dougballWeight = newValue;
+        }}
+      />,
     );
 
     const doughballLabel = getByText('Doughball weight')
@@ -54,11 +93,26 @@ describe('InputBox', () => {
       target: { value: '2' },
     });
     expect(queryByText('Please insert a positive number.')).toBeFalsy();
+    expect(dougballWeight).toBe(2);
   });
   test('changes water content', () => {
-    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    let waterContent = defaultFormInput.waterContent;
+
     const { getByText, queryByText } = render(
-      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+      <InputBox
+        pizzaNumber={defaultFormInput.pizzaNumber}
+        setPizzaNumber={() => {}}
+        waterContent={waterContent}
+        setWaterContent={newValue => {
+          waterContent = newValue;
+        }}
+        yeastContent={defaultFormInput.yeastContent}
+        setYeastContent={() => {}}
+        saltContent={defaultFormInput.saltContent}
+        setSaltContent={() => {}}
+        doughballWeight={defaultFormInput.doughballWeight}
+        setDoughballWeight={() => {}}
+      />,
     );
 
     const waterContentLabel = getByText('Water content')
@@ -75,11 +129,26 @@ describe('InputBox', () => {
       target: { value: '2' },
     });
     expect(queryByText('Please insert a positive number.')).toBeFalsy();
+    expect(waterContent).toBe(2);
   });
   test('changes salt content', () => {
-    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    let saltContent = defaultFormInput.saltContent;
+
     const { getByText, queryByText } = render(
-      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+      <InputBox
+        pizzaNumber={defaultFormInput.pizzaNumber}
+        setPizzaNumber={() => {}}
+        waterContent={defaultFormInput.waterContent}
+        setWaterContent={() => {}}
+        yeastContent={defaultFormInput.yeastContent}
+        setYeastContent={() => {}}
+        saltContent={saltContent}
+        setSaltContent={newValue => {
+          saltContent = newValue;
+        }}
+        doughballWeight={defaultFormInput.doughballWeight}
+        setDoughballWeight={() => {}}
+      />,
     );
 
     const saltContentLabel = getByText('Salt content')
@@ -96,11 +165,26 @@ describe('InputBox', () => {
       target: { value: '2' },
     });
     expect(queryByText('Please insert a positive number.')).toBeFalsy();
+    expect(saltContent).toBe(2);
   });
   test('changes yeast content', () => {
-    function setPizzaRecipe(newRecipe: PizzaRecipe): void {}
+    let yeastContent = defaultFormInput.yeastContent;
+
     const { getByText, queryByText } = render(
-      <InputBox setPizzaRecipe={setPizzaRecipe} />,
+      <InputBox
+        pizzaNumber={defaultFormInput.pizzaNumber}
+        setPizzaNumber={() => {}}
+        waterContent={defaultFormInput.waterContent}
+        setWaterContent={() => {}}
+        yeastContent={yeastContent}
+        setYeastContent={newValue => {
+          yeastContent = newValue;
+        }}
+        saltContent={defaultFormInput.saltContent}
+        setSaltContent={() => {}}
+        doughballWeight={defaultFormInput.doughballWeight}
+        setDoughballWeight={() => {}}
+      />,
     );
 
     const yeastContentLabel = getByText('Yeast content')
@@ -117,5 +201,6 @@ describe('InputBox', () => {
       target: { value: '2' },
     });
     expect(queryByText('Please insert a positive number.')).toBeFalsy();
+    expect(yeastContent).toBe(2);
   });
 });

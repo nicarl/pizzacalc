@@ -62,15 +62,7 @@ export interface FormInput {
 export const defaultFormInput: FormInput = {
   pizzaNumber: 2,
   waterContent: 62.0,
-  doughballWeight: 270,
+  doughballWeight: 210,
   yeastContent: 0.2,
-  saltContent: 3.0,
+  saltContent: 2.6,
 };
-
-export const defaultRecipe: PizzaRecipe = calculateRecipe(
-  defaultFormInput.pizzaNumber,
-  defaultFormInput.waterContent,
-  defaultFormInput.doughballWeight,
-  defaultFormInput.yeastContent,
-  defaultFormInput.saltContent,
-);
