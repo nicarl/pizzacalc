@@ -1,115 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ExpertView } from '../ExpertView/ExpertView';
-import { ExpertSwitch } from '../ExpertSwitch/ExpertSwitch';
-import { NormalMode } from '../NormalMode/NormalMode';
-import {
-  calculateRecipe,
-  defaultFormInput,
-  PizzaRecipe,
-} from '../../util/calculations';
+import { CentralPanel } from '../CentralPanel/CentralPanel';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { MenuItem } from '@material-ui/core';
+import { LegalNotice } from '../LegalNotice/LegalNotice';
 
 const useStyles = makeStyles({
-  root: {
+  root: {},
+  body: {
+    // paddingBottom: '2.5rem',
     display: 'flex',
     justifyContent: 'center',
-    alignContent: 'center',
     alignItems: 'center',
-    // height: '100vh',
-    // verticalAlign: 'middle',
-    // overflow: 'auto',
+    // margin: '0 0 100px',
+    // padding: '25px',
+    paddingBottom: '100px',
+    paddingLeft: '25px',
+    paddingRight: '25px',
+    paddingTop: '25px',
   },
-  switch: {
+  footer: {
+    width: '100%',
+    position: 'fixed',
+    bottom: 0,
+    alignText: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgb(255, 255, 255)',
+    borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+  },
+  links: {
+    padding: '25px',
     display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  centralPanel: {
-    display: 'grid',
-    gridColumn: 1,
-    gridRow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
 function App() {
   const classes = useStyles();
-  const [expertModeActive, setExpertModeActive] = React.useState<boolean>(
-    false,
-  );
-  const [pizzaNumber, setPizzaNumber] = useState<number>(
-    defaultFormInput.pizzaNumber,
-  );
-  const [waterContent, setWaterContent] = useState<number>(
-    defaultFormInput.waterContent,
-  );
-  const [doughballWeight, setDoughballWeight] = useState<number>(
-    defaultFormInput.doughballWeight,
-  );
-  const [yeastContent, setYeastContent] = useState<number>(
-    defaultFormInput.yeastContent,
-  );
-  const [saltContent, setSaltContent] = useState<number>(
-    defaultFormInput.saltContent,
-  );
-  const [pizzaRecipe, setPizzaRecipe] = useState<PizzaRecipe>(
-    calculateRecipe(
-      pizzaNumber,
-      waterContent,
-      yeastContent,
-      saltContent,
-      doughballWeight,
-    ),
-  );
-
-  useEffect(() => {
-    setPizzaRecipe(
-      calculateRecipe(
-        pizzaNumber,
-        waterContent,
-        yeastContent,
-        saltContent,
-        doughballWeight,
-      ),
-    );
-  }, [pizzaNumber, waterContent, doughballWeight, yeastContent, saltContent]);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.centralPanel}>
-        <div className={classes.switch}>
-          <ExpertSwitch
-            expertModeActive={expertModeActive}
-            setExpertModeActive={setExpertModeActive}
-          />
+    <Router>
+      <div className={classes.root}>
+        <div className={classes.body}>
+          <Switch>
+            <Route path="/legalnotice">
+              <LegalNotice />
+            </Route>
+            <Route path="/">
+              <CentralPanel />
+            </Route>
+          </Switch>
         </div>
-        <div>
-          {expertModeActive ? (
-            <ExpertView
-              pizzaRecipe={pizzaRecipe}
-              pizzaNumber={pizzaNumber}
-              setPizzaNumber={setPizzaNumber}
-              waterContent={waterContent}
-              setWaterContent={setWaterContent}
-              yeastContent={yeastContent}
-              setYeastContent={setYeastContent}
-              saltContent={saltContent}
-              setSaltContent={setSaltContent}
-              doughballWeight={doughballWeight}
-              setDoughballWeight={setDoughballWeight}
-            />
-          ) : (
-            <NormalMode
-              setExpertModeActive={setExpertModeActive}
-              pizzaRecipe={pizzaRecipe}
-              setPizzaNumber={setPizzaNumber}
-              setWaterContent={setWaterContent}
-              setYeastContent={setYeastContent}
-              setSaltContent={setSaltContent}
-              setDoughballWeight={setDoughballWeight}
-            />
-          )}
+        <div className={classes.footer}>
+          <div className={classes.links}>
+            <MenuItem component={Link} to={'/'}>
+              Pizza calculator
+            </MenuItem>
+            <MenuItem component={Link} to={'/legalnotice'}>
+              Legal notice
+            </MenuItem>
+          </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
