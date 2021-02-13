@@ -69,7 +69,7 @@ jobs:
             with:
               name: build_merge_to_main
               path: code/build/
-          - name: Run cdk diff
+          - name: Run cdk deploy
             run: cd deployment && yarn cdk deploy --require-approval never
             env:
               AWS_DEFAULT_REGION: 'eu-central-1'
