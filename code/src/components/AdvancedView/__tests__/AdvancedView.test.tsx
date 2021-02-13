@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import { calculateRecipe, defaultFormInput } from '../../../util/calculations';
-import { ExpertView } from '../ExpertView';
+import { AdvancedView } from '../AdvancedView';
 
-describe('The expert view', () => {
+describe('The advanced view', () => {
   test('renders', () => {
     const { getByText } = render(
-      <ExpertView
+      <AdvancedView
         pizzaRecipe={calculateRecipe(
           defaultFormInput.pizzaNumber,
           defaultFormInput.waterContent,

@@ -6,7 +6,7 @@ describe('The Normalmode', () => {
   test('renders', () => {
     render(
       <NormalMode
-        setExpertModeActive={() => {}}
+        setAdvancedModeActive={() => {}}
         pizzaRecipe={calculateRecipe(
           defaultFormInput.pizzaNumber * 2,
           defaultFormInput.waterContent * 0.5,
@@ -32,7 +32,7 @@ describe('The Normalmode', () => {
 
     const { getByText, getByTestId, queryByText } = render(
       <NormalMode
-        setExpertModeActive={newValue => {
+        setAdvancedModeActive={newValue => {
           setExpertModeActive = newValue;
         }}
         pizzaRecipe={calculateRecipe(
@@ -122,7 +122,7 @@ describe('The Normalmode', () => {
 
     const { getByText, getByTestId, queryByText } = render(
       <NormalMode
-        setExpertModeActive={newValue => {
+        setAdvancedModeActive={newValue => {
           setExpertModeActive = newValue;
         }}
         pizzaRecipe={calculateRecipe(

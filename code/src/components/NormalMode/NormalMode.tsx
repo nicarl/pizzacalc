@@ -29,7 +29,7 @@ const defaultValues: DefaultValues = {
 };
 
 interface NormalModeProps {
-  setExpertModeActive: (expertModesisActive: boolean) => void;
+  setAdvancedModeActive: (advancedModesIsActive: boolean) => void;
   pizzaRecipe: PizzaRecipe;
   setPizzaNumber: (newValue: number) => void;
   setWaterContent: (newValue: number) => void;
@@ -136,7 +136,7 @@ export function NormalMode(props: NormalModeProps): ReactElement {
       {activeStep === 3 ? (
         <div>
           <Button
-            onClick={() => props.setExpertModeActive(true)}
+            onClick={() => props.setAdvancedModeActive(true)}
             data-testid="editButton"
           >
             <EditIcon />

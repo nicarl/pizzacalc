@@ -3,14 +3,14 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
-interface ExpertSwitchProps {
-  expertModeActive: boolean;
-  setExpertModeActive: Dispatch<SetStateAction<boolean>>;
+interface AdvancedSwitchProps {
+  advancedModeActive: boolean;
+  setAdvancedModeActive: Dispatch<SetStateAction<boolean>>;
 }
 
-export function ExpertSwitch(props: ExpertSwitchProps): ReactElement {
+export function AdvancedSwitch(props: AdvancedSwitchProps): ReactElement {
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    props.setExpertModeActive(event.target.checked);
+    props.setAdvancedModeActive(event.target.checked);
   }
 
   return (
@@ -18,13 +18,13 @@ export function ExpertSwitch(props: ExpertSwitchProps): ReactElement {
       <FormControlLabel
         control={
           <Switch
-            checked={props.expertModeActive}
+            checked={props.advancedModeActive}
             onChange={handleChange}
-            name="expertMode"
+            name="advancedMode"
             color="primary"
           />
         }
-        label="Expert mode"
+        label="Advanced mode"
       />
     </FormGroup>
   );

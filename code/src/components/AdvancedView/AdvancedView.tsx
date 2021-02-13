@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-interface ExpertViewProps {
+interface AdvancedViewProps {
   pizzaRecipe: PizzaRecipe;
   pizzaNumber: number;
   setPizzaNumber: (newValue: number) => void;
@@ -25,7 +25,7 @@ interface ExpertViewProps {
   setDoughballWeight: (newValue: number) => void;
 }
 
-export function ExpertView(props: ExpertViewProps): ReactElement {
+export function AdvancedView(props: AdvancedViewProps): ReactElement {
   const classes = useStyles();
 
   return (

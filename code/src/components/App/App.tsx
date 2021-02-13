@@ -6,25 +6,23 @@ import { MenuItem } from '@material-ui/core';
 import { LegalNotice } from '../LegalNotice/LegalNotice';
 
 const useStyles = makeStyles({
-  root: {},
+  root: {
+    backgroundColor: 'white',
+    paddingRight: 'calc(17px - (100vw - 100%))',
+  },
   body: {
-    // paddingBottom: '2.5rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    // margin: '0 0 100px',
-    // padding: '25px',
     paddingBottom: '100px',
     paddingLeft: '25px',
     paddingRight: '25px',
     paddingTop: '25px',
   },
   footer: {
-    width: '100%',
+    width: '100vw',
     position: 'fixed',
     bottom: 0,
-    alignText: 'center',
-    alignItems: 'center',
     backgroundColor: 'rgb(255, 255, 255)',
     borderTop: '1px solid rgba(0, 0, 0, 0.1)',
   },

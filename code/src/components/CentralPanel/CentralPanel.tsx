@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ExpertView } from '../ExpertView/ExpertView';
-import { ExpertSwitch } from '../ExpertSwitch/ExpertSwitch';
+import { AdvancedView } from '../AdvancedView/AdvancedView';
+import { AdvancedSwitch } from '../AdvancedSwitch/AdvancedSwitch';
 import { NormalMode } from '../NormalMode/NormalMode';
 import {
   calculateRecipe,
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 export function CentralPanel(): ReactElement {
   const classes = useStyles();
 
-  const [expertModeActive, setExpertModeActive] = React.useState<boolean>(
+  const [advancedModeActive, setAdvancedModeActive] = React.useState<boolean>(
     false,
   );
   const [pizzaNumber, setPizzaNumber] = useState<number>(
@@ -67,14 +67,14 @@ export function CentralPanel(): ReactElement {
   return (
     <div className={classes.centralPanel}>
       <div className={classes.switch}>
-        <ExpertSwitch
-          expertModeActive={expertModeActive}
-          setExpertModeActive={setExpertModeActive}
+        <AdvancedSwitch
+          advancedModeActive={advancedModeActive}
+          setAdvancedModeActive={setAdvancedModeActive}
         />
       </div>
       <div>
-        {expertModeActive ? (
-          <ExpertView
+        {advancedModeActive ? (
+          <AdvancedView
             pizzaRecipe={pizzaRecipe}
             pizzaNumber={pizzaNumber}
             setPizzaNumber={setPizzaNumber}
@@ -89,7 +89,7 @@ export function CentralPanel(): ReactElement {
           />
         ) : (
           <NormalMode
-            setExpertModeActive={setExpertModeActive}
+            setAdvancedModeActive={setAdvancedModeActive}
             pizzaRecipe={pizzaRecipe}
             setPizzaNumber={setPizzaNumber}
             setWaterContent={setWaterContent}
