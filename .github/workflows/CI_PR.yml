@@ -1,0 +1,76 @@
+name: Pizzacalc CI PR
+ 
+on:
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: code
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Restore node_modules cache
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: node_modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build project
+        run: yarn build
+      - name: Run tests
+        run: yarn test --coverage --watchAll=false
+      - name: Run eslint
+        run: yarn lint
+      - name: CheckTs
+        run: yarn checkTs
+      - name: Prettify
+        run: yarn prettify -c
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build_pr
+          path: code/build
+
+  cdk_diff:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+          - uses: actions/checkout@v2
+          - name: Use Node.js ${{ matrix.node-version }}
+            uses: actions/setup-node@v1
+            with:
+              node-version: ${{ matrix.node-version }}
+          - name: Restore node_modules cache for deployment
+            uses: actions/cache@v2
+            with:
+              path: "deployment/node_modules"
+              key: node_modules-${{ hashFiles('**/yarn.lock') }}
+          - name: Install dependencies
+            run: cd deployment && yarn install --frozen-lockfile
+          - uses: actions/download-artifact@v2
+            with:
+              name: build_pr
+              path: code/build/
+          - name: Run cdk diff
+            run: cd deployment && yarn cdk diff
+            env:
+              AWS_DEFAULT_REGION: 'eu-central-1'
+              AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

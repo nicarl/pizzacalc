@@ -70,7 +70,7 @@ export class DeploymentStack extends cdk.Stack {
     });
 
     new s3Deploy.BucketDeployment(this, "DeployWithInvalidation", {
-      sources: [s3Deploy.Source.asset("../code/build/")],
+      sources: [s3Deploy.Source.asset(__dirname + "/../../code/build/")],
       destinationBucket: bucket,
       distribution,
       distributionPaths: ["/*"],
