@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ExpertView } from '../ExpertView/ExpertView';
-import { ExpertSwitch } from '../ExpertSwitch/ExpertSwitch';
+import { AdvancedView } from '../AdvancedView/AdvancedView';
+import { AdvancedSwitch } from '../AdvancedSwitch/AdvancedSwitch';
 import { NormalMode } from '../NormalMode/NormalMode';
 import {
   calculateRecipe,
@@ -12,19 +12,19 @@ import {
 const useStyles = makeStyles({
   switch: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   centralPanel: {
-    display: 'grid',
-    gridColumn: 1,
-    gridRow: 1,
+    padding: '15px',
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
 export function CentralPanel(): ReactElement {
   const classes = useStyles();
 
-  const [expertModeActive, setExpertModeActive] = React.useState<boolean>(
+  const [advancedModeActive, setAdvancedModeActive] = React.useState<boolean>(
     false,
   );
   const [pizzaNumber, setPizzaNumber] = useState<number>(
@@ -65,16 +65,16 @@ export function CentralPanel(): ReactElement {
   }, [pizzaNumber, waterContent, doughballWeight, yeastContent, saltContent]);
 
   return (
-    <div className={classes.centralPanel}>
+    <div>
       <div className={classes.switch}>
-        <ExpertSwitch
-          expertModeActive={expertModeActive}
-          setExpertModeActive={setExpertModeActive}
+        <AdvancedSwitch
+          advancedModeActive={advancedModeActive}
+          setAdvancedModeActive={setAdvancedModeActive}
         />
       </div>
-      <div>
-        {expertModeActive ? (
-          <ExpertView
+      <div className={classes.centralPanel}>
+        {advancedModeActive ? (
+          <AdvancedView
             pizzaRecipe={pizzaRecipe}
             pizzaNumber={pizzaNumber}
             setPizzaNumber={setPizzaNumber}
@@ -89,7 +89,7 @@ export function CentralPanel(): ReactElement {
           />
         ) : (
           <NormalMode
-            setExpertModeActive={setExpertModeActive}
+            setAdvancedModeActive={setAdvancedModeActive}
             pizzaRecipe={pizzaRecipe}
             setPizzaNumber={setPizzaNumber}
             setWaterContent={setWaterContent}

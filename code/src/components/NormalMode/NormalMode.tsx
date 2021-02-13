@@ -4,6 +4,7 @@ import {
   Step,
   StepContent,
   Button,
+  makeStyles,
 } from '@material-ui/core';
 import React, { ReactElement, useState } from 'react';
 import validator from 'validator';
@@ -18,6 +19,34 @@ import { Recipe } from '../Recipe/Recipe';
 import { ovenTypes } from './types';
 import EditIcon from '@material-ui/icons/Edit';
 
+const useStyles = makeStyles({
+  root: {
+    width: '300px',
+  },
+  slider: {
+    width: '80%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  finishButton: {
+    paddingTop: '20px',
+  },
+  resetBlock: {
+    paddingTop: '20px',
+    textAlign: 'center',
+  },
+  recipeBlock: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  editButton: {
+    textAlign: 'right',
+  },
+});
+
 interface DefaultValues {
   activeStep: number;
   ovenType: string;
@@ -29,7 +58,7 @@ const defaultValues: DefaultValues = {
 };
 
 interface NormalModeProps {
-  setExpertModeActive: (expertModesisActive: boolean) => void;
+  setAdvancedModeActive: (advancedModesIsActive: boolean) => void;
   pizzaRecipe: PizzaRecipe;
   setPizzaNumber: (newValue: number) => void;
   setWaterContent: (newValue: number) => void;
@@ -39,6 +68,8 @@ interface NormalModeProps {
 }
 
 export function NormalMode(props: NormalModeProps): ReactElement {
+  const classes = useStyles();
+
   const [activeStep, setActiveStep] = useState(defaultValues.activeStep);
   const [ovenType, setOvenType] = useState<string>(defaultValues.ovenType);
   const [pizzaNumber, setPizzaNumber] = useState<number>(
@@ -49,7 +80,7 @@ export function NormalMode(props: NormalModeProps): ReactElement {
   );
 
   return (
-    <div>
+    <div className={classes.root}>
       <Stepper activeStep={activeStep} orientation="vertical">
         <Step key="ovenType">
           <StepLabel>Select the oven type</StepLabel>
@@ -105,14 +136,14 @@ export function NormalMode(props: NormalModeProps): ReactElement {
           <StepLabel>Select the size of the pizza</StepLabel>
           <StepContent>
             <div>
-              <div>
+              <div className={classes.slider}>
                 <PizzaSizeSlider
                   doughBallWeight={doughBallWeight}
                   setDoughBallWeight={setDoughBallWeight}
                 />
               </div>
             </div>
-            <div>
+            <div className={classes.finishButton}>
               <BackButton
                 onClick={() => setActiveStep(1)}
                 testId="pizzaSizeBackButton"
@@ -134,29 +165,35 @@ export function NormalMode(props: NormalModeProps): ReactElement {
         </Step>
       </Stepper>
       {activeStep === 3 ? (
-        <div>
-          <Button
-            onClick={() => props.setExpertModeActive(true)}
-            data-testid="editButton"
-          >
-            <EditIcon />
-          </Button>
-          <Recipe recipe={props.pizzaRecipe} />
+        <div className={classes.recipeBlock}>
           <div>
-            <BackButton
-              onClick={() => setActiveStep(2)}
-              testId="finalViewBackButton"
-            />
-            <NextButton
-              onClick={() => {
-                setActiveStep(defaultValues.activeStep);
-                setOvenType(defaultValues.ovenType);
-                setPizzaNumber(defaultFormInput.pizzaNumber);
-                setDoughBallWeight(defaultFormInput.doughballWeight);
-              }}
-              disabled={false}
-              label="Reset"
-            />
+            <div>
+              <div className={classes.editButton}>
+                <Button
+                  onClick={() => props.setAdvancedModeActive(true)}
+                  data-testid="editButton"
+                >
+                  <EditIcon />
+                </Button>
+              </div>
+              <Recipe recipe={props.pizzaRecipe} />
+            </div>
+            <div className={classes.resetBlock}>
+              <BackButton
+                onClick={() => setActiveStep(2)}
+                testId="finalViewBackButton"
+              />
+              <NextButton
+                onClick={() => {
+                  setActiveStep(defaultValues.activeStep);
+                  setOvenType(defaultValues.ovenType);
+                  setPizzaNumber(defaultFormInput.pizzaNumber);
+                  setDoughBallWeight(defaultFormInput.doughballWeight);
+                }}
+                disabled={false}
+                label="Reset"
+              />
+            </div>
           </div>
         </div>
       ) : null}
