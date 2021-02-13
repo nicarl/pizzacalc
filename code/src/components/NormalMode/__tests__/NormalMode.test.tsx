@@ -97,7 +97,7 @@ describe('The Normalmode', () => {
     fireEvent.click(getByTestId('pizzaNumberNextButton'));
     fireEvent.click(getByText('Finish'));
 
-    expect(getByText('Ingredients'));
+    expect(getByText('Ingredient'));
     fireEvent.click(getByTestId('finalViewBackButton'));
     expect(getByText('medium'));
     fireEvent.click(getByText('Finish'));
@@ -110,7 +110,7 @@ describe('The Normalmode', () => {
     expect(waterContent).toBe(62);
 
     fireEvent.click(getByText('Reset'));
-    expect(queryByText('Ingredients')).not.toBeTruthy();
+    expect(queryByText('Ingredient')).not.toBeTruthy();
   });
   test('can be navigated through with home oven', () => {
     let setExpertModeActive = false;
@@ -186,7 +186,7 @@ describe('The Normalmode', () => {
     fireEvent.click(getByTestId('pizzaNumberNextButton'));
     fireEvent.click(getByText('Finish'));
 
-    expect(getByText('Ingredients'));
+    expect(getByText('Ingredient'));
     fireEvent.click(getByTestId('finalViewBackButton'));
     expect(getByText('medium'));
     fireEvent.click(getByText('Finish'));
@@ -199,6 +199,6 @@ describe('The Normalmode', () => {
     expect(waterContent).toBe(70);
 
     fireEvent.click(getByText('Reset'));
-    expect(queryByText('Ingredients')).not.toBeTruthy();
+    expect(queryByText('Ingredient')).not.toBeTruthy();
   });
 });

@@ -11,6 +11,6 @@ describe('The app', () => {
     expect(getByText('Select the oven type'));
     fireEvent.click(getByText('Advanced mode'));
     expect(queryByText('Select the oven type')).not.toBeTruthy();
-    expect(getByText('Ingredients'));
+    expect(getByText('Ingredient'));
   });
 });

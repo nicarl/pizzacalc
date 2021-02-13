@@ -31,7 +31,7 @@ describe('The advanced view', () => {
     expect(getByText('Water content'));
     expect(getByText('Salt content'));
     expect(getByText('Yeast content'));
-    expect(getByText('Ingredients'));
+    expect(getByText('Ingredient'));
     expect(getByText('254.9'));
   });
 });

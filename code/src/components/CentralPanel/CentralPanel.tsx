@@ -12,12 +12,12 @@ import {
 const useStyles = makeStyles({
   switch: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   centralPanel: {
-    display: 'grid',
-    gridColumn: 1,
-    gridRow: 1,
+    padding: '15px',
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -65,14 +65,14 @@ export function CentralPanel(): ReactElement {
   }, [pizzaNumber, waterContent, doughballWeight, yeastContent, saltContent]);
 
   return (
-    <div className={classes.centralPanel}>
+    <div>
       <div className={classes.switch}>
         <AdvancedSwitch
           advancedModeActive={advancedModeActive}
           setAdvancedModeActive={setAdvancedModeActive}
         />
       </div>
-      <div>
+      <div className={classes.centralPanel}>
         {advancedModeActive ? (
           <AdvancedView
             pizzaRecipe={pizzaRecipe}
