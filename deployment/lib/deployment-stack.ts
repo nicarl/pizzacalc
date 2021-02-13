@@ -21,6 +21,7 @@ export class DeploymentStack extends cdk.Stack {
       bucketName: domainName,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       websiteIndexDocument: "index.html",
+      websiteErrorDocument: "index.html"
     });
     new cdk.CfnOutput(this, "Bucket", { value: bucket.bucketName });
 
