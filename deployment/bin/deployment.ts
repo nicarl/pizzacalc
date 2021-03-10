@@ -7,7 +7,7 @@ const app = new cdk.App();
 new DeploymentStack(app, "DeploymentStack", {
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
-    region: process.env.CDK_DEFAULT_REGION,
+    region: "eu-central-1",
   },
 });
 app.synth();
