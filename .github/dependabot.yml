@@ -4,3 +4,7 @@ updates:
     directory: "/code"
     schedule:
       interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/deployment"
+    schedule:
+      interval: "daily"
