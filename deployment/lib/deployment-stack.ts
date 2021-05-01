@@ -9,10 +9,7 @@ import * as targets from '@aws-cdk/aws-route53-targets';
 export class DeploymentStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-    const domainName: string | undefined = process.env.DOMAIN_NAME;
-    if (!domainName) {
-      throw Error('Please set the env variable DOMAIN_NAME');
-    }
+    const domainName: string = 'pizzacalculator.net';
 
     const zone = route53.HostedZone.fromLookup(this, 'Zone', {
       domainName: domainName,
