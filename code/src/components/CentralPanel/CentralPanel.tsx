@@ -24,9 +24,8 @@ const useStyles = makeStyles({
 export function CentralPanel(): ReactElement {
   const classes = useStyles();
 
-  const [advancedModeActive, setAdvancedModeActive] = React.useState<boolean>(
-    false,
-  );
+  const [advancedModeActive, setAdvancedModeActive] =
+    React.useState<boolean>(false);
   const [pizzaNumber, setPizzaNumber] = useState<number>(
     defaultFormInput.pizzaNumber,
   );
