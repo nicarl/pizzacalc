@@ -84,6 +84,7 @@
     "immer": "^9.0.6",
     "glob-parent": "^5.1.2",
     "browserslist": "^4.16.5",
-    "set-value": "^4.0.1"
+    "set-value": "^4.0.1",
+    "ansi-html": "https://registry.npmjs.org/ansi-html-community/-/ansi-html-community-0.0.8.tgz"
   }
 }
