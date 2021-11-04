@@ -37,7 +37,8 @@
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "prettify": "prettier --write src",
-    "checkTs": "tsc --noEmit"
+    "checkTs": "tsc --noEmit",
+    "generateNotice": "yarn licenses generate-disclaimer --ignore-platform --production > public/notice.txt"
   },
   "eslintConfig": {
     "extends": [
