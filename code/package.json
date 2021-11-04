@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "ansi-html-community": "0.0.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.0.0",
@@ -84,6 +85,7 @@
     "immer": "^9.0.6",
     "glob-parent": "^5.1.2",
     "browserslist": "^4.16.5",
-    "set-value": "^4.0.1"
+    "set-value": "^4.0.1",
+    "ansi-html": "https://registry.npmjs.org/ansi-html-community/-/ansi-html-community-0.0.8.tgz"
   }
 }
