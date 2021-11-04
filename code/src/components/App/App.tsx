@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { CentralPanel } from '../CentralPanel/CentralPanel';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { MenuItem } from '@material-ui/core';
 import { LegalNotice } from '../LegalNotice/LegalNotice';
 
@@ -41,14 +41,10 @@ function App() {
     <Router>
       <div className={classes.root}>
         <div className={classes.body}>
-          <Switch>
-            <Route path="/legalnotice">
-              <LegalNotice />
-            </Route>
-            <Route path="/">
-              <CentralPanel />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/legalnotice" element={<LegalNotice />} />
+            <Route path="/" element={<CentralPanel />} />
+          </Routes>
         </div>
         <div className={classes.footer}>
           <div className={classes.links}>
