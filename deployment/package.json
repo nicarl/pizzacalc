@@ -29,7 +29,7 @@
     "@aws-cdk/aws-s3": "^1.88.0",
     "@aws-cdk/aws-s3-deployment": "^1.88.0",
     "@aws-cdk/core": "1.89.0",
-    "source-map-support": "^0.5.20"
+    "source-map-support": "^0.5.21"
   },
   "resolutions": {
     "set-value": "^4.0.1"
