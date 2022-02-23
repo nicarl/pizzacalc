@@ -6,7 +6,7 @@ import {
   validatePositiveInt,
 } from '../../util/validation';
 import validator from 'validator';
-import { InputAdornment } from '@material-ui/core';
+import { InputAdornment } from '@mui/material';
 
 interface InputBoxProps {
   pizzaNumber: number;

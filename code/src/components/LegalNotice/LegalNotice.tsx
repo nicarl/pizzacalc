@@ -1,6 +1,6 @@
-import { Typography, Link } from '@material-ui/core';
+import { Typography, Link } from '@mui/material';
 import { ReactElement } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +23,11 @@ export function LegalNotice(): ReactElement {
       </Typography>
       <Typography className={classes.text}>
         The notice document, which attributes the software used to create this
-        project can be found <Link href={'notice.txt'}>here</Link>.
+        project can be found{' '}
+        <Link href={'notice.txt'} underline="hover">
+          here
+        </Link>
+        .
       </Typography>
       <Typography className={classes.text} variant="h3">
         Impressum
@@ -97,7 +101,10 @@ export function LegalNotice(): ReactElement {
         wir derartige Inhalte umgehend entfernen.
         <br />
         <br />
-        Quelle: <Link href="https://www.e-recht24.de">e-recht24.de</Link>
+        Quelle:{' '}
+        <Link href="https://www.e-recht24.de" underline="hover">
+          e-recht24.de
+        </Link>
       </Typography>
     </div>
   );

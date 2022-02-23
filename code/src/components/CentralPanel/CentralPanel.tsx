@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { AdvancedView } from '../AdvancedView/AdvancedView';
 import { AdvancedSwitch } from '../AdvancedSwitch/AdvancedSwitch';
 import { NormalMode } from '../NormalMode/NormalMode';

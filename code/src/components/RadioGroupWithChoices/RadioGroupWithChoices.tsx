@@ -5,7 +5,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-} from '@material-ui/core';
+} from '@mui/material';
 
 interface RadioGroupProps {
   choices: RadioData;
