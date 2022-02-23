@@ -1,11 +1,5 @@
-import {
-  StepLabel,
-  Stepper,
-  Step,
-  StepContent,
-  Button,
-  makeStyles,
-} from '@material-ui/core';
+import { StepLabel, Stepper, Step, StepContent, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { ReactElement, useState } from 'react';
 import validator from 'validator';
 import { defaultFormInput, PizzaRecipe } from '../../util/calculations';
@@ -17,7 +11,7 @@ import { PizzaSizeSlider } from '../PizzaSizeSlider/PizzaSizeSlider';
 import { RadioGroupWithChoices } from '../RadioGroupWithChoices/RadioGroupWithChoices';
 import { Recipe } from '../Recipe/Recipe';
 import { ovenTypes } from './types';
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 
 const useStyles = makeStyles({
   root: {

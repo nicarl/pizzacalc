@@ -1,7 +1,7 @@
 import React, { Dispatch, ReactElement, SetStateAction } from 'react';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 interface AdvancedSwitchProps {
   advancedModeActive: boolean;

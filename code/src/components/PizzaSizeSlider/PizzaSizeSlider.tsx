@@ -1,4 +1,4 @@
-import { Slider } from '@material-ui/core';
+import { Slider } from '@mui/material';
 import React, { ReactElement } from 'react';
 
 interface PizzaSizeSliderProps {
