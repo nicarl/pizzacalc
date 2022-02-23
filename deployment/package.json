@@ -31,5 +31,7 @@
     "@aws-cdk/core": "1.89.0",
     "source-map-support": "^0.5.21"
   },
-  "resolutions": {}
+  "resolutions": {
+    "unset-value": "^2.0.1"
+  }
 }
