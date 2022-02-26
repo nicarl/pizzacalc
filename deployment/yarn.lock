@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@aws-cdk/assert@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/assert/-/assert-2.13.0.tgz#631bf5391d6726783b4548c0403ab8490c1bad5a"
-  integrity sha512-Q4tRx/g/XWbqLd/L1YgJZTXWmNbNI161RYl0CmwkTRWm1rKQfgkwQ3VqmxjCxcT9gQxJBzKlSe6j5tAG1UpaNg==
+"@aws-cdk/assert@^2.14.0":
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/assert/-/assert-2.14.0.tgz#d91b0f301f2dfed81aebc94b27a08195e01ff2a7"
+  integrity sha512-gthfK5YUAhQVw7HGvO6M+XlyTEtlMu2uKWmyXsAlB8ZVIivcWVLW3K0gykJIJnSIFO6S/pTPCPMUjMcf7T99CA==
   dependencies:
-    "@aws-cdk/cloudformation-diff" "2.13.0"
+    "@aws-cdk/cloudformation-diff" "2.14.0"
 
 "@aws-cdk/assets@1.145.0":
   version "1.145.0"
@@ -448,6 +448,14 @@
     fs-extra "^9.1.0"
     md5 "^2.3.0"
 
+"@aws-cdk/cfnspec@2.14.0":
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/cfnspec/-/cfnspec-2.14.0.tgz#3941478eeaf98b07f307a3cc262ba67c16175ea4"
+  integrity sha512-gHTRetUKMPkY0GA61oxQoEtsqZ7wWUcWIHf47JSDnT9SxggEb0ZyOfsSRvwcCgfSSMQwRVzpwSb0qc+fLHGoOQ==
+  dependencies:
+    fs-extra "^9.1.0"
+    md5 "^2.3.0"
+
 "@aws-cdk/cloud-assembly-schema@1.145.0":
   version "1.145.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/cloud-assembly-schema/-/cloud-assembly-schema-1.145.0.tgz#b1c123a901b1336a890f81b8196c4e87a4d63184"
@@ -470,6 +478,19 @@
   integrity sha512-TMxM5h6eME30j0XTlnJPdXO8zobQJdSiFTHJfS/4MwV2ee/ILsJoGz53Pd/5l030hIct9H54R/UpXSW7DUBXUA==
   dependencies:
     "@aws-cdk/cfnspec" "2.13.0"
+    "@types/node" "^10.17.60"
+    chalk "^4"
+    diff "^5.0.0"
+    fast-deep-equal "^3.1.3"
+    string-width "^4.2.3"
+    table "^6.8.0"
+
+"@aws-cdk/cloudformation-diff@2.14.0":
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/cloudformation-diff/-/cloudformation-diff-2.14.0.tgz#22496ab15b2e2af626dffa83d1f1cfcaf1a03314"
+  integrity sha512-EjvC1v9w51LQZDTAWttZYQW3BB4EtQTk0y26uQSDf5Vhguorx428Jhcs5ksHRAXFhTWXYABwXZlPGeOaZhGUzw==
+  dependencies:
+    "@aws-cdk/cfnspec" "2.14.0"
     "@types/node" "^10.17.60"
     chalk "^4"
     diff "^5.0.0"
