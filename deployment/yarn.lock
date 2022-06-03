@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@aws-cdk/assert@^2.24.1":
-  version "2.24.1"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/assert/-/assert-2.24.1.tgz#47a420dcbc0560d64bcd227aa6c63fcded73d6b4"
-  integrity sha512-IJ+wm1wk/HqaEJs0VbaIOdSTysZv0sOvDO50Jm5mkTFqytHTLJ/Uzla/30K8YJZmP7jEtdPFv21Sk4ZsK1x++g==
+"@aws-cdk/assert@^2.27.0":
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/assert/-/assert-2.27.0.tgz#9778938425b5cd3a103ed26243f64c117838a788"
+  integrity sha512-OU3k7fwhduUl1tAFvIKvsoW7F2Lz+Aq6rxR2enPSBX9aCWk59VCoPV8xDe3RzvGEj2iALYunp7s202S3ai+eVg==
   dependencies:
-    "@aws-cdk/cloudformation-diff" "2.24.1"
+    "@aws-cdk/cloudformation-diff" "2.27.0"
 
 "@aws-cdk/assets@1.156.1":
   version "1.156.1"
@@ -442,10 +442,10 @@
     "@aws-cdk/core" "1.156.1"
     constructs "^3.3.69"
 
-"@aws-cdk/cfnspec@2.24.1":
-  version "2.24.1"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/cfnspec/-/cfnspec-2.24.1.tgz#afffaae88b68d751bcf7c0547cc02ffcf44f2f17"
-  integrity sha512-2YOuScwQpeOkv0kLM2kkPMZBm7z7DhKIRVBZORZWctQHDhFe43RrSMThBwKgrp/GpnQV/1fN2bkyXpYyF0MeAg==
+"@aws-cdk/cfnspec@2.27.0":
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/cfnspec/-/cfnspec-2.27.0.tgz#2c7fedbd0ada595241203c3ed81d0930252bfcb5"
+  integrity sha512-ankMDOeTijS1hVM668eJP7SDLlWI3cfZIN/Khx88je16IH6nSe4EbcvR4dTswMC4aTwcrJt/IMh202T3qdLQgA==
   dependencies:
     fs-extra "^9.1.0"
     md5 "^2.3.0"
@@ -458,12 +458,12 @@
     jsonschema "^1.4.0"
     semver "^7.3.7"
 
-"@aws-cdk/cloudformation-diff@2.24.1":
-  version "2.24.1"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/cloudformation-diff/-/cloudformation-diff-2.24.1.tgz#5fb766fcc9dfe2e1c7582433723167c50b7d4585"
-  integrity sha512-swE+2HJzTmkQRROOBAYWe1KYu1mEs6+1qDwJMYyybeObCfeqluJXXoTQlUXXOqDOzmUfBtEIbehtPdqFPTMf8Q==
+"@aws-cdk/cloudformation-diff@2.27.0":
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/cloudformation-diff/-/cloudformation-diff-2.27.0.tgz#7b7345fda1deb8305c74c115f01df12a1f53c871"
+  integrity sha512-4yRycQQYtYbPmWaXJv8K1CVmJ4gWJc+3aPBecdr2DdM+brNASlDuu+VeuSKd+xrYSRgDSlj9eWGQIMIig4yEXg==
   dependencies:
-    "@aws-cdk/cfnspec" "2.24.1"
+    "@aws-cdk/cfnspec" "2.27.0"
     "@types/node" "^10.17.60"
     chalk "^4"
     diff "^5.0.0"
