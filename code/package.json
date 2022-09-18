@@ -29,7 +29,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/validator": "^13.7.6",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"
   },
   "scripts": {
