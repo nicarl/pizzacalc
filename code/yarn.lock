@@ -1642,15 +1642,6 @@
     "@mui/utils" "^5.10.14"
     prop-types "^15.8.1"
 
-"@mui/private-theming@^5.10.6":
-  version "5.10.6"
-  resolved "https://registry.yarnpkg.com/@mui/private-theming/-/private-theming-5.10.6.tgz#2c6bb2a4b7034cd402a099bd0349f217584e7b25"
-  integrity sha512-I/W0QyTLRdEx6py3lKAquKO/rNF/7j+nIOM/xCyI9kU0fcotVTcTY08mKMsS6vrzdWpi6pAkD0wP0KwWy5R5VA==
-  dependencies:
-    "@babel/runtime" "^7.19.0"
-    "@mui/utils" "^5.10.6"
-    prop-types "^15.8.1"
-
 "@mui/styled-engine@^5.10.14":
   version "5.10.14"
   resolved "https://registry.yarnpkg.com/@mui/styled-engine/-/styled-engine-5.10.14.tgz#4395198a1919254a3edabf6e8fc8d43c9c59b5c3"
@@ -1661,18 +1652,18 @@
     csstype "^3.1.1"
     prop-types "^15.8.1"
 
-"@mui/styles@^5.10.6":
-  version "5.10.6"
-  resolved "https://registry.yarnpkg.com/@mui/styles/-/styles-5.10.6.tgz#cef0774c64429c868ba85ddd34fd49c0dc92a926"
-  integrity sha512-QmT/PXDKOSttkSWV97SVw1isfmc+iNMQBUtVwafRju1T6+O26tf9Hz0QjILuXIk74lg/nrbQn5S5c9h6FZWPXQ==
+"@mui/styles@^5.10.14":
+  version "5.10.14"
+  resolved "https://registry.yarnpkg.com/@mui/styles/-/styles-5.10.14.tgz#c568d5d1831539dda7525b8a738ec844f76ea6dd"
+  integrity sha512-efmROE5O+9qV1Wj7Q/Cz3ZplsuqSwqWRFTUWwTuTedoLetAO6ExgV4vGD1bkFsr9+VkAfJV/Zy4KPM0ouok7aA==
   dependencies:
-    "@babel/runtime" "^7.19.0"
+    "@babel/runtime" "^7.20.1"
     "@emotion/hash" "^0.9.0"
-    "@mui/private-theming" "^5.10.6"
-    "@mui/types" "^7.2.0"
-    "@mui/utils" "^5.10.6"
+    "@mui/private-theming" "^5.10.14"
+    "@mui/types" "^7.2.1"
+    "@mui/utils" "^5.10.14"
     clsx "^1.2.1"
-    csstype "^3.1.0"
+    csstype "^3.1.1"
     hoist-non-react-statics "^3.3.2"
     jss "^10.9.2"
     jss-plugin-camel-case "^10.9.2"
@@ -3736,7 +3727,7 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^3.0.2, csstype@^3.1.0, csstype@^3.1.1:
+csstype@^3.0.2, csstype@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
