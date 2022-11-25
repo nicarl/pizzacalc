@@ -30,7 +30,7 @@
     "@types/validator": "^13.7.10",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.7.1"
+    "prettier": "^2.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
