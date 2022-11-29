@@ -7,7 +7,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.9",
-    "@mui/lab": "^5.0.0-alpha.109",
+    "@mui/lab": "^5.0.0-alpha.110",
     "@mui/material": "^5.10.15",
     "@mui/styles": "^5.10.15",
     "react": "^17.0.2",
