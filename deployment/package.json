@@ -19,14 +19,14 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@aws-cdk/aws-certificatemanager": "^1.181.1",
-    "@aws-cdk/aws-cloudfront": "^1.181.1",
-    "@aws-cdk/aws-iam": "^1.181.1",
-    "@aws-cdk/aws-route53": "^1.181.1",
-    "@aws-cdk/aws-route53-targets": "^1.181.1",
-    "@aws-cdk/aws-s3": "^1.181.1",
-    "@aws-cdk/aws-s3-deployment": "^1.181.1",
-    "@aws-cdk/core": "^1.181.1",
+    "@aws-cdk/aws-certificatemanager": "^1.186.1",
+    "@aws-cdk/aws-cloudfront": "^1.186.1",
+    "@aws-cdk/aws-iam": "^1.186.1",
+    "@aws-cdk/aws-route53": "^1.186.1",
+    "@aws-cdk/aws-route53-targets": "^1.186.1",
+    "@aws-cdk/aws-s3": "^1.186.1",
+    "@aws-cdk/aws-s3-deployment": "^1.186.1",
+    "@aws-cdk/core": "^1.186.1",
     "source-map-support": "^0.5.21"
   },
   "resolutions": {
