@@ -28,7 +28,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^5.3.3",
     "@types/validator": "^13.7.10",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.4"
   },
