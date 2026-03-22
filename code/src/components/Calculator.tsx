@@ -66,6 +66,9 @@ export function Calculator() {
 
   const preset = getDoughPreset(state.doughType);
   const showOil = preset.oilPercent > 0;
+  const hasColdFerment = preset.fermentation.phases.some(
+    p => p.environment === 'fridge',
+  );
 
   const handleDoughTypeChange = useCallback((type: DoughType) => {
     const p = getDoughPreset(type);
@@ -216,6 +219,7 @@ export function Calculator() {
           ambientTemp={state.ambientTemp}
           fridgeTemp={state.fridgeTemp}
           units={state.units}
+          showFridgeTemp={hasColdFerment}
           onTargetTimeChange={(v: string) => update('targetTime', v)}
           onAmbientTempChange={(v: string) => update('ambientTemp', v)}
           onFridgeTempChange={(v: string) => update('fridgeTemp', v)}

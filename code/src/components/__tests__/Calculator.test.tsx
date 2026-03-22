@@ -93,6 +93,8 @@ describe('Calculator', () => {
 
   it('updates fridge temp via FermentationInputs', () => {
     render(<Calculator />);
+    // Switch to New York which has cold ferment (fridge phase)
+    fireEvent.click(screen.getByText('New York'));
     const input = screen.getByLabelText(/fridge/i);
     fireEvent.change(input, { target: { value: '3' } });
     expect(input).toHaveValue('3');
@@ -139,6 +141,8 @@ describe('Calculator', () => {
 
   it('handles empty numeric inputs gracefully (fallback branches)', () => {
     render(<Calculator />);
+    // Switch to New York to get fridge input visible
+    fireEvent.click(screen.getByText('New York'));
     // Set pizza count to empty to trigger || 0 fallback
     fireEvent.change(screen.getByLabelText(/pizzas/i), {
       target: { value: '' },
@@ -179,5 +183,14 @@ describe('Calculator', () => {
     fireEvent.click(ozButton);
     // Should now show imperial values
     expect(screen.getByTestId('flour-amount').textContent).toContain('.');
+  });
+
+  it('hides fridge temp for dough types without cold ferment', () => {
+    render(<Calculator />);
+    // Neapolitan has no cold ferment
+    expect(screen.queryByLabelText(/fridge/i)).not.toBeInTheDocument();
+    // Switch to New York which has cold ferment
+    fireEvent.click(screen.getByText('New York'));
+    expect(screen.getByLabelText(/fridge/i)).toBeInTheDocument();
   });
 });

@@ -8,6 +8,12 @@ export interface TimelineStep {
 
 const DOUBLING_TEMP_DELTA = 9;
 
+function roundToNearest15Min(date: Date): Date {
+  const ms = date.getTime();
+  const fifteenMin = 15 * 60 * 1000;
+  return new Date(Math.round(ms / fifteenMin) * fifteenMin);
+}
+
 export function adjustDuration(
   baseDurationMin: number,
   actualTemp: number,
@@ -34,6 +40,7 @@ export function calculateTimeline(
   });
 
   currentTime = new Date(currentTime.getTime() - profile.bakeTimeMin * 60000);
+  currentTime = roundToNearest15Min(currentTime);
 
   const reversedPhases = [...profile.phases].reverse();
   for (const phase of reversedPhases) {
@@ -46,7 +53,7 @@ export function calculateTimeline(
 
     steps.unshift({
       name: phase.name,
-      time: new Date(currentTime),
+      time: roundToNearest15Min(new Date(currentTime)),
       description: `${phase.description} (${formatDuration(adjustedDuration)})`,
     });
 
@@ -55,7 +62,7 @@ export function calculateTimeline(
 
   steps.unshift({
     name: 'Mix & knead dough',
-    time: new Date(currentTime),
+    time: roundToNearest15Min(new Date(currentTime)),
     description: `Mix and knead (${formatDuration(profile.prepTimeMin)})`,
   });
 

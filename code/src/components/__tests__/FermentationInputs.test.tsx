@@ -8,6 +8,7 @@ describe('FermentationInputs', () => {
     ambientTemp: '22',
     fridgeTemp: '4',
     units: 'metric' as const,
+    showFridgeTemp: true,
     onTargetTimeChange: vi.fn(),
     onAmbientTempChange: vi.fn(),
     onFridgeTempChange: vi.fn(),
@@ -64,5 +65,26 @@ describe('FermentationInputs', () => {
     render(<FermentationInputs {...defaultProps} units="imperial" />);
     expect(screen.getByLabelText(/ambient °f/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/fridge °f/i)).toBeInTheDocument();
+  });
+
+  it('hides fridge temp input when showFridgeTemp is false', () => {
+    render(<FermentationInputs {...defaultProps} showFridgeTemp={false} />);
+    expect(screen.getByLabelText(/ambient/i)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/fridge/i)).not.toBeInTheDocument();
+  });
+
+  it('shows ambient warning for out-of-range temperature', () => {
+    render(<FermentationInputs {...defaultProps} ambientTemp="50" />);
+    expect(screen.getByText(/unusual temperature/i)).toBeInTheDocument();
+  });
+
+  it('shows fridge warning for out-of-range temperature', () => {
+    render(<FermentationInputs {...defaultProps} fridgeTemp="-5" />);
+    expect(screen.getByText(/unusual temperature/i)).toBeInTheDocument();
+  });
+
+  it('does not show warning for in-range temperatures', () => {
+    render(<FermentationInputs {...defaultProps} />);
+    expect(screen.queryByText(/unusual temperature/i)).not.toBeInTheDocument();
   });
 });

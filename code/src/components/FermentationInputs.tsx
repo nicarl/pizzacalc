@@ -5,9 +5,17 @@ interface FermentationInputsProps {
   ambientTemp: string;
   fridgeTemp: string;
   units: UnitSystem;
+  showFridgeTemp: boolean;
   onTargetTimeChange: (value: string) => void;
   onAmbientTempChange: (value: string) => void;
   onFridgeTempChange: (value: string) => void;
+}
+
+function tempWarning(value: string, min: number, max: number): string | null {
+  const num = Number(value);
+  if (value === '' || Number.isNaN(num)) return null;
+  if (num < min || num > max) return 'Unusual temperature — check your input';
+  return null;
 }
 
 export function FermentationInputs({
@@ -15,11 +23,14 @@ export function FermentationInputs({
   ambientTemp,
   fridgeTemp,
   units,
+  showFridgeTemp,
   onTargetTimeChange,
   onAmbientTempChange,
   onFridgeTempChange,
 }: FermentationInputsProps) {
   const tempUnit = units === 'metric' ? '\u00B0C' : '\u00B0F';
+  const ambientWarning = tempWarning(ambientTemp, 10, 40);
+  const fridgeWarning = tempWarning(fridgeTemp, 0, 10);
 
   return (
     <div className="rounded-xl border border-primary-muted-border bg-primary-muted p-4">
@@ -43,7 +54,7 @@ export function FermentationInputs({
           />
         </div>
         <div className="flex gap-3">
-          <div className="flex-1">
+          <div className={showFridgeTemp ? 'flex-1' : 'w-full'}>
             <label
               htmlFor="ambient-temp"
               className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
@@ -58,23 +69,31 @@ export function FermentationInputs({
               onChange={e => onAmbientTempChange(e.target.value)}
               className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
             />
+            {ambientWarning && (
+              <p className="mt-1 text-xs text-orange-600">{ambientWarning}</p>
+            )}
           </div>
-          <div className="flex-1">
-            <label
-              htmlFor="fridge-temp"
-              className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-            >
-              Fridge {tempUnit}
-            </label>
-            <input
-              id="fridge-temp"
-              type="text"
-              inputMode="numeric"
-              value={fridgeTemp}
-              onChange={e => onFridgeTempChange(e.target.value)}
-              className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
-            />
-          </div>
+          {showFridgeTemp && (
+            <div className="flex-1">
+              <label
+                htmlFor="fridge-temp"
+                className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
+              >
+                Fridge {tempUnit}
+              </label>
+              <input
+                id="fridge-temp"
+                type="text"
+                inputMode="numeric"
+                value={fridgeTemp}
+                onChange={e => onFridgeTempChange(e.target.value)}
+                className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+              />
+              {fridgeWarning && (
+                <p className="mt-1 text-xs text-orange-600">{fridgeWarning}</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

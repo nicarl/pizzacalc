@@ -214,8 +214,8 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
       {
         name: 'Oil the pan',
         instruction:
-          'Generously oil a 10x14" Detroit-style pan or similar steel pan.',
-        tip: 'Use 2-3 tablespoons of olive oil or butter for the authentic fried-edge crust.',
+          'Generously oil a 25x35cm Detroit-style pan or similar steel pan.',
+        tip: 'Use 30-45ml of olive oil or butter for the authentic fried-edge crust.',
       },
       {
         name: 'Stretch into pan',
@@ -231,7 +231,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         name: 'Top and bake',
         instruction:
           'Add cheese to the edges first (touching the pan), then sauce in racing stripes, then toppings.',
-        tip: 'Brick cheese is traditional, but a mix of mozzarella and cheddar works well.',
+        tip: 'Use a good melting cheese like mozzarella, young gouda, or a mix.',
       },
     ],
   },
@@ -283,7 +283,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
       {
         name: 'Oil the pan',
         instruction:
-          'Pour a generous amount of olive oil into a half-sheet pan (18x13").',
+          'Pour a generous amount of olive oil into a half-sheet pan (46x33cm).',
       },
       {
         name: 'Transfer to pan',
