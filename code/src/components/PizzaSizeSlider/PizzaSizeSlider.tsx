@@ -1,5 +1,5 @@
 import { Slider } from '@mui/material';
-import React, { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 interface PizzaSizeSliderProps {
   doughBallWeight: number;
@@ -33,7 +33,10 @@ function sizeToDoughBallWeight(size: 0 | 1 | 2): number {
 }
 
 export function PizzaSizeSlider(props: PizzaSizeSliderProps): ReactElement {
-  const handlePizzaSizeChange = (event: any, newValue: number | number[]) => {
+  const handlePizzaSizeChange = (
+    _event: Event,
+    newValue: number | number[],
+  ) => {
     props.setDoughBallWeight(sizeToDoughBallWeight(newValue as 0 | 1 | 2));
   };
 

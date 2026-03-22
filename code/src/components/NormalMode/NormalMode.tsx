@@ -1,6 +1,14 @@
-import { StepLabel, Stepper, Step, StepContent, Button, Box } from '@mui/material';
-import { ReactElement, useState } from 'react';
-import { defaultFormInput, PizzaRecipe } from '../../util/calculations';
+import EditIcon from '@mui/icons-material/Edit';
+import {
+  Box,
+  Button,
+  Step,
+  StepContent,
+  StepLabel,
+  Stepper,
+} from '@mui/material';
+import { type ReactElement, useState } from 'react';
+import { defaultFormInput, type PizzaRecipe } from '../../util/calculations';
 import { validatePositiveInt } from '../../util/validation';
 import { BackButton } from '../BackButton/BackButton';
 import { InputForm } from '../InputForm/InputForm';
@@ -9,7 +17,6 @@ import { PizzaSizeSlider } from '../PizzaSizeSlider/PizzaSizeSlider';
 import { RadioGroupWithChoices } from '../RadioGroupWithChoices/RadioGroupWithChoices';
 import { Recipe } from '../Recipe/Recipe';
 import { ovenTypes } from './types';
-import EditIcon from '@mui/icons-material/Edit';
 
 interface DefaultValues {
   activeStep: number;
@@ -58,7 +65,7 @@ export function NormalMode(props: NormalModeProps): ReactElement {
               </div>
               <NextButton
                 onClick={() => setActiveStep(1)}
-                disabled={ovenType ? false : true}
+                disabled={!ovenType}
                 testId="ovenTypeNextButton"
               />
             </div>

@@ -1,8 +1,8 @@
-import { ReactElement } from 'react';
 import { Box } from '@mui/material';
+import type { ReactElement } from 'react';
+import type { PizzaRecipe } from '../../util/calculations';
 import { InputBox } from '../InputBox/InputBox';
 import { Recipe } from '../Recipe/Recipe';
-import { PizzaRecipe } from '../../util/calculations';
 
 interface AdvancedViewProps {
   pizzaRecipe: PizzaRecipe;

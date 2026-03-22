@@ -1,5 +1,5 @@
-import { Typography, Link, Box } from '@mui/material';
-import { ReactElement } from 'react';
+import { Box, Link, Typography } from '@mui/material';
+import type { ReactElement } from 'react';
 
 const textSx = { marginBottom: '15px' };
 

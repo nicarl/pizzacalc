@@ -1,6 +1,6 @@
-import { ReactElement, useState } from 'react';
-import React from 'react';
 import TextField from '@mui/material/TextField';
+import type React from 'react';
+import { type ReactElement, useState } from 'react';
 
 interface Props {
   label: string;

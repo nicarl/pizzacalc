@@ -1,11 +1,10 @@
-import { ReactElement } from 'react';
-import React from 'react';
-import { InputForm } from '../InputForm/InputForm';
+import { InputAdornment } from '@mui/material';
+import type { ReactElement } from 'react';
 import {
   validatePositiveFloat,
   validatePositiveInt,
 } from '../../util/validation';
-import { InputAdornment } from '@mui/material';
+import { InputForm } from '../InputForm/InputForm';
 
 interface InputBoxProps {
   pizzaNumber: number;

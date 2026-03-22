@@ -1,13 +1,13 @@
-import React, { useState, useEffect, ReactElement } from 'react';
 import { Box } from '@mui/material';
-import { AdvancedView } from '../AdvancedView/AdvancedView';
-import { AdvancedSwitch } from '../AdvancedSwitch/AdvancedSwitch';
-import { NormalMode } from '../NormalMode/NormalMode';
+import React, { type ReactElement, useEffect, useState } from 'react';
 import {
   calculateRecipe,
   defaultFormInput,
-  PizzaRecipe,
+  type PizzaRecipe,
 } from '../../util/calculations';
+import { AdvancedSwitch } from '../AdvancedSwitch/AdvancedSwitch';
+import { AdvancedView } from '../AdvancedView/AdvancedView';
+import { NormalMode } from '../NormalMode/NormalMode';
 
 export function CentralPanel(): ReactElement {
   const [advancedModeActive, setAdvancedModeActive] =

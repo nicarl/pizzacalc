@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { calculateRecipe, defaultFormInput } from '../../../util/calculations';
 import { NormalMode } from '../NormalMode';
 

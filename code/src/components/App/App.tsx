@@ -1,8 +1,7 @@
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Box, MenuItem } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { CentralPanel } from '../CentralPanel/CentralPanel';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { MenuItem } from '@mui/material';
 import { LegalNotice } from '../LegalNotice/LegalNotice';
 
 const theme = createTheme();

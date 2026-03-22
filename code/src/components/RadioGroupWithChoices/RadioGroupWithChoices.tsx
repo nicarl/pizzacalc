@@ -1,11 +1,12 @@
-import React, { ReactElement } from 'react';
-import { RadioData } from '../NormalMode/types';
 import {
   FormControl,
-  RadioGroup,
   FormControlLabel,
   Radio,
+  RadioGroup,
 } from '@mui/material';
+import type React from 'react';
+import type { ReactElement } from 'react';
+import type { RadioData } from '../NormalMode/types';
 
 interface RadioGroupProps {
   choices: RadioData;
@@ -32,7 +33,7 @@ export function RadioGroupWithChoices(props: RadioGroupProps): ReactElement {
               value={props.choices[choice].id}
               control={<Radio color="primary" />}
               label={props.choices[choice].description}
-              key={'key-radio-group-' + props.choices[choice].id}
+              key={`key-radio-group-${props.choices[choice].id}`}
             />
           );
         })}

@@ -2,7 +2,7 @@ import {
   calculateFlourMass,
   calculateFractionalMass,
   calculateRecipe,
-  PizzaRecipe,
+  type PizzaRecipe,
 } from '../calculations';
 
 describe('calculateFractionalMass', () => {
@@ -12,12 +12,9 @@ describe('calculateFractionalMass', () => {
     [900, 1000, 90],
     [10000, 1000, 1000],
     [152, 1000, 15.2],
-  ])(
-    'yields %s for %s gramm and a percentage of %s',
-    (expected: number, flourMass: number, fraction: number) => {
-      expect(calculateFractionalMass(flourMass, fraction)).toBe(expected);
-    },
-  );
+  ])('yields %s for %s gramm and a percentage of %s', (expected: number, flourMass: number, fraction: number) => {
+    expect(calculateFractionalMass(flourMass, fraction)).toBe(expected);
+  });
 });
 
 describe('calculateFlourMass', () => {
@@ -28,27 +25,17 @@ describe('calculateFlourMass', () => {
     [500, 1, 0, 100, 0, 1000],
     [500, 1, 0, 0, 100, 1000],
     [500, 1, 20, 20, 60, 1000],
-  ])(
-    'yields %s for %s pizza, %s waterContent, %s yeastContent, %s saltContent, %s doughballWeight',
-    (
-      expected: number,
-      pizzaNumber: number,
-      waterContent: number,
-      yeastContent: number,
-      saltContent: number,
-      doughballWeight: number,
-    ) => {
-      expect(
-        calculateFlourMass(
-          pizzaNumber,
-          waterContent,
-          yeastContent,
-          saltContent,
-          doughballWeight,
-        ),
-      ).toBe(expected);
-    },
-  );
+  ])('yields %s for %s pizza, %s waterContent, %s yeastContent, %s saltContent, %s doughballWeight', (expected: number, pizzaNumber: number, waterContent: number, yeastContent: number, saltContent: number, doughballWeight: number) => {
+    expect(
+      calculateFlourMass(
+        pizzaNumber,
+        waterContent,
+        yeastContent,
+        saltContent,
+        doughballWeight,
+      ),
+    ).toBe(expected);
+  });
 });
 
 describe('calculateRecipe', () => {
@@ -85,25 +72,15 @@ describe('calculateRecipe', () => {
       0.0,
       100,
     ],
-  ])(
-    'calculates recipe correctly',
-    (
-      expected: PizzaRecipe,
-      pizzaNumber: number,
-      waterContent: number,
-      yeastContent: number,
-      saltContent: number,
-      doughballWeight: number,
-    ) => {
-      expect(
-        calculateRecipe(
-          pizzaNumber,
-          waterContent,
-          yeastContent,
-          saltContent,
-          doughballWeight,
-        ),
-      ).toEqual(expected);
-    },
-  );
+  ])('calculates recipe correctly', (expected: PizzaRecipe, pizzaNumber: number, waterContent: number, yeastContent: number, saltContent: number, doughballWeight: number) => {
+    expect(
+      calculateRecipe(
+        pizzaNumber,
+        waterContent,
+        yeastContent,
+        saltContent,
+        doughballWeight,
+      ),
+    ).toEqual(expected);
+  });
 });
