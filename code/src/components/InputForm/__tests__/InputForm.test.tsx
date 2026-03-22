@@ -1,5 +1,4 @@
 import { fireEvent, render } from '@testing-library/react';
-import validator from 'validator';
 import { validatePositiveInt } from '../../../util/validation';
 import { InputForm } from '../InputForm';
 
@@ -7,7 +6,7 @@ describe('The InputForm', () => {
   it('renders', () => {
     let value = 1;
     function setValue(newContent: string): void {
-      value = validator.toInt(newContent);
+      value = parseInt(newContent, 10);
     }
     render(
       <InputForm
@@ -22,7 +21,7 @@ describe('The InputForm', () => {
   it('shows warning when a wrong value is set', () => {
     let value = 1;
     function setValue(newContent: string): void {
-      value = validator.toInt(newContent);
+      value = parseInt(newContent, 10);
     }
     const { getByTestId, getByText } = render(
       <InputForm
@@ -48,7 +47,7 @@ describe('The InputForm', () => {
   it('does not show a warning when correct value is set', () => {
     let value = 1;
     function setValue(newContent: string): void {
-      value = validator.toInt(newContent);
+      value = parseInt(newContent, 10);
     }
     const { getByTestId, queryByText } = render(
       <InputForm

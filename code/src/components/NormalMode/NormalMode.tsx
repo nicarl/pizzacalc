@@ -1,7 +1,6 @@
 import { StepLabel, Stepper, Step, StepContent, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { ReactElement, useState } from 'react';
-import validator from 'validator';
 import { defaultFormInput, PizzaRecipe } from '../../util/calculations';
 import { validatePositiveInt } from '../../util/validation';
 import { BackButton } from '../BackButton/BackButton';
@@ -106,7 +105,7 @@ export function NormalMode(props: NormalModeProps): ReactElement {
                   helpText="Please insert a positive integer."
                   value={pizzaNumber}
                   setValue={(value: string) => {
-                    setPizzaNumber(validator.toInt(value));
+                    setPizzaNumber(parseInt(value, 10));
                   }}
                   validation={validatePositiveInt}
                   dialButton={true}

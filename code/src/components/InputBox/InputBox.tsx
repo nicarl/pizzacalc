@@ -5,7 +5,6 @@ import {
   validatePositiveFloat,
   validatePositiveInt,
 } from '../../util/validation';
-import validator from 'validator';
 import { InputAdornment } from '@mui/material';
 
 interface InputBoxProps {
@@ -35,7 +34,7 @@ export function InputBox(props: InputBoxProps): ReactElement {
         helpText={helpTextInt}
         value={props.pizzaNumber}
         setValue={(value: string) => {
-          props.setPizzaNumber(validator.toInt(value));
+          props.setPizzaNumber(parseInt(value, 10));
         }}
         validation={validatePositiveInt}
         dialButton={true}
@@ -45,7 +44,7 @@ export function InputBox(props: InputBoxProps): ReactElement {
         helpText={helpTextFloat}
         value={props.doughballWeight}
         setValue={(value: string) => {
-          props.setDoughballWeight(validator.toFloat(value));
+          props.setDoughballWeight(parseFloat(value));
         }}
         validation={validatePositiveFloat}
         endAdornment={massAdornment}
@@ -55,7 +54,7 @@ export function InputBox(props: InputBoxProps): ReactElement {
         helpText={helpTextFloat}
         value={props.waterContent}
         setValue={(value: string) => {
-          props.setWaterContent(validator.toFloat(value));
+          props.setWaterContent(parseFloat(value));
         }}
         validation={validatePositiveFloat}
         endAdornment={percentAdornment}
@@ -65,7 +64,7 @@ export function InputBox(props: InputBoxProps): ReactElement {
         helpText={helpTextFloat}
         value={props.saltContent}
         setValue={(value: string) => {
-          props.setSaltContent(validator.toFloat(value));
+          props.setSaltContent(parseFloat(value));
         }}
         validation={validatePositiveFloat}
         endAdornment={percentAdornment}
@@ -75,7 +74,7 @@ export function InputBox(props: InputBoxProps): ReactElement {
         helpText={helpTextFloat}
         value={props.yeastContent}
         setValue={(value: string) => {
-          props.setYeastContent(validator.toFloat(value));
+          props.setYeastContent(parseFloat(value));
         }}
         validation={validatePositiveFloat}
         endAdornment={percentAdornment}
