@@ -24,10 +24,15 @@ export class DeploymentStack extends cdk.Stack {
     });
     new cdk.CfnOutput(this, 'Bucket', { value: bucket.bucketName });
 
-    const certificate = new acm.Certificate(this, 'SiteCertificate', {
-      domainName: domainName,
-      validation: acm.CertificateValidation.fromDns(zone),
-    });
+    const certificate = new acm.DnsValidatedCertificate(
+      this,
+      'SiteCertificate',
+      {
+        domainName: domainName,
+        hostedZone: zone,
+        region: 'us-east-1', // CloudFront requires certificates in us-east-1
+      },
+    );
     new cdk.CfnOutput(this, 'Certificate', {
       value: certificate.certificateArn,
     });

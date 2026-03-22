@@ -7,17 +7,6 @@ export function LegalNotice(): ReactElement {
   return (
     <Box sx={{ maxWidth: '450px', textAlign: 'justify' }}>
       <Typography sx={textSx} variant="h3">
-        Licenses
-      </Typography>
-      <Typography sx={textSx}>
-        The notice document, which attributes the software used to create this
-        project can be found{' '}
-        <Link href={'notice.txt'} underline="hover">
-          here
-        </Link>
-        .
-      </Typography>
-      <Typography sx={textSx} variant="h3">
         Impressum
       </Typography>
       <Typography sx={textSx} variant="h4">
