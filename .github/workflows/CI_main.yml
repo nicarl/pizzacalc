@@ -34,7 +34,7 @@ jobs:
         run: pnpm --filter pizzacalc check
       - name: CheckTs
         run: pnpm --filter pizzacalc checkTs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: build_merge_to_main
           path: code/build
