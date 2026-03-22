@@ -10,7 +10,7 @@ interface Props {
   validation: (value: string) => boolean;
   dialButton?: boolean;
   testId?: string;
-  endAdornment?: JSX.Element;
+  endAdornment?: React.ReactElement;
 }
 
 export function InputForm(props: Props): ReactElement {
