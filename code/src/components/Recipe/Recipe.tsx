@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { PizzaRecipe } from '../../util/calculations';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,23 +9,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles({
-  root: {
-    width: '230px',
-  },
-});
-
 interface Props {
   recipe: PizzaRecipe;
 }
 
 export function Recipe(props: Props): ReactElement {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <Box sx={{ width: '230px' }}>
       <TableContainer component={Paper}>
         <Table aria-label="recipe table">
           <TableHead>
@@ -74,6 +64,6 @@ export function Recipe(props: Props): ReactElement {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </Box>
   );
 }

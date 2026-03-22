@@ -10,7 +10,6 @@
     "@mui/icons-material": "^5.10.16",
     "@mui/lab": "^5.0.0-alpha.116",
     "@mui/material": "^5.11.5",
-    "@mui/styles": "^5.12.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.7.0"

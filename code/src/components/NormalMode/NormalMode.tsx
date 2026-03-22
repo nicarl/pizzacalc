@@ -1,6 +1,5 @@
-import { StepLabel, Stepper, Step, StepContent, Button } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import React, { ReactElement, useState } from 'react';
+import { StepLabel, Stepper, Step, StepContent, Button, Box } from '@mui/material';
+import { ReactElement, useState } from 'react';
 import { defaultFormInput, PizzaRecipe } from '../../util/calculations';
 import { validatePositiveInt } from '../../util/validation';
 import { BackButton } from '../BackButton/BackButton';
@@ -11,34 +10,6 @@ import { RadioGroupWithChoices } from '../RadioGroupWithChoices/RadioGroupWithCh
 import { Recipe } from '../Recipe/Recipe';
 import { ovenTypes } from './types';
 import EditIcon from '@mui/icons-material/Edit';
-
-const useStyles = makeStyles({
-  root: {
-    width: '300px',
-  },
-  slider: {
-    width: '80%',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  finishButton: {
-    paddingTop: '20px',
-  },
-  resetBlock: {
-    paddingTop: '20px',
-    textAlign: 'center',
-  },
-  recipeBlock: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
-  },
-  editButton: {
-    textAlign: 'right',
-  },
-});
 
 interface DefaultValues {
   activeStep: number;
@@ -61,8 +32,6 @@ interface NormalModeProps {
 }
 
 export function NormalMode(props: NormalModeProps): ReactElement {
-  const classes = useStyles();
-
   const [activeStep, setActiveStep] = useState(defaultValues.activeStep);
   const [ovenType, setOvenType] = useState<string>(defaultValues.ovenType);
   const [pizzaNumber, setPizzaNumber] = useState<number>(
@@ -73,7 +42,7 @@ export function NormalMode(props: NormalModeProps): ReactElement {
   );
 
   return (
-    <div className={classes.root}>
+    <Box sx={{ width: '300px' }}>
       <Stepper activeStep={activeStep} orientation="vertical">
         <Step key="ovenType">
           <StepLabel>Select the oven type</StepLabel>
@@ -129,14 +98,20 @@ export function NormalMode(props: NormalModeProps): ReactElement {
           <StepLabel>Select the size of the pizza</StepLabel>
           <StepContent>
             <div>
-              <div className={classes.slider}>
+              <Box
+                sx={{
+                  width: '80%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
                 <PizzaSizeSlider
                   doughBallWeight={doughBallWeight}
                   setDoughBallWeight={setDoughBallWeight}
                 />
-              </div>
+              </Box>
             </div>
-            <div className={classes.finishButton}>
+            <Box sx={{ paddingTop: '20px' }}>
               <BackButton
                 onClick={() => setActiveStep(1)}
                 testId="pizzaSizeBackButton"
@@ -153,25 +128,33 @@ export function NormalMode(props: NormalModeProps): ReactElement {
                 disabled={false}
                 label="Finish"
               />
-            </div>
+            </Box>
           </StepContent>
         </Step>
       </Stepper>
       {activeStep === 3 ? (
-        <div className={classes.recipeBlock}>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <div>
             <div>
-              <div className={classes.editButton}>
+              <Box sx={{ textAlign: 'right' }}>
                 <Button
                   onClick={() => props.setAdvancedModeActive(true)}
                   data-testid="editButton"
                 >
                   <EditIcon />
                 </Button>
-              </div>
+              </Box>
               <Recipe recipe={props.pizzaRecipe} />
             </div>
-            <div className={classes.resetBlock}>
+            <Box sx={{ paddingTop: '20px', textAlign: 'center' }}>
               <BackButton
                 onClick={() => setActiveStep(2)}
                 testId="finalViewBackButton"
@@ -186,10 +169,10 @@ export function NormalMode(props: NormalModeProps): ReactElement {
                 disabled={false}
                 label="Reset"
               />
-            </div>
+            </Box>
           </div>
-        </div>
+        </Box>
       ) : null}
-    </div>
+    </Box>
   );
 }

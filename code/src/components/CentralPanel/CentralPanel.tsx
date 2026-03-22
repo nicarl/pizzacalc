@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box } from '@mui/material';
 import { AdvancedView } from '../AdvancedView/AdvancedView';
 import { AdvancedSwitch } from '../AdvancedSwitch/AdvancedSwitch';
 import { NormalMode } from '../NormalMode/NormalMode';
@@ -9,21 +9,7 @@ import {
   PizzaRecipe,
 } from '../../util/calculations';
 
-const useStyles = makeStyles({
-  switch: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  centralPanel: {
-    padding: '15px',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-});
-
 export function CentralPanel(): ReactElement {
-  const classes = useStyles();
-
   const [advancedModeActive, setAdvancedModeActive] =
     React.useState<boolean>(false);
   const [pizzaNumber, setPizzaNumber] = useState<number>(
@@ -65,13 +51,13 @@ export function CentralPanel(): ReactElement {
 
   return (
     <div>
-      <div className={classes.switch}>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <AdvancedSwitch
           advancedModeActive={advancedModeActive}
           setAdvancedModeActive={setAdvancedModeActive}
         />
-      </div>
-      <div className={classes.centralPanel}>
+      </Box>
+      <Box sx={{ padding: '15px', display: 'flex', justifyContent: 'center' }}>
         {advancedModeActive ? (
           <AdvancedView
             pizzaRecipe={pizzaRecipe}
@@ -97,7 +83,7 @@ export function CentralPanel(): ReactElement {
             setDoughballWeight={setDoughballWeight}
           />
         )}
-      </div>
+      </Box>
     </div>
   );
 }
