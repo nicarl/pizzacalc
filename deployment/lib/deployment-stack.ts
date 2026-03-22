@@ -1,13 +1,15 @@
-import * as cdk from '@aws-cdk/core';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as route53 from '@aws-cdk/aws-route53';
-import * as s3Deploy from '@aws-cdk/aws-s3-deployment';
-import * as acm from '@aws-cdk/aws-certificatemanager';
-import * as targets from '@aws-cdk/aws-route53-targets';
+import * as cdk from 'aws-cdk-lib';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as route53 from 'aws-cdk-lib/aws-route53';
+import * as s3Deploy from 'aws-cdk-lib/aws-s3-deployment';
+import * as acm from 'aws-cdk-lib/aws-certificatemanager';
+import * as targets from 'aws-cdk-lib/aws-route53-targets';
+import { Construct } from 'constructs';
 
 export class DeploymentStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     const domainName: string = 'pizzacalculator.net';
 
@@ -17,42 +19,41 @@ export class DeploymentStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'Site', { value: 'https://' + domainName });
 
     const bucket = new s3.Bucket(this, 'PizzaCalculatorAppBucket', {
-      publicReadAccess: true,
       bucketName: domainName,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      websiteIndexDocument: 'index.html',
-      websiteErrorDocument: 'index.html',
     });
     new cdk.CfnOutput(this, 'Bucket', { value: bucket.bucketName });
 
-    const certificateArn = new acm.DnsValidatedCertificate(
+    const certificate = new acm.DnsValidatedCertificate(
       this,
       'SiteCertificate',
       {
         domainName: domainName,
         hostedZone: zone,
-        region: 'us-east-1', // Cloudfront only checks this region for certificates.
+        region: 'us-east-1', // CloudFront requires certificates in us-east-1
       },
-    ).certificateArn;
-    new cdk.CfnOutput(this, 'Certificate', { value: certificateArn });
+    );
+    new cdk.CfnOutput(this, 'Certificate', {
+      value: certificate.certificateArn,
+    });
 
-    const distribution = new cloudfront.CloudFrontWebDistribution(
+    const distribution = new cloudfront.Distribution(
       this,
       'PizzaCalculatorAppDistribution',
       {
-        aliasConfiguration: {
-          acmCertRef: certificateArn,
-          names: [domainName],
-          sslMethod: cloudfront.SSLMethod.SNI,
-          securityPolicy: cloudfront.SecurityPolicyProtocol.TLS_V1_1_2016,
+        defaultBehavior: {
+          origin: origins.S3BucketOrigin.withOriginAccessControl(bucket),
+          viewerProtocolPolicy:
+            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         },
-        originConfigs: [
+        domainNames: [domainName],
+        certificate: certificate,
+        defaultRootObject: 'index.html',
+        errorResponses: [
           {
-            customOriginSource: {
-              domainName: bucket.bucketWebsiteDomainName,
-              originProtocolPolicy: cloudfront.OriginProtocolPolicy.HTTP_ONLY,
-            },
-            behaviors: [{ isDefaultBehavior: true }],
+            httpStatus: 404,
+            responseHttpStatus: 200,
+            responsePagePath: '/index.html',
           },
         ],
       },

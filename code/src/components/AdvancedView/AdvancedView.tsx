@@ -1,15 +1,8 @@
-import { ReactElement } from 'react';
-import React from 'react';
+import { Box } from '@mui/material';
+import type { ReactElement } from 'react';
+import type { PizzaRecipe } from '../../util/calculations';
 import { InputBox } from '../InputBox/InputBox';
 import { Recipe } from '../Recipe/Recipe';
-import { PizzaRecipe } from '../../util/calculations';
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles({
-  root: {
-    marginBottom: '20px',
-  },
-});
 
 interface AdvancedViewProps {
   pizzaRecipe: PizzaRecipe;
@@ -26,10 +19,8 @@ interface AdvancedViewProps {
 }
 
 export function AdvancedView(props: AdvancedViewProps): ReactElement {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <Box sx={{ marginBottom: '20px' }}>
       <InputBox
         pizzaNumber={props.pizzaNumber}
         setPizzaNumber={props.setPizzaNumber}
@@ -43,6 +34,6 @@ export function AdvancedView(props: AdvancedViewProps): ReactElement {
         setDoughballWeight={props.setDoughballWeight}
       />
       <Recipe recipe={props.pizzaRecipe} />
-    </div>
+    </Box>
   );
 }

@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React, { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 interface NextButtonProps {
   onClick: () => void;

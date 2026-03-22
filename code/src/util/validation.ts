@@ -1,9 +1,11 @@
-import validator from 'validator';
-
 export function validatePositiveFloat(value: string): boolean {
-  return validator.isFloat(value, { min: 0 });
+  const n = Number(value);
+  return (
+    !Number.isNaN(n) && Number.isFinite(n) && n >= 0 && value.trim() !== ''
+  );
 }
 
 export function validatePositiveInt(value: string): boolean {
-  return validator.isInt(value, { min: 1 });
+  const n = Number(value);
+  return Number.isInteger(n) && n >= 1;
 }

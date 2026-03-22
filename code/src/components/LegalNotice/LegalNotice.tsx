@@ -1,56 +1,33 @@
-import { Typography, Link } from '@mui/material';
-import { ReactElement } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, Link, Typography } from '@mui/material';
+import type { ReactElement } from 'react';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: '450px',
-    align: 'justify',
-    textAlign: 'justify',
-  },
-  text: {
-    marginBottom: '15px',
-  },
-});
+const textSx = { marginBottom: '15px' };
 
 export function LegalNotice(): ReactElement {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <Typography className={classes.text} variant="h3">
-        Licenses
-      </Typography>
-      <Typography className={classes.text}>
-        The notice document, which attributes the software used to create this
-        project can be found{' '}
-        <Link href={'notice.txt'} underline="hover">
-          here
-        </Link>
-        .
-      </Typography>
-      <Typography className={classes.text} variant="h3">
+    <Box sx={{ maxWidth: '450px', textAlign: 'justify' }}>
+      <Typography sx={textSx} variant="h3">
         Impressum
       </Typography>
-      <Typography className={classes.text} variant="h4">
+      <Typography sx={textSx} variant="h4">
         Angaben gemäß § 5 TMG
       </Typography>
-      <Typography className={classes.text} variant="body1">
+      <Typography sx={textSx} variant="body1">
         Nico Carl
         <br />
         Holzhofstraße 3<br />
         81667 München
       </Typography>
-      <Typography className={classes.text} variant="h4">
+      <Typography sx={textSx} variant="h4">
         Kontakt
       </Typography>
-      <Typography className={classes.text} variant="body1">
+      <Typography sx={textSx} variant="body1">
         E-Mail: nicocarl@protonmail.com
       </Typography>
-      <Typography className={classes.text} variant="h5">
+      <Typography sx={textSx} variant="h5">
         Haftung für Inhalte
       </Typography>
-      <Typography className={classes.text} variant="body1">
+      <Typography sx={textSx} variant="body1">
         Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf
         diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8
         bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet,
@@ -58,7 +35,7 @@ export function LegalNotice(): ReactElement {
         nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit
         hinweisen.
       </Typography>
-      <Typography className={classes.text} variant="body1">
+      <Typography sx={textSx} variant="body1">
         Verpflichtungen zur Entfernung oder Sperrung der Nutzung von
         Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.
         Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der
@@ -66,10 +43,10 @@ export function LegalNotice(): ReactElement {
         entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend
         entfernen.
       </Typography>
-      <Typography className={classes.text} variant="h5">
+      <Typography sx={textSx} variant="h5">
         Haftung für Links
       </Typography>
-      <Typography className={classes.text} variant="body1">
+      <Typography sx={textSx} variant="body1">
         Unser Angebot enthält Links zu externen Websites Dritter, auf deren
         Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden
         Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten
@@ -83,10 +60,10 @@ export function LegalNotice(): ReactElement {
         Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend
         entfernen.
       </Typography>
-      <Typography className={classes.text} variant="h5">
+      <Typography sx={textSx} variant="h5">
         Urheberrecht
       </Typography>
-      <Typography className={classes.text} variant="body1">
+      <Typography sx={textSx} variant="body1">
         Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen
         Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung,
         Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
@@ -106,6 +83,6 @@ export function LegalNotice(): ReactElement {
           e-recht24.de
         </Link>
       </Typography>
-    </div>
+    </Box>
   );
 }

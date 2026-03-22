@@ -7,29 +7,17 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "jest",
     "cdk": "cdk"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^2.61.1",
-    "@types/jest": "^29.2.6",
-    "@types/node": "^18.11.18",
-    "aws-cdk": "^2.61.1",
+    "@types/node": "^22.0.0",
+    "aws-cdk": "^2.180.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@aws-cdk/aws-certificatemanager": "^1.186.1",
-    "@aws-cdk/aws-cloudfront": "^1.186.1",
-    "@aws-cdk/aws-iam": "^1.186.1",
-    "@aws-cdk/aws-route53": "^1.186.1",
-    "@aws-cdk/aws-route53-targets": "^1.186.1",
-    "@aws-cdk/aws-s3": "^1.186.1",
-    "@aws-cdk/aws-s3-deployment": "^1.186.1",
-    "@aws-cdk/core": "^1.186.1",
+    "aws-cdk-lib": "^2.180.0",
+    "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"
-  },
-  "resolutions": {
-    "unset-value": "^2.0.1"
   }
 }
