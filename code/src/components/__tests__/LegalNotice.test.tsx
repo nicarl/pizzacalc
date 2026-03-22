@@ -5,12 +5,20 @@ import { LegalNotice } from '../LegalNotice';
 
 describe('LegalNotice', () => {
   it('renders legal notice heading', () => {
-    render(<MemoryRouter><LegalNotice /></MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <LegalNotice />
+      </MemoryRouter>,
+    );
     expect(screen.getByText(/impressum/i)).toBeInTheDocument();
   });
 
   it('renders contact information', () => {
-    render(<MemoryRouter><LegalNotice /></MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <LegalNotice />
+      </MemoryRouter>,
+    );
     expect(screen.getByText(/nico carl/i)).toBeInTheDocument();
   });
 });

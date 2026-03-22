@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router';
+import { BrowserRouter, Link, Route, Routes } from 'react-router';
 import { Calculator } from './Calculator';
 import { LegalNotice } from './LegalNotice';
 

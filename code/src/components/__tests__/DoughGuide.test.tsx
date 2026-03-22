@@ -1,17 +1,23 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { DoughGuide } from '../DoughGuide';
 import type { PreparationStep } from '@/util/dough-presets';
+import { DoughGuide } from '../DoughGuide';
 
 describe('DoughGuide', () => {
   const steps: PreparationStep[] = [
     { name: 'Mix dry ingredients', instruction: 'Combine flour and salt.' },
-    { name: 'Knead', instruction: 'Knead for 10 minutes.', tip: 'The dough should feel tacky.' },
+    {
+      name: 'Knead',
+      instruction: 'Knead for 10 minutes.',
+      tip: 'The dough should feel tacky.',
+    },
   ];
 
   it('is collapsed by default', () => {
     render(<DoughGuide steps={steps} />);
-    expect(screen.queryByText('Combine flour and salt.')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Combine flour and salt.'),
+    ).not.toBeInTheDocument();
   });
 
   it('shows toggle button', () => {
@@ -29,7 +35,9 @@ describe('DoughGuide', () => {
   it('shows tips when present', () => {
     render(<DoughGuide steps={steps} />);
     fireEvent.click(screen.getByText(/show preparation steps/i));
-    expect(screen.getByText('The dough should feel tacky.')).toBeInTheDocument();
+    expect(
+      screen.getByText('The dough should feel tacky.'),
+    ).toBeInTheDocument();
   });
 
   it('changes toggle text when expanded', () => {

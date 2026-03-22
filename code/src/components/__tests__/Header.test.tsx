@@ -9,6 +9,8 @@ describe('Header', () => {
   });
   it('renders subtitle', () => {
     render(<Header />);
-    expect(screen.getByText('Calculate your perfect recipe')).toBeInTheDocument();
+    expect(
+      screen.getByText('Calculate your perfect recipe'),
+    ).toBeInTheDocument();
   });
 });

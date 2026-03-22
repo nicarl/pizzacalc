@@ -16,9 +16,12 @@ export function FermentationTimeline({ steps }: FermentationTimelineProps) {
   if (steps.length === 0) return null;
 
   return (
-    <div className="mt-4 flex flex-col gap-2" role="list">
+    <ul className="mt-4 flex flex-col gap-2">
       {steps.map((step, i) => (
-        <div key={step.name} className="flex items-center gap-2.5 font-sans text-[13px]" role="listitem">
+        <li
+          key={step.name}
+          className="flex items-center gap-2.5 font-sans text-[13px]"
+        >
           <div
             className="h-2 w-2 flex-shrink-0 rounded-full bg-primary"
             style={{ opacity: 1 - (i / steps.length) * 0.7 }}
@@ -27,8 +30,8 @@ export function FermentationTimeline({ steps }: FermentationTimelineProps) {
             {formatTime(step.time)}
           </span>
           <span className="text-text-primary">{step.name}</span>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

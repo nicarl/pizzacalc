@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
-  type UnitSystem,
-  gramsToOz, ozToGrams,
-  celsiusToFahrenheit, fahrenheitToCelsius,
-  formatWeight, formatTemp,
+  celsiusToFahrenheit,
+  fahrenheitToCelsius,
+  formatTemp,
+  formatWeight,
+  gramsToOz,
+  ozToGrams,
 } from '../units';
 
 describe('weight conversion', () => {

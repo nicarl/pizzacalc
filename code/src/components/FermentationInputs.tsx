@@ -11,8 +11,13 @@ interface FermentationInputsProps {
 }
 
 export function FermentationInputs({
-  targetTime, ambientTemp, fridgeTemp, units,
-  onTargetTimeChange, onAmbientTempChange, onFridgeTempChange,
+  targetTime,
+  ambientTemp,
+  fridgeTemp,
+  units,
+  onTargetTimeChange,
+  onAmbientTempChange,
+  onFridgeTempChange,
 }: FermentationInputsProps) {
   const tempUnit = units === 'metric' ? '\u00B0C' : '\u00B0F';
 
@@ -23,29 +28,52 @@ export function FermentationInputs({
       </h4>
       <div className="space-y-3">
         <div>
-          <label htmlFor="target-time" className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary">
+          <label
+            htmlFor="target-time"
+            className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
+          >
             I want to eat at
           </label>
-          <input id="target-time" type="datetime-local" value={targetTime}
-            onChange={(e) => onTargetTimeChange(e.target.value)}
-            className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary" />
+          <input
+            id="target-time"
+            type="datetime-local"
+            value={targetTime}
+            onChange={e => onTargetTimeChange(e.target.value)}
+            className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+          />
         </div>
         <div className="flex gap-3">
           <div className="flex-1">
-            <label htmlFor="ambient-temp" className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary">
+            <label
+              htmlFor="ambient-temp"
+              className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
+            >
               Ambient {tempUnit}
             </label>
-            <input id="ambient-temp" type="text" inputMode="numeric" value={ambientTemp}
-              onChange={(e) => onAmbientTempChange(e.target.value)}
-              className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary" />
+            <input
+              id="ambient-temp"
+              type="text"
+              inputMode="numeric"
+              value={ambientTemp}
+              onChange={e => onAmbientTempChange(e.target.value)}
+              className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+            />
           </div>
           <div className="flex-1">
-            <label htmlFor="fridge-temp" className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary">
+            <label
+              htmlFor="fridge-temp"
+              className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
+            >
               Fridge {tempUnit}
             </label>
-            <input id="fridge-temp" type="text" inputMode="numeric" value={fridgeTemp}
-              onChange={(e) => onFridgeTempChange(e.target.value)}
-              className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary" />
+            <input
+              id="fridge-temp"
+              type="text"
+              inputMode="numeric"
+              value={fridgeTemp}
+              onChange={e => onFridgeTempChange(e.target.value)}
+              className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+            />
           </div>
         </div>
       </div>

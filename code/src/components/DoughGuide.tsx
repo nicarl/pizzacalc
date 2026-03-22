@@ -10,8 +10,11 @@ export function DoughGuide({ steps }: DoughGuideProps) {
 
   return (
     <div>
-      <button type="button" onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 font-sans text-[13px] text-primary">
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-1.5 font-sans text-[13px] text-primary"
+      >
         <span className="text-xs">{isOpen ? '\u25B2' : '\u25BC'}</span>
         {isOpen ? 'Hide preparation steps' : 'Show preparation steps'}
       </button>
@@ -23,8 +26,12 @@ export function DoughGuide({ steps }: DoughGuideProps) {
                 {i + 1}
               </span>
               <div>
-                <h4 className="font-sans text-sm font-semibold text-text-primary">{step.name}</h4>
-                <p className="mt-0.5 font-sans text-[13px] text-text-secondary">{step.instruction}</p>
+                <h4 className="font-sans text-sm font-semibold text-text-primary">
+                  {step.name}
+                </h4>
+                <p className="mt-0.5 font-sans text-[13px] text-text-secondary">
+                  {step.instruction}
+                </p>
                 {step.tip && (
                   <div className="mt-1.5 rounded-lg bg-advanced-bg px-3 py-2 font-sans text-xs text-text-secondary">
                     {step.tip}

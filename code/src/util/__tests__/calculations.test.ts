@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { type RecipeInput, type PizzaRecipe, calculateRecipe } from '../calculations';
+import { calculateRecipe, type RecipeInput } from '../calculations';
 
 describe('calculateRecipe', () => {
   it('calculates basic recipe without oil', () => {
     const input: RecipeInput = {
-      pizzaCount: 4, doughballWeight: 250, waterPercent: 65,
-      saltPercent: 2.8, yeastPercent: 0.05, oilPercent: 0,
+      pizzaCount: 4,
+      doughballWeight: 250,
+      waterPercent: 65,
+      saltPercent: 2.8,
+      yeastPercent: 0.05,
+      oilPercent: 0,
     };
     const recipe = calculateRecipe(input);
     // Total dough = 4 * 250 = 1000g
@@ -19,8 +23,12 @@ describe('calculateRecipe', () => {
 
   it('calculates recipe with oil', () => {
     const input: RecipeInput = {
-      pizzaCount: 2, doughballWeight: 950, waterPercent: 78,
-      saltPercent: 2.1, yeastPercent: 0.3, oilPercent: 7,
+      pizzaCount: 2,
+      doughballWeight: 950,
+      waterPercent: 78,
+      saltPercent: 2.1,
+      yeastPercent: 0.3,
+      oilPercent: 7,
     };
     const recipe = calculateRecipe(input);
     // Total dough = 2 * 950 = 1900g
@@ -31,8 +39,12 @@ describe('calculateRecipe', () => {
 
   it('returns zero recipe for zero pizzas', () => {
     const input: RecipeInput = {
-      pizzaCount: 0, doughballWeight: 250, waterPercent: 65,
-      saltPercent: 2.8, yeastPercent: 0.05, oilPercent: 0,
+      pizzaCount: 0,
+      doughballWeight: 250,
+      waterPercent: 65,
+      saltPercent: 2.8,
+      yeastPercent: 0.05,
+      oilPercent: 0,
     };
     const recipe = calculateRecipe(input);
     expect(recipe.flourMass).toBe(0);

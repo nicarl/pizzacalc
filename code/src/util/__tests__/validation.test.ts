@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
-  validatePositiveFloat,
-  validatePositiveInt,
   parseValidFloat,
   parseValidInt,
+  validatePositiveFloat,
+  validatePositiveInt,
 } from '../validation';
 
 describe('validatePositiveFloat', () => {

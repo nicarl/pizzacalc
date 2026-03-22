@@ -1,13 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import {
-  type DoughType,
-  doughPresets,
-  getDoughPreset,
-} from '../dough-presets';
+import { type DoughType, doughPresets, getDoughPreset } from '../dough-presets';
 
 describe('doughPresets', () => {
   it('has all four dough types', () => {
-    const types: DoughType[] = ['neapolitan', 'new-york', 'detroit', 'focaccia'];
+    const types: DoughType[] = [
+      'neapolitan',
+      'new-york',
+      'detroit',
+      'focaccia',
+    ];
     for (const type of types) {
       expect(doughPresets[type]).toBeDefined();
     }

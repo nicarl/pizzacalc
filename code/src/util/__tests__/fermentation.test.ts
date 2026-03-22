@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { type TimelineStep, adjustDuration, calculateTimeline } from '../fermentation';
 import { getDoughPreset } from '../dough-presets';
+import { adjustDuration, calculateTimeline } from '../fermentation';
 
 describe('adjustDuration', () => {
   it('returns base duration at reference temp', () => {
@@ -43,7 +43,8 @@ describe('calculateTimeline', () => {
 
     const firstStep = timeline[0];
     const lastStep = timeline[timeline.length - 1];
-    const spanHours = (lastStep.time.getTime() - firstStep.time.getTime()) / (1000 * 60 * 60);
+    const spanHours =
+      (lastStep.time.getTime() - firstStep.time.getTime()) / (1000 * 60 * 60);
     expect(spanHours).toBeGreaterThan(40);
   });
 
@@ -54,6 +55,21 @@ describe('calculateTimeline', () => {
     const timelineCold = calculateTimeline(profile, target, 15, 4);
     const timelineWarm = calculateTimeline(profile, target, 28, 4);
 
-    expect(timelineCold[0].time.getTime()).toBeLessThan(timelineWarm[0].time.getTime());
+    expect(timelineCold[0].time.getTime()).toBeLessThan(
+      timelineWarm[0].time.getTime(),
+    );
+  });
+
+  it('formats durations exceeding 24h as days and hours', () => {
+    // Use a very cold fridge temp to produce durations > 24h with remaining hours
+    const profile = getDoughPreset('new-york').fermentation;
+    const target = new Date('2026-03-22T19:00:00');
+    const timeline = calculateTimeline(profile, target, 22, 1);
+
+    // Check that at least one step description contains the "Xd Yh" format
+    const hasDayHourFormat = timeline.some(step =>
+      /\d+d \d+h/.test(step.description),
+    );
+    expect(hasDayHourFormat).toBe(true);
   });
 });

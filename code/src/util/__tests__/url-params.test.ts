@@ -1,11 +1,23 @@
 import { describe, expect, it } from 'vitest';
-import { type CalculatorState, serializeToParams, deserializeFromParams } from '../url-params';
+import {
+  type CalculatorState,
+  deserializeFromParams,
+  serializeToParams,
+} from '../url-params';
 
 const defaultState: CalculatorState = {
-  doughType: 'neapolitan', pizzaCount: 4, doughballWeight: 250,
-  waterPercent: 65, saltPercent: 2.8, yeastPercent: 0.05, oilPercent: 0,
-  ovenType: 'home', targetTime: '2026-03-22T19:00',
-  ambientTemp: 22, fridgeTemp: 4, units: 'metric',
+  doughType: 'neapolitan',
+  pizzaCount: 4,
+  doughballWeight: 250,
+  waterPercent: 65,
+  saltPercent: 2.8,
+  yeastPercent: 0.05,
+  oilPercent: 0,
+  ovenType: 'home',
+  targetTime: '2026-03-22T19:00',
+  ambientTemp: 22,
+  fridgeTemp: 4,
+  units: 'metric',
 };
 
 describe('serializeToParams', () => {
@@ -57,15 +69,45 @@ describe('deserializeFromParams', () => {
     const params = new URLSearchParams('type=focaccia&n=2');
     const state = deserializeFromParams(params);
     expect(state).not.toBeNull();
-    expect(state!.doughType).toBe('focaccia');
-    expect(state!.pizzaCount).toBe(2);
-    expect(state!.waterPercent).toBe(78);
-    expect(state!.oilPercent).toBe(7);
+    expect(state?.doughType).toBe('focaccia');
+    expect(state?.pizzaCount).toBe(2);
+    expect(state?.waterPercent).toBe(78);
+    expect(state?.oilPercent).toBe(7);
   });
 
   it('roundtrips correctly', () => {
     const params = serializeToParams(defaultState);
     const restored = deserializeFromParams(params);
     expect(restored).toEqual(defaultState);
+  });
+
+  it('falls back to default when numeric param is NaN', () => {
+    const params = new URLSearchParams('type=neapolitan&n=abc&w=xyz');
+    const state = deserializeFromParams(params);
+    expect(state).not.toBeNull();
+    expect(state?.pizzaCount).toBe(4);
+    expect(state?.doughballWeight).toBe(250);
+  });
+
+  it('deserializes professional oven type', () => {
+    const params = new URLSearchParams('type=neapolitan&oven=professional');
+    const state = deserializeFromParams(params);
+    expect(state).not.toBeNull();
+    expect(state?.ovenType).toBe('professional');
+  });
+
+  it('deserializes imperial units', () => {
+    const params = new URLSearchParams('type=neapolitan&units=imperial');
+    const state = deserializeFromParams(params);
+    expect(state).not.toBeNull();
+    expect(state?.units).toBe('imperial');
+  });
+
+  it('falls back to default target time when eat param is missing', () => {
+    const params = new URLSearchParams('type=neapolitan');
+    const state = deserializeFromParams(params);
+    expect(state).not.toBeNull();
+    // targetTime should be a valid datetime string (tomorrow at 19:00)
+    expect(state?.targetTime).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/);
   });
 });

@@ -1,4 +1,9 @@
-import { type DoughType, type OvenType, doughPresets, doughTypeList } from './dough-presets';
+import {
+  type DoughType,
+  doughPresets,
+  doughTypeList,
+  type OvenType,
+} from './dough-presets';
 import type { UnitSystem } from './units';
 
 export interface CalculatorState {
@@ -33,7 +38,9 @@ export function serializeToParams(state: CalculatorState): URLSearchParams {
   return params;
 }
 
-export function deserializeFromParams(params: URLSearchParams): CalculatorState | null {
+export function deserializeFromParams(
+  params: URLSearchParams,
+): CalculatorState | null {
   const typeParam = params.get('type');
   if (!typeParam) return null;
   if (!doughTypeList.includes(typeParam as DoughType)) return null;
@@ -56,11 +63,15 @@ export function deserializeFromParams(params: URLSearchParams): CalculatorState 
     saltPercent: parseNum('salt', preset.saltPercent),
     yeastPercent: parseNum('yeast', preset.yeastPercent),
     oilPercent: parseNum('oil', preset.oilPercent),
-    ovenType: (params.get('oven') === 'professional' ? 'professional' : 'home') as OvenType,
+    ovenType: (params.get('oven') === 'professional'
+      ? 'professional'
+      : 'home') as OvenType,
     targetTime: params.get('eat') ?? getDefaultTargetTime(),
     ambientTemp: parseNum('ambient', 22),
     fridgeTemp: parseNum('fridge', 4),
-    units: (params.get('units') === 'imperial' ? 'imperial' : 'metric') as UnitSystem,
+    units: (params.get('units') === 'imperial'
+      ? 'imperial'
+      : 'metric') as UnitSystem,
   };
 }
 

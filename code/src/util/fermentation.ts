@@ -8,7 +8,11 @@ export interface TimelineStep {
 
 const DOUBLING_TEMP_DELTA = 9;
 
-export function adjustDuration(baseDurationMin: number, actualTemp: number, referenceTemp: number): number {
+export function adjustDuration(
+  baseDurationMin: number,
+  actualTemp: number,
+  referenceTemp: number,
+): number {
   const tempDelta = actualTemp - referenceTemp;
   const factor = 2 ** (tempDelta / DOUBLING_TEMP_DELTA);
   return baseDurationMin / factor;
@@ -34,7 +38,11 @@ export function calculateTimeline(
   const reversedPhases = [...profile.phases].reverse();
   for (const phase of reversedPhases) {
     const temp = phase.environment === 'fridge' ? fridgeTempC : ambientTempC;
-    const adjustedDuration = adjustDuration(phase.baseDurationMin, temp, profile.referenceTemp);
+    const adjustedDuration = adjustDuration(
+      phase.baseDurationMin,
+      temp,
+      profile.referenceTemp,
+    );
 
     steps.unshift({
       name: phase.name,

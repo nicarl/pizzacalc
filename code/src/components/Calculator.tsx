@@ -1,18 +1,22 @@
-import { useMemo, useState, useEffect, useCallback } from 'react';
-import { Header } from './Header';
-import { DoughTypeSelector } from './DoughTypeSelector';
-import { CoreInputs } from './CoreInputs';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { calculateRecipe } from '@/util/calculations';
+import {
+  type DoughType,
+  getDoughPreset,
+  type OvenType,
+} from '@/util/dough-presets';
+import { calculateTimeline } from '@/util/fermentation';
+import type { UnitSystem } from '@/util/units';
+import { deserializeFromParams, serializeToParams } from '@/util/url-params';
 import { AdvancedInputs } from './AdvancedInputs';
-import { RecipeCard } from './RecipeCard';
+import { CoreInputs } from './CoreInputs';
+import { DoughGuide } from './DoughGuide';
+import { DoughTypeSelector } from './DoughTypeSelector';
 import { FermentationInputs } from './FermentationInputs';
 import { FermentationTimeline } from './FermentationTimeline';
-import { DoughGuide } from './DoughGuide';
+import { Header } from './Header';
+import { RecipeCard } from './RecipeCard';
 import { ShareButton } from './ShareButton';
-import { type DoughType, type OvenType, getDoughPreset } from '@/util/dough-presets';
-import { calculateRecipe } from '@/util/calculations';
-import { calculateTimeline } from '@/util/fermentation';
-import { type UnitSystem } from '@/util/units';
-import { serializeToParams, deserializeFromParams } from '@/util/url-params';
 
 function getDefaultTargetTime(): string {
   const tomorrow = new Date();
@@ -65,7 +69,7 @@ export function Calculator() {
 
   const handleDoughTypeChange = useCallback((type: DoughType) => {
     const p = getDoughPreset(type);
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       doughType: type,
       doughballWeight: String(p.doughballWeight),
@@ -78,7 +82,7 @@ export function Calculator() {
   }, []);
 
   const update = useCallback((field: string, value: string) => {
-    setState((prev) => ({ ...prev, [field]: value }));
+    setState(prev => ({ ...prev, [field]: value }));
   }, []);
 
   const hasOverrides =
@@ -89,7 +93,7 @@ export function Calculator() {
     state.oilPercent !== String(preset.oilPercent);
 
   const handleReset = useCallback(() => {
-    setState((prev) => {
+    setState(prev => {
       const p = getDoughPreset(prev.doughType);
       return {
         ...prev,
@@ -111,7 +115,14 @@ export function Calculator() {
       yeastPercent: Number(state.yeastPercent) || 0,
       oilPercent: Number(state.oilPercent) || 0,
     });
-  }, [state.pizzaCount, state.doughballWeight, state.waterPercent, state.saltPercent, state.yeastPercent, state.oilPercent]);
+  }, [
+    state.pizzaCount,
+    state.doughballWeight,
+    state.waterPercent,
+    state.saltPercent,
+    state.yeastPercent,
+    state.oilPercent,
+  ]);
 
   const timeline = useMemo(() => {
     if (!state.targetTime) return [];
@@ -121,7 +132,12 @@ export function Calculator() {
       Number(state.ambientTemp) || 22,
       Number(state.fridgeTemp) || 4,
     );
-  }, [preset.fermentation, state.targetTime, state.ambientTemp, state.fridgeTemp]);
+  }, [
+    preset.fermentation,
+    state.targetTime,
+    state.ambientTemp,
+    state.fridgeTemp,
+  ]);
 
   // URL sync
   useEffect(() => {
@@ -142,26 +158,31 @@ export function Calculator() {
     window.history.replaceState(null, '', `?${params.toString()}`);
   }, [state]);
 
-  const shareUrl = `${window.location.origin}${window.location.pathname}?${serializeToParams({
-    doughType: state.doughType,
-    pizzaCount: Number(state.pizzaCount) || 0,
-    doughballWeight: Number(state.doughballWeight) || 0,
-    waterPercent: Number(state.waterPercent) || 0,
-    saltPercent: Number(state.saltPercent) || 0,
-    yeastPercent: Number(state.yeastPercent) || 0,
-    oilPercent: Number(state.oilPercent) || 0,
-    ovenType: state.ovenType,
-    targetTime: state.targetTime,
-    ambientTemp: Number(state.ambientTemp) || 22,
-    fridgeTemp: Number(state.fridgeTemp) || 4,
-    units: state.units,
-  }).toString()}`;
+  const shareUrl = `${window.location.origin}${window.location.pathname}?${serializeToParams(
+    {
+      doughType: state.doughType,
+      pizzaCount: Number(state.pizzaCount) || 0,
+      doughballWeight: Number(state.doughballWeight) || 0,
+      waterPercent: Number(state.waterPercent) || 0,
+      saltPercent: Number(state.saltPercent) || 0,
+      yeastPercent: Number(state.yeastPercent) || 0,
+      oilPercent: Number(state.oilPercent) || 0,
+      ovenType: state.ovenType,
+      targetTime: state.targetTime,
+      ambientTemp: Number(state.ambientTemp) || 22,
+      fridgeTemp: Number(state.fridgeTemp) || 4,
+      units: state.units,
+    },
+  ).toString()}`;
 
   return (
     <div className="mx-auto max-w-[420px]">
       <Header />
       <div className="space-y-6 p-6">
-        <DoughTypeSelector selected={state.doughType} onSelect={handleDoughTypeChange} />
+        <DoughTypeSelector
+          selected={state.doughType}
+          onSelect={handleDoughTypeChange}
+        />
         <CoreInputs
           pizzaCount={state.pizzaCount}
           doughballWeight={state.doughballWeight}

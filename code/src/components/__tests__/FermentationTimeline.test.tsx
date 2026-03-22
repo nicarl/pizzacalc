@@ -1,13 +1,25 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { FermentationTimeline } from '../FermentationTimeline';
 import type { TimelineStep } from '@/util/fermentation';
+import { FermentationTimeline } from '../FermentationTimeline';
 
 describe('FermentationTimeline', () => {
   const steps: TimelineStep[] = [
-    { name: 'Mix & knead dough', time: new Date('2026-03-21T10:00:00'), description: 'Mix and knead (30min)' },
-    { name: 'Bulk ferment', time: new Date('2026-03-21T10:30:00'), description: 'Cover and let rise (8h)' },
-    { name: 'Ready to bake!', time: new Date('2026-03-22T19:00:00'), description: 'Your dough is ready' },
+    {
+      name: 'Mix & knead dough',
+      time: new Date('2026-03-21T10:00:00'),
+      description: 'Mix and knead (30min)',
+    },
+    {
+      name: 'Bulk ferment',
+      time: new Date('2026-03-21T10:30:00'),
+      description: 'Cover and let rise (8h)',
+    },
+    {
+      name: 'Ready to bake!',
+      time: new Date('2026-03-22T19:00:00'),
+      description: 'Your dough is ready',
+    },
   ];
 
   it('renders all timeline steps', () => {
