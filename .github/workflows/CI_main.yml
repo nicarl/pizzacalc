@@ -11,35 +11,29 @@ concurrency: deployment
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: code
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-          cache-dependency-path: code/pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build project
-        run: pnpm build
+        run: pnpm --filter pizzacalc build
       - name: Run tests
-        run: pnpm test:coverage
+        run: pnpm --filter pizzacalc test:coverage
       - name: Lint and format check
-        run: pnpm check
+        run: pnpm --filter pizzacalc check
       - name: CheckTs
-        run: pnpm checkTs
+        run: pnpm --filter pizzacalc checkTs
       - uses: actions/upload-artifact@v4
         with:
           name: build_merge_to_main
@@ -50,28 +44,25 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-          cache-dependency-path: deployment/pnpm-lock.yaml
       - name: Install dependencies
-        run: cd deployment && pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - uses: actions/download-artifact@v4
         with:
           name: build_merge_to_main
           path: code/build/
       - name: Run cdk deploy
-        run: cd deployment && pnpm cdk deploy --require-approval never
+        run: pnpm --filter deployment cdk deploy --require-approval never
         env:
           AWS_DEFAULT_REGION: 'eu-central-1'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

@@ -1,6 +1,6 @@
 import { Box, MenuItem } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router';
 import { CentralPanel } from '../CentralPanel/CentralPanel';
 import { LegalNotice } from '../LegalNotice/LegalNotice';
 

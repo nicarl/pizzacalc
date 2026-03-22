@@ -9,32 +9,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: code
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [24.x]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-          cache-dependency-path: code/pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build project
-        run: pnpm build
+        run: pnpm --filter pizzacalc build
       - name: Run tests
-        run: pnpm test:coverage
+        run: pnpm --filter pizzacalc test:coverage
       - name: Lint and format check
-        run: pnpm check
+        run: pnpm --filter pizzacalc check
       - name: CheckTs
-        run: pnpm checkTs
+        run: pnpm --filter pizzacalc checkTs
