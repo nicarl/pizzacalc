@@ -29,6 +29,7 @@ function initState() {
   const params = new URLSearchParams(window.location.search);
   const restored = deserializeFromParams(params);
   if (restored) {
+    const restoredPreset = getDoughPreset(restored.doughType);
     return {
       doughType: restored.doughType,
       pizzaCount: String(restored.pizzaCount),
@@ -37,6 +38,9 @@ function initState() {
       saltPercent: String(restored.saltPercent),
       yeastPercent: String(restored.yeastPercent),
       oilPercent: String(restored.oilPercent),
+      sugarPercent: String(
+        restored.sugarPercent ?? restoredPreset.sugarPercent ?? 0,
+      ),
       ovenType: restored.ovenType,
       targetTime: restored.targetTime,
       ambientTemp: String(restored.ambientTemp),
@@ -53,6 +57,7 @@ function initState() {
     saltPercent: String(preset.saltPercent),
     yeastPercent: String(preset.yeastPercent),
     oilPercent: String(preset.oilPercent),
+    sugarPercent: String(preset.sugarPercent ?? 0),
     ovenType: preset.ovenDefault,
     targetTime: getDefaultTargetTime(),
     ambientTemp: '22',
@@ -66,6 +71,7 @@ export function Calculator() {
 
   const preset = getDoughPreset(state.doughType);
   const showOil = preset.oilPercent > 0;
+  const showSugar = (preset.sugarPercent ?? 0) > 0;
   const hasColdFerment = preset.fermentation.phases.some(
     p => p.environment === 'fridge',
   );
@@ -86,6 +92,7 @@ export function Calculator() {
         saltPercent: String(p.saltPercent),
         yeastPercent: String(p.yeastPercent),
         oilPercent: String(p.oilPercent),
+        sugarPercent: String(p.sugarPercent ?? 0),
         ovenType,
       };
     });
@@ -114,7 +121,8 @@ export function Calculator() {
     state.waterPercent !== String(preset.waterPercent) ||
     state.saltPercent !== String(preset.saltPercent) ||
     state.yeastPercent !== String(preset.yeastPercent) ||
-    state.oilPercent !== String(preset.oilPercent);
+    state.oilPercent !== String(preset.oilPercent) ||
+    state.sugarPercent !== String(preset.sugarPercent ?? 0);
 
   const handleReset = useCallback(() => {
     setState(prev => {
@@ -126,6 +134,7 @@ export function Calculator() {
         saltPercent: String(p.saltPercent),
         yeastPercent: String(p.yeastPercent),
         oilPercent: String(p.oilPercent),
+        sugarPercent: String(p.sugarPercent ?? 0),
       };
     });
   }, []);
@@ -138,6 +147,7 @@ export function Calculator() {
       saltPercent: Number(state.saltPercent) || 0,
       yeastPercent: Number(state.yeastPercent) || 0,
       oilPercent: Number(state.oilPercent) || 0,
+      sugarPercent: Number(state.sugarPercent) || 0,
     });
   }, [
     state.pizzaCount,
@@ -146,7 +156,10 @@ export function Calculator() {
     state.saltPercent,
     state.yeastPercent,
     state.oilPercent,
+    state.sugarPercent,
   ]);
+
+  const bakeTimeMin = preset.bakingInstructions[state.ovenType].timeMin;
 
   const timeline = useMemo(() => {
     if (!state.targetTime) return [];
@@ -155,12 +168,14 @@ export function Calculator() {
       new Date(state.targetTime),
       Number(state.ambientTemp) || 22,
       Number(state.fridgeTemp) || 4,
+      bakeTimeMin,
     );
   }, [
     preset.fermentation,
     state.targetTime,
     state.ambientTemp,
     state.fridgeTemp,
+    bakeTimeMin,
   ]);
 
   // URL sync
@@ -173,6 +188,7 @@ export function Calculator() {
       saltPercent: Number(state.saltPercent) || 0,
       yeastPercent: Number(state.yeastPercent) || 0,
       oilPercent: Number(state.oilPercent) || 0,
+      sugarPercent: Number(state.sugarPercent) || 0,
       ovenType: state.ovenType,
       targetTime: state.targetTime,
       ambientTemp: Number(state.ambientTemp) || 22,
@@ -191,6 +207,7 @@ export function Calculator() {
       saltPercent: Number(state.saltPercent) || 0,
       yeastPercent: Number(state.yeastPercent) || 0,
       oilPercent: Number(state.oilPercent) || 0,
+      sugarPercent: Number(state.sugarPercent) || 0,
       ovenType: state.ovenType,
       targetTime: state.targetTime,
       ambientTemp: Number(state.ambientTemp) || 22,
@@ -212,6 +229,7 @@ export function Calculator() {
           doughballWeight={state.doughballWeight}
           ovenType={state.ovenType}
           isPanStyle={preset.isPanStyle}
+          units={state.units}
           onPizzaCountChange={(v: string) => update('pizzaCount', v)}
           onDoughballWeightChange={(v: string) => update('doughballWeight', v)}
           onOvenTypeChange={handleOvenTypeChange}
@@ -222,16 +240,20 @@ export function Calculator() {
           yeastPercent={state.yeastPercent}
           oilPercent={state.oilPercent}
           showOil={showOil}
+          sugarPercent={state.sugarPercent}
+          showSugar={showSugar}
           onWaterChange={(v: string) => update('waterPercent', v)}
           onSaltChange={(v: string) => update('saltPercent', v)}
           onYeastChange={(v: string) => update('yeastPercent', v)}
           onOilChange={(v: string) => update('oilPercent', v)}
+          onSugarChange={(v: string) => update('sugarPercent', v)}
           hasOverrides={hasOverrides}
           onReset={handleReset}
         />
         <RecipeCard
           recipe={recipe}
           showOil={showOil}
+          showSugar={showSugar}
           units={state.units}
           onToggleUnits={(u: UnitSystem) => update('units', u)}
         />
@@ -246,7 +268,12 @@ export function Calculator() {
           onFridgeTempChange={(v: string) => update('fridgeTemp', v)}
         />
         <FermentationTimeline steps={timeline} />
-        <DoughGuide steps={preset.steps} />
+        <DoughGuide
+          steps={preset.steps}
+          bakingInstructions={preset.bakingInstructions}
+          ovenType={state.ovenType}
+          units={state.units}
+        />
         <ShareButton url={shareUrl} />
       </div>
     </div>

@@ -1,4 +1,8 @@
-import type { UnitSystem } from '@/util/units';
+import {
+  celsiusToFahrenheit,
+  fahrenheitToCelsius,
+  type UnitSystem,
+} from '@/util/units';
 
 interface FermentationInputsProps {
   targetTime: string;
@@ -11,11 +15,40 @@ interface FermentationInputsProps {
   onFridgeTempChange: (value: string) => void;
 }
 
-function tempWarning(value: string, min: number, max: number): string | null {
-  const num = Number(value);
-  if (value === '' || Number.isNaN(num)) return null;
-  if (num < min || num > max) return 'Unusual temperature — check your input';
+function tempWarning(
+  valueCelsius: string,
+  min: number,
+  max: number,
+): string | null {
+  const num = Number(valueCelsius);
+  if (valueCelsius === '' || Number.isNaN(num)) return null;
+  if (num < min || num > max)
+    return 'Unusual temperature \u2014 check your input';
   return null;
+}
+
+function displayTemp(celsiusStr: string, isImperial: boolean): string {
+  if (!isImperial || celsiusStr === '') return celsiusStr;
+  const c = Number(celsiusStr);
+  if (Number.isNaN(c)) return celsiusStr;
+  return String(Math.round(celsiusToFahrenheit(c)));
+}
+
+function handleTempInput(
+  value: string,
+  isImperial: boolean,
+  onChange: (celsiusStr: string) => void,
+): void {
+  if (!isImperial || value === '') {
+    onChange(value);
+    return;
+  }
+  const f = Number(value);
+  if (Number.isNaN(f)) {
+    onChange(value);
+    return;
+  }
+  onChange(String(Math.round(fahrenheitToCelsius(f))));
 }
 
 export function FermentationInputs({
@@ -28,7 +61,8 @@ export function FermentationInputs({
   onAmbientTempChange,
   onFridgeTempChange,
 }: FermentationInputsProps) {
-  const tempUnit = units === 'metric' ? '\u00B0C' : '\u00B0F';
+  const isImperial = units === 'imperial';
+  const tempUnit = isImperial ? '\u00B0F' : '\u00B0C';
   const ambientWarning = tempWarning(ambientTemp, 10, 40);
   const fridgeWarning = tempWarning(fridgeTemp, 0, 10);
 
@@ -65,8 +99,10 @@ export function FermentationInputs({
               id="ambient-temp"
               type="text"
               inputMode="numeric"
-              value={ambientTemp}
-              onChange={e => onAmbientTempChange(e.target.value)}
+              value={displayTemp(ambientTemp, isImperial)}
+              onChange={e =>
+                handleTempInput(e.target.value, isImperial, onAmbientTempChange)
+              }
               className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
             />
             {ambientWarning && (
@@ -85,8 +121,14 @@ export function FermentationInputs({
                 id="fridge-temp"
                 type="text"
                 inputMode="numeric"
-                value={fridgeTemp}
-                onChange={e => onFridgeTempChange(e.target.value)}
+                value={displayTemp(fridgeTemp, isImperial)}
+                onChange={e =>
+                  handleTempInput(
+                    e.target.value,
+                    isImperial,
+                    onFridgeTempChange,
+                  )
+                }
                 className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
               />
               {fridgeWarning && (

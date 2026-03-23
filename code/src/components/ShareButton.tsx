@@ -18,7 +18,7 @@ export function ShareButton({ url }: ShareButtonProps) {
       type="button"
       aria-label="Share recipe"
       onClick={handleClick}
-      className="w-full rounded-[10px] border-[1.5px] border-border px-4 py-3 font-sans text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
+      className="w-full cursor-pointer rounded-[10px] border-[1.5px] border-border px-4 py-3 font-sans text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
     >
       {copied ? 'Copied!' : 'Share Recipe'}
     </button>

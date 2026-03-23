@@ -44,10 +44,18 @@ describe('doughPresets', () => {
 
   it('each preset has a fermentation profile', () => {
     for (const preset of Object.values(doughPresets)) {
-      expect(preset.fermentation.referenceTemp).toBeGreaterThan(0);
       expect(preset.fermentation.phases.length).toBeGreaterThan(0);
       expect(preset.fermentation.prepTimeMin).toBeGreaterThan(0);
-      expect(preset.fermentation.bakeTimeMin).toBeGreaterThan(0);
+      for (const phase of preset.fermentation.phases) {
+        expect(phase.referenceTemp).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('each preset has baking instructions with timeMin', () => {
+    for (const preset of Object.values(doughPresets)) {
+      expect(preset.bakingInstructions.home.timeMin).toBeGreaterThan(0);
+      expect(preset.bakingInstructions.professional.timeMin).toBeGreaterThan(0);
     }
   });
 

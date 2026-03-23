@@ -87,4 +87,28 @@ describe('FermentationInputs', () => {
     render(<FermentationInputs {...defaultProps} />);
     expect(screen.queryByText(/unusual temperature/i)).not.toBeInTheDocument();
   });
+
+  it('displays temperature in °F when units is imperial', () => {
+    render(<FermentationInputs {...defaultProps} units="imperial" />);
+    // 22°C ≈ 72°F
+    expect(screen.getByLabelText(/ambient °f/i)).toHaveValue('72');
+    // 4°C ≈ 39°F
+    expect(screen.getByLabelText(/fridge °f/i)).toHaveValue('39');
+  });
+
+  it('converts °F input back to °C when units is imperial', () => {
+    const onAmbient = vi.fn();
+    render(
+      <FermentationInputs
+        {...defaultProps}
+        units="imperial"
+        onAmbientTempChange={onAmbient}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText(/ambient °f/i), {
+      target: { value: '77' },
+    });
+    // 77°F ≈ 25°C
+    expect(onAmbient).toHaveBeenCalledWith('25');
+  });
 });

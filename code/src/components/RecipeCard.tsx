@@ -4,6 +4,7 @@ import { formatWeight, type UnitSystem } from '@/util/units';
 interface RecipeCardProps {
   recipe: PizzaRecipe;
   showOil: boolean;
+  showSugar: boolean;
   units: UnitSystem;
   onToggleUnits: (units: UnitSystem) => void;
 }
@@ -11,6 +12,7 @@ interface RecipeCardProps {
 export function RecipeCard({
   recipe,
   showOil,
+  showSugar,
   units,
   onToggleUnits,
 }: RecipeCardProps) {
@@ -31,6 +33,14 @@ export function RecipeCard({
     });
   }
 
+  if (showSugar) {
+    ingredients.push({
+      name: 'Sugar',
+      mass: recipe.sugarMass,
+      testId: 'sugar-amount',
+    });
+  }
+
   return (
     <div className="rounded-[14px] bg-surface-dark p-[22px] text-[#faf6f1]">
       <div className="mb-4 flex items-center justify-between">
@@ -41,7 +51,7 @@ export function RecipeCard({
           <button
             type="button"
             onClick={() => onToggleUnits('metric')}
-            className={`rounded px-2 py-0.5 font-sans text-xs font-medium transition-colors ${
+            className={`cursor-pointer rounded px-2 py-0.5 font-sans text-xs font-medium transition-colors ${
               units === 'metric'
                 ? 'bg-primary text-white'
                 : 'text-[#a89580] hover:text-[#faf6f1]'
@@ -52,7 +62,7 @@ export function RecipeCard({
           <button
             type="button"
             onClick={() => onToggleUnits('imperial')}
-            className={`rounded px-2 py-0.5 font-sans text-xs font-medium transition-colors ${
+            className={`cursor-pointer rounded px-2 py-0.5 font-sans text-xs font-medium transition-colors ${
               units === 'imperial'
                 ? 'bg-primary text-white'
                 : 'text-[#a89580] hover:text-[#faf6f1]'

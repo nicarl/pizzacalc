@@ -6,10 +6,13 @@ interface AdvancedInputsProps {
   yeastPercent: string;
   oilPercent: string;
   showOil: boolean;
+  sugarPercent: string;
+  showSugar: boolean;
   onWaterChange: (value: string) => void;
   onSaltChange: (value: string) => void;
   onYeastChange: (value: string) => void;
   onOilChange: (value: string) => void;
+  onSugarChange: (value: string) => void;
   hasOverrides: boolean;
   onReset: () => void;
 }
@@ -20,10 +23,13 @@ export function AdvancedInputs({
   yeastPercent,
   oilPercent,
   showOil,
+  sugarPercent,
+  showSugar,
   onWaterChange,
   onSaltChange,
   onYeastChange,
   onOilChange,
+  onSugarChange,
   hasOverrides,
   onReset,
 }: AdvancedInputsProps) {
@@ -34,7 +40,7 @@ export function AdvancedInputs({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 font-sans text-[13px] text-primary"
+        className="flex cursor-pointer items-center gap-1.5 font-sans text-[13px] text-primary"
       >
         <span className="text-xs">{isOpen ? '\u25B2' : '\u25BC'}</span>
         {isOpen ? 'Hide advanced' : 'Adjust hydration, salt & yeast'}
@@ -109,11 +115,29 @@ export function AdvancedInputs({
               />
             </div>
           )}
+          {showSugar && (
+            <div className="mt-3">
+              <label
+                htmlFor="sugar-percent"
+                className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
+              >
+                Sugar %
+              </label>
+              <input
+                id="sugar-percent"
+                type="text"
+                inputMode="decimal"
+                value={sugarPercent}
+                onChange={e => onSugarChange(e.target.value)}
+                className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+              />
+            </div>
+          )}
           {hasOverrides && (
             <button
               type="button"
               onClick={onReset}
-              className="mt-3 font-sans text-xs text-primary underline-offset-2 hover:underline"
+              className="mt-3 cursor-pointer font-sans text-xs text-primary underline-offset-2 hover:underline"
             >
               Reset to defaults
             </button>

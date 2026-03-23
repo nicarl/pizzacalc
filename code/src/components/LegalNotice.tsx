@@ -16,36 +16,12 @@ export function LegalNotice() {
       <p className="text-sm leading-relaxed text-text-secondary">
         Nico Carl
         <br />
-        M&uuml;nchen
+        Holzhofstra&szlig;e 3<br />
+        81667 M&uuml;nchen
       </p>
       <h2 className="mb-2 mt-6 text-lg font-semibold">Kontakt</h2>
       <p className="text-sm text-text-secondary">
         E-Mail: nicocarl@protonmail.com
-      </p>
-      <h2 className="mb-2 mt-6 text-lg font-semibold">
-        Haftung f&uuml;r Inhalte
-      </h2>
-      <p className="text-sm leading-relaxed text-text-secondary">
-        Als Diensteanbieter sind wir gem&auml;&szlig; &sect; 7 Abs.1 TMG
-        f&uuml;r eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen
-        verantwortlich. Nach &sect;&sect; 8 bis 10 TMG sind wir als
-        Diensteanbieter jedoch nicht verpflichtet, &uuml;bermittelte oder
-        gespeicherte fremde Informationen zu &uuml;berwachen oder nach
-        Umst&auml;nden zu forschen, die auf eine rechtswidrige T&auml;tigkeit
-        hinweisen.
-      </p>
-      <h2 className="mb-2 mt-6 text-lg font-semibold">
-        Haftung f&uuml;r Links
-      </h2>
-      <p className="text-sm leading-relaxed text-text-secondary">
-        Unser Angebot enth&auml;lt Links zu externen Websites Dritter, auf deren
-        Inhalte wir keinen Einfluss haben. Deshalb k&ouml;nnen wir f&uuml;r
-        diese fremden Inhalte auch keine Gew&auml;hr &uuml;bernehmen.
-      </p>
-      <h2 className="mb-2 mt-6 text-lg font-semibold">Urheberrecht</h2>
-      <p className="text-sm leading-relaxed text-text-secondary">
-        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen
-        Seiten unterliegen dem deutschen Urheberrecht.
       </p>
     </div>
   );

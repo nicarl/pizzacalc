@@ -14,6 +14,7 @@ export interface CalculatorState {
   saltPercent: number;
   yeastPercent: number;
   oilPercent: number;
+  sugarPercent: number;
   ovenType: OvenType;
   targetTime: string;
   ambientTemp: number;
@@ -30,6 +31,8 @@ export function serializeToParams(state: CalculatorState): URLSearchParams {
   params.set('salt', String(state.saltPercent));
   params.set('yeast', String(state.yeastPercent));
   if (state.oilPercent > 0) params.set('oil', String(state.oilPercent));
+  if (state.sugarPercent > 0)
+    params.set('sugar_pct', String(state.sugarPercent));
   params.set('oven', state.ovenType);
   params.set('eat', state.targetTime);
   params.set('ambient', String(state.ambientTemp));
@@ -63,6 +66,7 @@ export function deserializeFromParams(
     saltPercent: parseNum('salt', preset.saltPercent),
     yeastPercent: parseNum('yeast', preset.yeastPercent),
     oilPercent: parseNum('oil', preset.oilPercent),
+    sugarPercent: parseNum('sugar_pct', preset.sugarPercent ?? 0),
     ovenType: (params.get('oven') === 'professional'
       ? 'professional'
       : 'home') as OvenType,

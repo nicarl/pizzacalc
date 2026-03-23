@@ -29,18 +29,25 @@ export function calculateTimeline(
   targetTime: Date,
   ambientTempC: number,
   fridgeTempC: number,
+  bakeTimeMin: number,
 ): TimelineStep[] {
   const steps: TimelineStep[] = [];
   let currentTime = new Date(targetTime);
 
   steps.unshift({
-    name: 'Ready to bake!',
+    name: 'Time to eat!',
     time: new Date(currentTime),
-    description: 'Your dough is ready',
+    description: 'Enjoy your pizza!',
   });
 
-  currentTime = new Date(currentTime.getTime() - profile.bakeTimeMin * 60000);
+  currentTime = new Date(currentTime.getTime() - bakeTimeMin * 60000);
   currentTime = roundToNearest15Min(currentTime);
+
+  steps.unshift({
+    name: 'Ready to bake!',
+    time: new Date(currentTime),
+    description: `Start baking (~${bakeTimeMin}min)`,
+  });
 
   const reversedPhases = [...profile.phases].reverse();
   for (const phase of reversedPhases) {
@@ -48,7 +55,7 @@ export function calculateTimeline(
     const adjustedDuration = adjustDuration(
       phase.baseDurationMin,
       temp,
-      profile.referenceTemp,
+      phase.referenceTemp,
     );
 
     steps.unshift({

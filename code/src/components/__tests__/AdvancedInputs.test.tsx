@@ -9,10 +9,13 @@ describe('AdvancedInputs', () => {
     yeastPercent: '0.05',
     oilPercent: '0',
     showOil: false,
+    sugarPercent: '0',
+    showSugar: false,
     onWaterChange: vi.fn(),
     onSaltChange: vi.fn(),
     onYeastChange: vi.fn(),
     onOilChange: vi.fn(),
+    onSugarChange: vi.fn(),
     hasOverrides: false,
     onReset: vi.fn(),
   };
@@ -74,6 +77,20 @@ describe('AdvancedInputs', () => {
       target: { value: '0.1' },
     });
     expect(onYeastChange).toHaveBeenCalledWith('0.1');
+  });
+
+  it('hides sugar input when showSugar is false', () => {
+    render(<AdvancedInputs {...defaultProps} />);
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    expect(screen.queryByLabelText(/sugar/i)).not.toBeInTheDocument();
+  });
+
+  it('shows sugar input when showSugar is true', () => {
+    render(
+      <AdvancedInputs {...defaultProps} showSugar={true} sugarPercent="1.5" />,
+    );
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    expect(screen.getByLabelText(/sugar/i)).toBeInTheDocument();
   });
 
   it('calls onOilChange when oil input changes', () => {

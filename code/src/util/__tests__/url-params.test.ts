@@ -13,6 +13,7 @@ const defaultState: CalculatorState = {
   saltPercent: 2.8,
   yeastPercent: 0.05,
   oilPercent: 0,
+  sugarPercent: 0,
   ovenType: 'home',
   targetTime: '2026-03-22T19:00',
   ambientTemp: 22,
@@ -42,17 +43,28 @@ describe('serializeToParams', () => {
     const params = serializeToParams({ ...defaultState, oilPercent: 7 });
     expect(params.get('oil')).toBe('7');
   });
+
+  it('omits sugar_pct param when sugar is 0', () => {
+    const params = serializeToParams(defaultState);
+    expect(params.has('sugar_pct')).toBe(false);
+  });
+
+  it('includes sugar_pct param when sugar > 0', () => {
+    const params = serializeToParams({ ...defaultState, sugarPercent: 1.5 });
+    expect(params.get('sugar_pct')).toBe('1.5');
+  });
 });
 
 describe('deserializeFromParams', () => {
   it('deserializes full params', () => {
     const params = serializeToParams(defaultState);
     const state = deserializeFromParams(params);
-    expect(state.doughType).toBe('neapolitan');
-    expect(state.pizzaCount).toBe(4);
-    expect(state.doughballWeight).toBe(250);
-    expect(state.waterPercent).toBe(65);
-    expect(state.oilPercent).toBe(0);
+    expect(state).not.toBeNull();
+    expect(state?.doughType).toBe('neapolitan');
+    expect(state?.pizzaCount).toBe(4);
+    expect(state?.doughballWeight).toBe(250);
+    expect(state?.waterPercent).toBe(65);
+    expect(state?.oilPercent).toBe(0);
   });
 
   it('returns null for empty params', () => {

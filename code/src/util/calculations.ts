@@ -5,6 +5,7 @@ export interface RecipeInput {
   saltPercent: number;
   yeastPercent: number;
   oilPercent: number;
+  sugarPercent: number;
 }
 
 export interface PizzaRecipe {
@@ -13,6 +14,7 @@ export interface PizzaRecipe {
   saltMass: number;
   yeastMass: number;
   oilMass: number;
+  sugarMass: number;
 }
 
 export function calculateRecipe(input: RecipeInput): PizzaRecipe {
@@ -25,6 +27,7 @@ export function calculateRecipe(input: RecipeInput): PizzaRecipe {
       saltMass: 0,
       yeastMass: 0,
       oilMass: 0,
+      sugarMass: 0,
     };
   }
 
@@ -32,10 +35,16 @@ export function calculateRecipe(input: RecipeInput): PizzaRecipe {
   const saltFraction = input.saltPercent / 100;
   const yeastFraction = input.yeastPercent / 100;
   const oilFraction = input.oilPercent / 100;
+  const sugarFraction = input.sugarPercent / 100;
 
   const flourMass =
     totalDough /
-    (1 + waterFraction + saltFraction + yeastFraction + oilFraction);
+    (1 +
+      waterFraction +
+      saltFraction +
+      yeastFraction +
+      oilFraction +
+      sugarFraction);
 
   return {
     flourMass,
@@ -43,5 +52,6 @@ export function calculateRecipe(input: RecipeInput): PizzaRecipe {
     saltMass: flourMass * saltFraction,
     yeastMass: flourMass * yeastFraction,
     oilMass: flourMass * oilFraction,
+    sugarMass: flourMass * sugarFraction,
   };
 }

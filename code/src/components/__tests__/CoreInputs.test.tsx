@@ -8,6 +8,7 @@ describe('CoreInputs', () => {
     doughballWeight: '250',
     ovenType: 'home' as const,
     isPanStyle: false,
+    units: 'metric' as const,
     onPizzaCountChange: vi.fn(),
     onDoughballWeightChange: vi.fn(),
     onOvenTypeChange: vi.fn(),
@@ -53,5 +54,32 @@ describe('CoreInputs', () => {
       target: { value: '300' },
     });
     expect(onChange).toHaveBeenCalledWith('300');
+  });
+
+  it('displays weight in oz when units is imperial', () => {
+    render(<CoreInputs {...defaultProps} units="imperial" />);
+    // 250g ≈ 8.8oz
+    expect(screen.getByLabelText(/doughball/i)).toHaveValue('8.8');
+  });
+
+  it('shows oz label when units is imperial', () => {
+    render(<CoreInputs {...defaultProps} units="imperial" />);
+    expect(screen.getByText('oz')).toBeInTheDocument();
+  });
+
+  it('converts oz input back to grams when units is imperial', () => {
+    const onChange = vi.fn();
+    render(
+      <CoreInputs
+        {...defaultProps}
+        units="imperial"
+        onDoughballWeightChange={onChange}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText(/doughball/i), {
+      target: { value: '10' },
+    });
+    // 10oz ≈ 283g
+    expect(onChange).toHaveBeenCalledWith('283');
   });
 });

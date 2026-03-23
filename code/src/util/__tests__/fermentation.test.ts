@@ -25,21 +25,27 @@ describe('adjustDuration', () => {
 
 describe('calculateTimeline', () => {
   it('calculates neapolitan timeline backwards from target', () => {
-    const profile = getDoughPreset('neapolitan').fermentation;
+    const preset = getDoughPreset('neapolitan');
+    const profile = preset.fermentation;
+    const bakeTimeMin = preset.bakingInstructions.home.timeMin;
     const target = new Date('2026-03-22T19:00:00');
-    const timeline = calculateTimeline(profile, target, 20, 4);
+    const timeline = calculateTimeline(profile, target, 20, 4, bakeTimeMin);
 
     const lastStep = timeline[timeline.length - 1];
-    expect(lastStep.name).toBe('Ready to bake!');
+    expect(lastStep.name).toBe('Time to eat!');
     expect(lastStep.time.getTime()).toBe(target.getTime());
+    const secondToLastStep = timeline[timeline.length - 2];
+    expect(secondToLastStep.name).toBe('Ready to bake!');
     expect(timeline[0].time.getTime()).toBeLessThan(target.getTime());
-    expect(timeline.length).toBeGreaterThanOrEqual(4);
+    expect(timeline.length).toBeGreaterThanOrEqual(5);
   });
 
   it('calculates new york timeline with cold ferment', () => {
-    const profile = getDoughPreset('new-york').fermentation;
+    const preset = getDoughPreset('new-york');
+    const profile = preset.fermentation;
+    const bakeTimeMin = preset.bakingInstructions.home.timeMin;
     const target = new Date('2026-03-22T19:00:00');
-    const timeline = calculateTimeline(profile, target, 21, 3);
+    const timeline = calculateTimeline(profile, target, 21, 3, bakeTimeMin);
 
     const firstStep = timeline[0];
     const lastStep = timeline[timeline.length - 1];
@@ -49,11 +55,13 @@ describe('calculateTimeline', () => {
   });
 
   it('adjusts for different ambient temperatures', () => {
-    const profile = getDoughPreset('neapolitan').fermentation;
+    const preset = getDoughPreset('neapolitan');
+    const profile = preset.fermentation;
+    const bakeTimeMin = preset.bakingInstructions.home.timeMin;
     const target = new Date('2026-03-22T19:00:00');
 
-    const timelineCold = calculateTimeline(profile, target, 15, 4);
-    const timelineWarm = calculateTimeline(profile, target, 28, 4);
+    const timelineCold = calculateTimeline(profile, target, 15, 4, bakeTimeMin);
+    const timelineWarm = calculateTimeline(profile, target, 28, 4, bakeTimeMin);
 
     expect(timelineCold[0].time.getTime()).toBeLessThan(
       timelineWarm[0].time.getTime(),
@@ -61,15 +69,59 @@ describe('calculateTimeline', () => {
   });
 
   it('formats durations exceeding 24h as days and hours', () => {
-    // Use a very cold fridge temp to produce durations > 24h with remaining hours
-    const profile = getDoughPreset('new-york').fermentation;
+    const preset = getDoughPreset('new-york');
+    const profile = preset.fermentation;
+    const bakeTimeMin = preset.bakingInstructions.home.timeMin;
     const target = new Date('2026-03-22T19:00:00');
-    const timeline = calculateTimeline(profile, target, 22, 1);
+    const timeline = calculateTimeline(profile, target, 22, 1, bakeTimeMin);
 
-    // Check that at least one step description contains the "Xd Yh" format
     const hasDayHourFormat = timeline.some(step =>
       /\d+d \d+h/.test(step.description),
     );
     expect(hasDayHourFormat).toBe(true);
+  });
+
+  it('uses per-phase reference temps for cold ferment', () => {
+    const preset = getDoughPreset('new-york');
+    const profile = preset.fermentation;
+    const bakeTimeMin = preset.bakingInstructions.home.timeMin;
+    const target = new Date('2026-03-22T19:00:00');
+    // With fridge at 3°C (matching reference), cold ferment should be ~48h
+    const timeline = calculateTimeline(profile, target, 21, 3, bakeTimeMin);
+
+    const firstStep = timeline[0];
+    const lastStep = timeline[timeline.length - 1];
+    const spanHours =
+      (lastStep.time.getTime() - firstStep.time.getTime()) / (1000 * 60 * 60);
+    // Should be around 50-52 hours (48h cold + 2h warm + prep + bake), not 7+ days
+    expect(spanHours).toBeLessThan(72);
+    expect(spanHours).toBeGreaterThan(40);
+  });
+
+  it('varies bake time by oven type', () => {
+    const preset = getDoughPreset('neapolitan');
+    const profile = preset.fermentation;
+    const target = new Date('2026-03-22T19:00:00');
+
+    const homeTimeline = calculateTimeline(
+      profile,
+      target,
+      20,
+      4,
+      preset.bakingInstructions.home.timeMin,
+    );
+    const proTimeline = calculateTimeline(
+      profile,
+      target,
+      20,
+      4,
+      preset.bakingInstructions.professional.timeMin,
+    );
+
+    // Home bake time is longer (6min vs 2min), check the description reflects it
+    const homeReady = homeTimeline[homeTimeline.length - 2];
+    const proReady = proTimeline[proTimeline.length - 2];
+    expect(homeReady.description).toContain('~6min');
+    expect(proReady.description).toContain('~2min');
   });
 });

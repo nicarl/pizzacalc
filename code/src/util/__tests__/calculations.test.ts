@@ -10,6 +10,7 @@ describe('calculateRecipe', () => {
       saltPercent: 2.8,
       yeastPercent: 0.05,
       oilPercent: 0,
+      sugarPercent: 0,
     };
     const recipe = calculateRecipe(input);
     // Total dough = 4 * 250 = 1000g
@@ -29,6 +30,7 @@ describe('calculateRecipe', () => {
       saltPercent: 2.1,
       yeastPercent: 0.3,
       oilPercent: 7,
+      sugarPercent: 0,
     };
     const recipe = calculateRecipe(input);
     // Total dough = 2 * 950 = 1900g
@@ -45,6 +47,7 @@ describe('calculateRecipe', () => {
       saltPercent: 2.8,
       yeastPercent: 0.05,
       oilPercent: 0,
+      sugarPercent: 0,
     };
     const recipe = calculateRecipe(input);
     expect(recipe.flourMass).toBe(0);
@@ -52,5 +55,21 @@ describe('calculateRecipe', () => {
     expect(recipe.saltMass).toBe(0);
     expect(recipe.yeastMass).toBe(0);
     expect(recipe.oilMass).toBe(0);
+    expect(recipe.sugarMass).toBe(0);
+  });
+
+  it('calculates recipe with sugar', () => {
+    const input: RecipeInput = {
+      pizzaCount: 4,
+      doughballWeight: 350,
+      waterPercent: 63,
+      saltPercent: 2.0,
+      yeastPercent: 0.4,
+      oilPercent: 3,
+      sugarPercent: 1.5,
+    };
+    const recipe = calculateRecipe(input);
+    expect(recipe.sugarMass).toBeGreaterThan(0);
+    expect(recipe.sugarMass).toBeCloseTo(recipe.flourMass * 0.015, 0);
   });
 });

@@ -10,6 +10,7 @@ describe('RecipeCard', () => {
     saltMass: 15,
     yeastMass: 1.2,
     oilMass: 0,
+    sugarMass: 0,
   };
 
   it('displays all ingredient amounts', () => {
@@ -17,6 +18,7 @@ describe('RecipeCard', () => {
       <RecipeCard
         recipe={recipe}
         showOil={false}
+        showSugar={false}
         units="metric"
         onToggleUnits={vi.fn()}
       />,
@@ -36,6 +38,7 @@ describe('RecipeCard', () => {
       <RecipeCard
         recipe={recipe}
         showOil={false}
+        showSugar={false}
         units="metric"
         onToggleUnits={vi.fn()}
       />,
@@ -48,6 +51,7 @@ describe('RecipeCard', () => {
       <RecipeCard
         recipe={{ ...recipe, oilMass: 40.5 }}
         showOil={true}
+        showSugar={false}
         units="metric"
         onToggleUnits={vi.fn()}
       />,
@@ -61,6 +65,7 @@ describe('RecipeCard', () => {
       <RecipeCard
         recipe={recipe}
         showOil={false}
+        showSugar={false}
         units="metric"
         onToggleUnits={vi.fn()}
       />,
@@ -77,6 +82,7 @@ describe('RecipeCard', () => {
       <RecipeCard
         recipe={recipe}
         showOil={false}
+        showSugar={false}
         units="metric"
         onToggleUnits={onToggle}
       />,
@@ -92,6 +98,7 @@ describe('RecipeCard', () => {
       <RecipeCard
         recipe={recipe}
         showOil={false}
+        showSugar={false}
         units="imperial"
         onToggleUnits={onToggle}
       />,
@@ -106,10 +113,25 @@ describe('RecipeCard', () => {
       <RecipeCard
         recipe={recipe}
         showOil={false}
+        showSugar={false}
         units="imperial"
         onToggleUnits={vi.fn()}
       />,
     );
     expect(screen.getByTestId('flour-amount')).toHaveTextContent('20.4');
+  });
+
+  it('shows sugar row when showSugar is true', () => {
+    render(
+      <RecipeCard
+        recipe={{ ...recipe, sugarMass: 12 }}
+        showOil={false}
+        showSugar={true}
+        units="metric"
+        onToggleUnits={vi.fn()}
+      />,
+    );
+    expect(screen.getByText('Sugar')).toBeInTheDocument();
+    expect(screen.getByTestId('sugar-amount')).toHaveTextContent('12');
   });
 });

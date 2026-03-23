@@ -5,20 +5,26 @@ export interface FermentationPhase {
   name: string;
   environment: 'room' | 'fridge';
   baseDurationMin: number;
+  referenceTemp: number;
   description: string;
 }
 
 export interface FermentationProfile {
-  referenceTemp: number;
   phases: FermentationPhase[];
   prepTimeMin: number;
-  bakeTimeMin: number;
 }
 
 export interface PreparationStep {
   name: string;
   instruction: string;
   tip?: string;
+}
+
+export interface BakingInstruction {
+  tempC: number;
+  tempF: number;
+  timeMin: number;
+  description: string;
 }
 
 export interface DoughPreset {
@@ -28,11 +34,13 @@ export interface DoughPreset {
   saltPercent: number;
   yeastPercent: number;
   oilPercent: number;
+  sugarPercent?: number;
   ovenDefault: OvenType;
   isPanStyle: boolean;
   professionalWaterPercent?: number;
   fermentation: FermentationProfile;
   steps: PreparationStep[];
+  bakingInstructions: Record<OvenType, BakingInstruction>;
 }
 
 export const doughPresets: Record<DoughType, DoughPreset> = {
@@ -47,24 +55,24 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
     isPanStyle: false,
     professionalWaterPercent: 60,
     fermentation: {
-      referenceTemp: 20,
       phases: [
         {
           name: 'Bulk ferment',
           environment: 'room',
           baseDurationMin: 480,
+          referenceTemp: 20,
           description: 'Cover and let rise at room temperature',
         },
         {
           name: 'Shape doughballs',
           environment: 'room',
           baseDurationMin: 300,
+          referenceTemp: 20,
           description:
             'Divide and shape into balls, proof in covered containers',
         },
       ],
       prepTimeMin: 30,
-      bakeTimeMin: 2,
     },
     steps: [
       {
@@ -75,7 +83,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         name: 'Add water',
         instruction:
           'Dissolve yeast in water, then add to flour mixture. Mix until no dry flour remains.',
-        tip: 'Use room-temperature water (~20°C) for best results.',
+        tip: 'Use room-temperature water for best results.',
       },
       {
         name: 'Knead',
@@ -87,6 +95,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         name: 'Bulk ferment',
         instruction:
           'Place in a lightly oiled bowl, cover with a damp cloth or plastic wrap. Let rise at room temperature.',
+        tip: 'Total fermentation (bulk + proof) sweet spot is 12-24 hours at room temperature.',
       },
       {
         name: 'Shape doughballs',
@@ -105,6 +114,22 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         tip: 'Do not use a rolling pin — it degasses the dough.',
       },
     ],
+    bakingInstructions: {
+      home: {
+        tempC: 275,
+        tempF: 530,
+        timeMin: 6,
+        description:
+          'Max oven temperature with pizza stone or steel, 5-7 minutes.',
+      },
+      professional: {
+        tempC: 485,
+        tempF: 905,
+        timeMin: 2,
+        description:
+          'Wood-fired oven, Ooni, or Roccbox at full heat, 60-90 seconds.',
+      },
+    },
   },
   'new-york': {
     name: 'New York',
@@ -113,32 +138,32 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
     saltPercent: 2.0,
     yeastPercent: 0.4,
     oilPercent: 3,
+    sugarPercent: 1.5,
     ovenDefault: 'home',
     isPanStyle: false,
     fermentation: {
-      referenceTemp: 21,
       phases: [
         {
           name: 'Cold ferment',
           environment: 'fridge',
           baseDurationMin: 2880,
+          referenceTemp: 3,
           description: 'Ball immediately and refrigerate',
         },
         {
           name: 'Warm up',
           environment: 'room',
           baseDurationMin: 120,
+          referenceTemp: 21,
           description: 'Remove from fridge, let come to room temperature',
         },
       ],
       prepTimeMin: 30,
-      bakeTimeMin: 10,
     },
     steps: [
       {
         name: 'Mix dry ingredients',
-        instruction:
-          'Combine flour, salt, and sugar (if using) in a large bowl.',
+        instruction: 'Combine flour, salt, and sugar in a large bowl.',
       },
       {
         name: 'Add wet ingredients',
@@ -155,6 +180,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         name: 'Ball and refrigerate',
         instruction:
           'Divide into balls immediately. Place in oiled containers, cover tightly, and refrigerate.',
+        tip: 'Sweet spot is 48 hours cold ferment (range: 24-72 hours).',
       },
       {
         name: 'Remove and warm up',
@@ -168,6 +194,21 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         tip: 'Preheat your oven with a pizza steel for at least 45 minutes at max temperature.',
       },
     ],
+    bakingInstructions: {
+      home: {
+        tempC: 275,
+        tempF: 530,
+        timeMin: 9,
+        description:
+          'Max oven temperature with pizza steel, preheat 45+ minutes, bake 8-10 minutes.',
+      },
+      professional: {
+        tempC: 290,
+        tempF: 550,
+        timeMin: 7,
+        description: 'Deck oven, 6-8 minutes.',
+      },
+    },
   },
   detroit: {
     name: 'Detroit',
@@ -179,23 +220,23 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
     ovenDefault: 'home',
     isPanStyle: true,
     fermentation: {
-      referenceTemp: 22,
       phases: [
         {
           name: 'Cold ferment',
           environment: 'fridge',
           baseDurationMin: 1440,
+          referenceTemp: 3,
           description: 'Cover bowl and refrigerate',
         },
         {
           name: 'Pan proof',
           environment: 'room',
           baseDurationMin: 120,
+          referenceTemp: 22,
           description: 'Stretch into oiled pan, let rise until puffy',
         },
       ],
       prepTimeMin: 20,
-      bakeTimeMin: 15,
     },
     steps: [
       {
@@ -212,11 +253,12 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
       {
         name: 'Cold ferment',
         instruction: 'Place in an oiled bowl, cover tightly, and refrigerate.',
+        tip: '24 hours cold ferment is standard, followed by 1.5-2.5 hours pan proof at room temperature.',
       },
       {
         name: 'Oil the pan',
         instruction:
-          'Generously oil a 25x35cm Detroit-style pan or similar steel pan.',
+          'Generously oil a 25x35cm (10x14") Detroit-style pan or similar steel pan.',
         tip: 'Use 30-45ml of olive oil or butter for the authentic fried-edge crust.',
       },
       {
@@ -236,6 +278,22 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         tip: 'Use a good melting cheese like mozzarella, young gouda, or a mix.',
       },
     ],
+    bakingInstructions: {
+      home: {
+        tempC: 260,
+        tempF: 500,
+        timeMin: 14,
+        description:
+          'Bake on lowest rack for 12-15 minutes until edges are deeply caramelized.',
+      },
+      professional: {
+        tempC: 260,
+        tempF: 500,
+        timeMin: 14,
+        description:
+          'Bake for 12-15 minutes until edges are deeply caramelized.',
+      },
+    },
   },
   focaccia: {
     name: 'Focaccia',
@@ -247,23 +305,23 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
     ovenDefault: 'home',
     isPanStyle: true,
     fermentation: {
-      referenceTemp: 21,
       phases: [
         {
           name: 'Bulk ferment',
           environment: 'room',
           baseDurationMin: 720,
+          referenceTemp: 21,
           description: 'Cover and let rise at room temperature',
         },
         {
           name: 'Pan proof',
           environment: 'room',
           baseDurationMin: 60,
+          referenceTemp: 21,
           description: 'Transfer to oiled pan, let spread and rise',
         },
       ],
       prepTimeMin: 20,
-      bakeTimeMin: 20,
     },
     steps: [
       {
@@ -276,15 +334,17 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         name: 'Stretch and fold',
         instruction:
           'Perform 3-4 sets of stretch-and-folds, about 30 minutes apart, during the first part of the rise.',
+        tip: 'Perform at 30, 60, 90, and 120 minutes after mixing.',
       },
       {
         name: 'Overnight rise',
         instruction: 'Cover the bowl and let rise at room temperature.',
+        tip: '12-14 hours at room temperature is ideal.',
       },
       {
         name: 'Oil the pan',
         instruction:
-          'Pour a generous amount of olive oil into a half-sheet pan (46x33cm).',
+          'Pour a generous amount of olive oil into a half-sheet pan (46x33cm / 18x13").',
       },
       {
         name: 'Transfer to pan',
@@ -302,6 +362,20 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
         instruction: 'Let rest until slightly puffy, then bake.',
       },
     ],
+    bakingInstructions: {
+      home: {
+        tempC: 230,
+        tempF: 450,
+        timeMin: 22,
+        description: 'Bake for 20-25 minutes until golden brown.',
+      },
+      professional: {
+        tempC: 230,
+        tempF: 450,
+        timeMin: 22,
+        description: 'Bake for 20-25 minutes until golden brown.',
+      },
+    },
   },
 };
 

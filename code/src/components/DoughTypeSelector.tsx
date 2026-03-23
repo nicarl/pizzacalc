@@ -25,7 +25,7 @@ export function DoughTypeSelector({
             onClick={() => {
               if (!isSelected) onSelect(type);
             }}
-            className={`rounded-full border-[1.5px] px-3.5 py-1.5 font-sans text-[13px] transition-colors ${
+            className={`cursor-pointer rounded-full border-[1.5px] px-3.5 py-1.5 font-sans text-[13px] transition-colors ${
               isSelected
                 ? 'border-primary bg-primary text-white'
                 : 'border-border bg-transparent text-text-tertiary hover:border-primary/50'
