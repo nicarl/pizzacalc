@@ -41,7 +41,7 @@ export function FermentationTimeline({ steps }: FermentationTimelineProps) {
       <ul className="mt-4 flex flex-col gap-2">
         {steps.map((step, i) => (
           <li
-            key={step.name}
+            key={`${step.name}-${step.time.getTime()}`}
             className="flex items-center gap-2.5 font-sans text-[13px]"
           >
             <div

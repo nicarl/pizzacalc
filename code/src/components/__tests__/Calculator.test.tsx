@@ -103,7 +103,7 @@ describe('Calculator', () => {
     expect(screen.getByLabelText(/water %/i)).toHaveValue('65');
   });
 
-  it('uses professional water when switching to neapolitan while oven is professional', () => {
+  it('uses default water when switching to neapolitan (home oven default)', () => {
     render(<Calculator />);
     // Switch oven to professional while on neapolitan
     const select = screen.getByLabelText(/oven type/i);
@@ -113,10 +113,10 @@ describe('Calculator', () => {
     // Switch oven back to professional on NY
     const select2 = screen.getByLabelText(/oven type/i);
     fireEvent.change(select2, { target: { value: 'professional' } });
-    // Now switch to neapolitan - prev.ovenType is professional so should use 60
+    // Switch to neapolitan — ovenDefault is 'home', so water should be 65 (not 60)
     fireEvent.click(screen.getByText('Neapolitan'));
     fireEvent.click(screen.getByText(/adjust hydration/i));
-    expect(screen.getByLabelText(/water %/i)).toHaveValue('60');
+    expect(screen.getByLabelText(/water %/i)).toHaveValue('65');
   });
 
   it('does not change water when switching oven type for non-neapolitan', () => {
@@ -228,6 +228,35 @@ describe('Calculator', () => {
     fireEvent.click(ozButton);
     // Should now show imperial values
     expect(screen.getByTestId('flour-amount').textContent).toContain('.');
+  });
+
+  it('changes sugar percent for new york dough', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByText('New York'));
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    fireEvent.change(screen.getByLabelText(/sugar %/i), {
+      target: { value: '2' },
+    });
+    expect(screen.getByLabelText(/sugar %/i)).toHaveValue('2');
+  });
+
+  it('syncs state to URL after debounce', async () => {
+    vi.useFakeTimers();
+    const { unmount } = render(<Calculator />);
+    fireEvent.change(screen.getByLabelText(/pizzas/i), {
+      target: { value: '6' },
+    });
+    // URL not yet updated (debounced)
+    expect(window.location.search).not.toContain('n=6');
+    // Advance past debounce
+    vi.advanceTimersByTime(400);
+    expect(window.location.search).toContain('n=6');
+    // Trigger another change then unmount to exercise cleanup with pending timer
+    fireEvent.change(screen.getByLabelText(/pizzas/i), {
+      target: { value: '7' },
+    });
+    unmount();
+    vi.useRealTimers();
   });
 
   it('hides fridge temp for dough types without cold ferment', () => {

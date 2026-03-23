@@ -96,6 +96,57 @@ describe('FermentationInputs', () => {
     expect(screen.getByLabelText(/fridge °f/i)).toHaveValue('39');
   });
 
+  it('passes non-numeric imperial temp input through as-is', () => {
+    const onAmbient = vi.fn();
+    render(
+      <FermentationInputs
+        {...defaultProps}
+        units="imperial"
+        onAmbientTempChange={onAmbient}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText(/ambient °f/i), {
+      target: { value: 'abc' },
+    });
+    expect(onAmbient).toHaveBeenCalledWith('abc');
+  });
+
+  it('passes empty imperial temp input through as-is', () => {
+    const onAmbient = vi.fn();
+    render(
+      <FermentationInputs
+        {...defaultProps}
+        units="imperial"
+        onAmbientTempChange={onAmbient}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText(/ambient °f/i), {
+      target: { value: '' },
+    });
+    expect(onAmbient).toHaveBeenCalledWith('');
+  });
+
+  it('does not show warning for empty temperature', () => {
+    render(<FermentationInputs {...defaultProps} ambientTemp="" />);
+    expect(screen.queryByText(/unusual temperature/i)).not.toBeInTheDocument();
+  });
+
+  it('does not show warning for NaN temperature', () => {
+    render(<FermentationInputs {...defaultProps} ambientTemp="abc" />);
+    expect(screen.queryByText(/unusual temperature/i)).not.toBeInTheDocument();
+  });
+
+  it('displays non-numeric temp as-is in imperial mode', () => {
+    render(
+      <FermentationInputs
+        {...defaultProps}
+        units="imperial"
+        ambientTemp="abc"
+      />,
+    );
+    expect(screen.getByLabelText(/ambient °f/i)).toHaveValue('abc');
+  });
+
   it('converts °F input back to °C when units is imperial', () => {
     const onAmbient = vi.fn();
     render(

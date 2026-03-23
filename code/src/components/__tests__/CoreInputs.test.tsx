@@ -67,6 +67,66 @@ describe('CoreInputs', () => {
     expect(screen.getByText('oz')).toBeInTheDocument();
   });
 
+  it('shows validation error for invalid pizza count', () => {
+    render(<CoreInputs {...defaultProps} pizzaCount="abc" />);
+    expect(screen.getByText('Enter a positive integer')).toBeInTheDocument();
+  });
+
+  it('shows validation error for invalid doughball weight', () => {
+    render(<CoreInputs {...defaultProps} doughballWeight="abc" />);
+    expect(screen.getByText('Enter a positive number')).toBeInTheDocument();
+  });
+
+  it('does not show validation errors for valid inputs', () => {
+    render(<CoreInputs {...defaultProps} />);
+    expect(
+      screen.queryByText('Enter a positive integer'),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Enter a positive number'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not show validation errors for empty inputs', () => {
+    render(<CoreInputs {...defaultProps} pizzaCount="" doughballWeight="" />);
+    expect(
+      screen.queryByText('Enter a positive integer'),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Enter a positive number'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('passes non-numeric value through when imperial weight is NaN', () => {
+    const onChange = vi.fn();
+    render(
+      <CoreInputs
+        {...defaultProps}
+        units="imperial"
+        onDoughballWeightChange={onChange}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText(/doughball/i), {
+      target: { value: 'abc' },
+    });
+    expect(onChange).toHaveBeenCalledWith('abc');
+  });
+
+  it('passes empty value through when imperial weight is empty', () => {
+    const onChange = vi.fn();
+    render(
+      <CoreInputs
+        {...defaultProps}
+        units="imperial"
+        onDoughballWeightChange={onChange}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText(/doughball/i), {
+      target: { value: '' },
+    });
+    expect(onChange).toHaveBeenCalledWith('');
+  });
+
   it('converts oz input back to grams when units is imperial', () => {
     const onChange = vi.fn();
     render(

@@ -8,9 +8,13 @@ export function ShareButton({ url }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleClick = async () => {
-    await navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API unavailable (e.g. non-HTTPS context)
+    }
   };
 
   return (

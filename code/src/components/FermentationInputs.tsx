@@ -3,6 +3,7 @@ import {
   fahrenheitToCelsius,
   type UnitSystem,
 } from '@/util/units';
+import { INPUT_CLASS, LABEL_CLASS } from './styles';
 
 interface FermentationInputsProps {
   targetTime: string;
@@ -73,10 +74,7 @@ export function FermentationInputs({
       </h4>
       <div className="space-y-3">
         <div>
-          <label
-            htmlFor="target-time"
-            className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-          >
+          <label htmlFor="target-time" className={LABEL_CLASS}>
             I want to eat at
           </label>
           <input
@@ -84,15 +82,12 @@ export function FermentationInputs({
             type="datetime-local"
             value={targetTime}
             onChange={e => onTargetTimeChange(e.target.value)}
-            className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+            className={INPUT_CLASS}
           />
         </div>
         <div className="flex gap-3">
           <div className={showFridgeTemp ? 'flex-1' : 'w-full'}>
-            <label
-              htmlFor="ambient-temp"
-              className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-            >
+            <label htmlFor="ambient-temp" className={LABEL_CLASS}>
               Ambient {tempUnit}
             </label>
             <input
@@ -103,7 +98,7 @@ export function FermentationInputs({
               onChange={e =>
                 handleTempInput(e.target.value, isImperial, onAmbientTempChange)
               }
-              className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+              className={INPUT_CLASS}
             />
             {ambientWarning && (
               <p className="mt-1 text-xs text-orange-600">{ambientWarning}</p>
@@ -111,10 +106,7 @@ export function FermentationInputs({
           </div>
           {showFridgeTemp && (
             <div className="flex-1">
-              <label
-                htmlFor="fridge-temp"
-                className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-              >
+              <label htmlFor="fridge-temp" className={LABEL_CLASS}>
                 Fridge {tempUnit}
               </label>
               <input
@@ -129,7 +121,7 @@ export function FermentationInputs({
                     onFridgeTempChange,
                   )
                 }
-                className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+                className={INPUT_CLASS}
               />
               {fridgeWarning && (
                 <p className="mt-1 text-xs text-orange-600">{fridgeWarning}</p>

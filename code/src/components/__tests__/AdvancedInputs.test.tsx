@@ -93,6 +93,57 @@ describe('AdvancedInputs', () => {
     expect(screen.getByLabelText(/sugar/i)).toBeInTheDocument();
   });
 
+  it('calls onSugarChange when sugar input changes', () => {
+    const onSugarChange = vi.fn();
+    render(
+      <AdvancedInputs
+        {...defaultProps}
+        showSugar={true}
+        sugarPercent="1.5"
+        onSugarChange={onSugarChange}
+      />,
+    );
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    fireEvent.change(screen.getByLabelText(/sugar %/i), {
+      target: { value: '2.5' },
+    });
+    expect(onSugarChange).toHaveBeenCalledWith('2.5');
+  });
+
+  it('shows validation errors for invalid percentage inputs', () => {
+    render(
+      <AdvancedInputs
+        {...defaultProps}
+        waterPercent="abc"
+        saltPercent="def"
+        yeastPercent="ghi"
+        showOil={true}
+        oilPercent="jkl"
+        showSugar={true}
+        sugarPercent="mno"
+      />,
+    );
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    const errors = screen.getAllByText('Enter a positive number');
+    expect(errors.length).toBe(5);
+  });
+
+  it('does not show validation errors for valid percentage inputs', () => {
+    render(
+      <AdvancedInputs
+        {...defaultProps}
+        showOil={true}
+        oilPercent="3"
+        showSugar={true}
+        sugarPercent="1.5"
+      />,
+    );
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    expect(
+      screen.queryByText('Enter a positive number'),
+    ).not.toBeInTheDocument();
+  });
+
   it('calls onOilChange when oil input changes', () => {
     const onOilChange = vi.fn();
     render(

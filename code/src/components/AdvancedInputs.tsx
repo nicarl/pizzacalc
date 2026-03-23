@@ -1,4 +1,11 @@
 import { useState } from 'react';
+import { validatePositiveFloat } from '@/util/validation';
+import { INPUT_CLASS, LABEL_CLASS } from './styles';
+
+function percentError(value: string): string | null {
+  if (value === '') return null;
+  return !validatePositiveFloat(value) ? 'Enter a positive number' : null;
+}
 
 interface AdvancedInputsProps {
   waterPercent: string;
@@ -49,10 +56,7 @@ export function AdvancedInputs({
         <div className="mt-3 rounded-xl bg-advanced-bg p-4">
           <div className="flex gap-3">
             <div className="flex-1">
-              <label
-                htmlFor="water-percent"
-                className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-              >
+              <label htmlFor="water-percent" className={LABEL_CLASS}>
                 Water %
               </label>
               <input
@@ -61,14 +65,16 @@ export function AdvancedInputs({
                 inputMode="decimal"
                 value={waterPercent}
                 onChange={e => onWaterChange(e.target.value)}
-                className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+                className={INPUT_CLASS}
               />
+              {percentError(waterPercent) && (
+                <p className="mt-1 text-xs text-orange-600">
+                  {percentError(waterPercent)}
+                </p>
+              )}
             </div>
             <div className="flex-1">
-              <label
-                htmlFor="salt-percent"
-                className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-              >
+              <label htmlFor="salt-percent" className={LABEL_CLASS}>
                 Salt %
               </label>
               <input
@@ -77,14 +83,16 @@ export function AdvancedInputs({
                 inputMode="decimal"
                 value={saltPercent}
                 onChange={e => onSaltChange(e.target.value)}
-                className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+                className={INPUT_CLASS}
               />
+              {percentError(saltPercent) && (
+                <p className="mt-1 text-xs text-orange-600">
+                  {percentError(saltPercent)}
+                </p>
+              )}
             </div>
             <div className="flex-1">
-              <label
-                htmlFor="yeast-percent"
-                className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-              >
+              <label htmlFor="yeast-percent" className={LABEL_CLASS}>
                 Yeast %
               </label>
               <input
@@ -93,16 +101,18 @@ export function AdvancedInputs({
                 inputMode="decimal"
                 value={yeastPercent}
                 onChange={e => onYeastChange(e.target.value)}
-                className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+                className={INPUT_CLASS}
               />
+              {percentError(yeastPercent) && (
+                <p className="mt-1 text-xs text-orange-600">
+                  {percentError(yeastPercent)}
+                </p>
+              )}
             </div>
           </div>
           {showOil && (
             <div className="mt-3">
-              <label
-                htmlFor="oil-percent"
-                className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-              >
+              <label htmlFor="oil-percent" className={LABEL_CLASS}>
                 Oil %
               </label>
               <input
@@ -111,16 +121,18 @@ export function AdvancedInputs({
                 inputMode="decimal"
                 value={oilPercent}
                 onChange={e => onOilChange(e.target.value)}
-                className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+                className={INPUT_CLASS}
               />
+              {percentError(oilPercent) && (
+                <p className="mt-1 text-xs text-orange-600">
+                  {percentError(oilPercent)}
+                </p>
+              )}
             </div>
           )}
           {showSugar && (
             <div className="mt-3">
-              <label
-                htmlFor="sugar-percent"
-                className="mb-1.5 block font-sans text-xs font-semibold uppercase tracking-wider text-text-secondary"
-              >
+              <label htmlFor="sugar-percent" className={LABEL_CLASS}>
                 Sugar %
               </label>
               <input
@@ -129,8 +141,13 @@ export function AdvancedInputs({
                 inputMode="decimal"
                 value={sugarPercent}
                 onChange={e => onSugarChange(e.target.value)}
-                className="w-full rounded-lg border-[1.5px] border-border bg-white px-3 py-2 font-sans text-[15px] text-text-primary outline-none focus:border-primary"
+                className={INPUT_CLASS}
               />
+              {percentError(sugarPercent) && (
+                <p className="mt-1 text-xs text-orange-600">
+                  {percentError(sugarPercent)}
+                </p>
+              )}
             </div>
           )}
           {hasOverrides && (

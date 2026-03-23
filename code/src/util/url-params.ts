@@ -79,7 +79,7 @@ export function deserializeFromParams(
   };
 }
 
-function getDefaultTargetTime(): string {
+export function getDefaultTargetTime(): string {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(19, 0, 0, 0);

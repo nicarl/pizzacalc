@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { calculateRecipe } from '@/util/calculations';
 import {
   type DoughType,
@@ -7,7 +7,11 @@ import {
 } from '@/util/dough-presets';
 import { calculateTimeline } from '@/util/fermentation';
 import type { UnitSystem } from '@/util/units';
-import { deserializeFromParams, serializeToParams } from '@/util/url-params';
+import {
+  deserializeFromParams,
+  getDefaultTargetTime,
+  serializeToParams,
+} from '@/util/url-params';
 import { AdvancedInputs } from './AdvancedInputs';
 import { CoreInputs } from './CoreInputs';
 import { DoughGuide } from './DoughGuide';
@@ -18,18 +22,10 @@ import { Header } from './Header';
 import { RecipeCard } from './RecipeCard';
 import { ShareButton } from './ShareButton';
 
-function getDefaultTargetTime(): string {
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow.setHours(19, 0, 0, 0);
-  return tomorrow.toISOString().slice(0, 16);
-}
-
 function initState() {
   const params = new URLSearchParams(window.location.search);
   const restored = deserializeFromParams(params);
   if (restored) {
-    const restoredPreset = getDoughPreset(restored.doughType);
     return {
       doughType: restored.doughType,
       pizzaCount: String(restored.pizzaCount),
@@ -38,9 +34,7 @@ function initState() {
       saltPercent: String(restored.saltPercent),
       yeastPercent: String(restored.yeastPercent),
       oilPercent: String(restored.oilPercent),
-      sugarPercent: String(
-        restored.sugarPercent ?? restoredPreset.sugarPercent ?? 0,
-      ),
+      sugarPercent: String(restored.sugarPercent),
       ovenType: restored.ovenType,
       targetTime: restored.targetTime,
       ambientTemp: String(restored.ambientTemp),
@@ -78,24 +72,17 @@ export function Calculator() {
 
   const handleDoughTypeChange = useCallback((type: DoughType) => {
     const p = getDoughPreset(type);
-    setState(prev => {
-      const ovenType = p.ovenDefault;
-      const waterPercent =
-        prev.ovenType === 'professional' && p.professionalWaterPercent != null
-          ? p.professionalWaterPercent
-          : p.waterPercent;
-      return {
-        ...prev,
-        doughType: type,
-        doughballWeight: String(p.doughballWeight),
-        waterPercent: String(waterPercent),
-        saltPercent: String(p.saltPercent),
-        yeastPercent: String(p.yeastPercent),
-        oilPercent: String(p.oilPercent),
-        sugarPercent: String(p.sugarPercent ?? 0),
-        ovenType,
-      };
-    });
+    setState(prev => ({
+      ...prev,
+      doughType: type,
+      doughballWeight: String(p.doughballWeight),
+      waterPercent: String(p.waterPercent),
+      saltPercent: String(p.saltPercent),
+      yeastPercent: String(p.yeastPercent),
+      oilPercent: String(p.oilPercent),
+      sugarPercent: String(p.sugarPercent ?? 0),
+      ovenType: p.ovenDefault,
+    }));
   }, []);
 
   const handleOvenTypeChange = useCallback((ovenType: OvenType) => {
@@ -178,9 +165,8 @@ export function Calculator() {
     bakeTimeMin,
   ]);
 
-  // URL sync
-  useEffect(() => {
-    const params = serializeToParams({
+  const calculatorState = useMemo(
+    () => ({
       doughType: state.doughType,
       pizzaCount: Number(state.pizzaCount) || 0,
       doughballWeight: Number(state.doughballWeight) || 0,
@@ -194,27 +180,24 @@ export function Calculator() {
       ambientTemp: Number(state.ambientTemp) || 22,
       fridgeTemp: Number(state.fridgeTemp) || 4,
       units: state.units,
-    });
-    window.history.replaceState(null, '', `?${params.toString()}`);
-  }, [state]);
+    }),
+    [state],
+  );
 
-  const shareUrl = `${window.location.origin}${window.location.pathname}?${serializeToParams(
-    {
-      doughType: state.doughType,
-      pizzaCount: Number(state.pizzaCount) || 0,
-      doughballWeight: Number(state.doughballWeight) || 0,
-      waterPercent: Number(state.waterPercent) || 0,
-      saltPercent: Number(state.saltPercent) || 0,
-      yeastPercent: Number(state.yeastPercent) || 0,
-      oilPercent: Number(state.oilPercent) || 0,
-      sugarPercent: Number(state.sugarPercent) || 0,
-      ovenType: state.ovenType,
-      targetTime: state.targetTime,
-      ambientTemp: Number(state.ambientTemp) || 22,
-      fridgeTemp: Number(state.fridgeTemp) || 4,
-      units: state.units,
-    },
-  ).toString()}`;
+  // URL sync (debounced)
+  const urlSyncTimer = useRef<ReturnType<typeof setTimeout>>(
+    undefined as unknown as ReturnType<typeof setTimeout>,
+  );
+  useEffect(() => {
+    clearTimeout(urlSyncTimer.current);
+    urlSyncTimer.current = setTimeout(() => {
+      const params = serializeToParams(calculatorState);
+      window.history.replaceState(null, '', `?${params.toString()}`);
+    }, 300);
+    return () => clearTimeout(urlSyncTimer.current);
+  }, [calculatorState]);
+
+  const shareUrl = `${window.location.origin}${window.location.pathname}?${serializeToParams(calculatorState).toString()}`;
 
   return (
     <div className="mx-auto max-w-[420px]">

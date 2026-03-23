@@ -42,7 +42,7 @@ export function RecipeCard({
   }
 
   return (
-    <div className="rounded-[14px] bg-surface-dark p-[22px] text-[#faf6f1]">
+    <div className="rounded-[14px] bg-surface-dark p-[22px] text-background">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="font-sans text-sm font-semibold uppercase tracking-wider text-primary">
           Your Recipe
@@ -54,7 +54,7 @@ export function RecipeCard({
             className={`cursor-pointer rounded px-2 py-0.5 font-sans text-xs font-medium transition-colors ${
               units === 'metric'
                 ? 'bg-primary text-white'
-                : 'text-[#a89580] hover:text-[#faf6f1]'
+                : 'text-text-muted-on-dark hover:text-background'
             }`}
           >
             g
@@ -65,7 +65,7 @@ export function RecipeCard({
             className={`cursor-pointer rounded px-2 py-0.5 font-sans text-xs font-medium transition-colors ${
               units === 'imperial'
                 ? 'bg-primary text-white'
-                : 'text-[#a89580] hover:text-[#faf6f1]'
+                : 'text-text-muted-on-dark hover:text-background'
             }`}
           >
             oz
@@ -82,7 +82,9 @@ export function RecipeCard({
             <span data-testid={item.testId}>
               {formatWeight(item.mass, units)}
             </span>
-            <span className="ml-1 text-xs text-[#a89580]">{unitSuffix}</span>
+            <span className="ml-1 text-xs text-text-muted-on-dark">
+              {unitSuffix}
+            </span>
           </span>
         </div>
       ))}
