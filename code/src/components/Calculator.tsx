@@ -72,16 +72,37 @@ export function Calculator() {
 
   const handleDoughTypeChange = useCallback((type: DoughType) => {
     const p = getDoughPreset(type);
-    setState(prev => ({
-      ...prev,
-      doughType: type,
-      doughballWeight: String(p.doughballWeight),
-      waterPercent: String(p.waterPercent),
-      saltPercent: String(p.saltPercent),
-      yeastPercent: String(p.yeastPercent),
-      oilPercent: String(p.oilPercent),
-      ovenType: p.ovenDefault,
-    }));
+    setState(prev => {
+      const ovenType = p.ovenDefault;
+      const waterPercent =
+        prev.ovenType === 'professional' && p.professionalWaterPercent != null
+          ? p.professionalWaterPercent
+          : p.waterPercent;
+      return {
+        ...prev,
+        doughType: type,
+        doughballWeight: String(p.doughballWeight),
+        waterPercent: String(waterPercent),
+        saltPercent: String(p.saltPercent),
+        yeastPercent: String(p.yeastPercent),
+        oilPercent: String(p.oilPercent),
+        ovenType,
+      };
+    });
+  }, []);
+
+  const handleOvenTypeChange = useCallback((ovenType: OvenType) => {
+    setState(prev => {
+      const p = getDoughPreset(prev.doughType);
+      if (p.professionalWaterPercent != null) {
+        const waterPercent =
+          ovenType === 'professional'
+            ? p.professionalWaterPercent
+            : p.waterPercent;
+        return { ...prev, ovenType, waterPercent: String(waterPercent) };
+      }
+      return { ...prev, ovenType };
+    });
   }, []);
 
   const update = useCallback((field: string, value: string) => {
@@ -193,7 +214,7 @@ export function Calculator() {
           isPanStyle={preset.isPanStyle}
           onPizzaCountChange={(v: string) => update('pizzaCount', v)}
           onDoughballWeightChange={(v: string) => update('doughballWeight', v)}
-          onOvenTypeChange={(v: OvenType) => update('ovenType', v)}
+          onOvenTypeChange={handleOvenTypeChange}
         />
         <AdvancedInputs
           waterPercent={state.waterPercent}

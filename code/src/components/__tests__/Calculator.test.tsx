@@ -84,6 +84,51 @@ describe('Calculator', () => {
     expect(select).toHaveValue('professional');
   });
 
+  it('sets water to 60% when switching neapolitan to professional oven', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    expect(screen.getByLabelText(/water %/i)).toHaveValue('65');
+    const select = screen.getByLabelText(/oven type/i);
+    fireEvent.change(select, { target: { value: 'professional' } });
+    expect(screen.getByLabelText(/water %/i)).toHaveValue('60');
+  });
+
+  it('restores water to 65% when switching neapolitan back to home oven', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    const select = screen.getByLabelText(/oven type/i);
+    fireEvent.change(select, { target: { value: 'professional' } });
+    expect(screen.getByLabelText(/water %/i)).toHaveValue('60');
+    fireEvent.change(select, { target: { value: 'home' } });
+    expect(screen.getByLabelText(/water %/i)).toHaveValue('65');
+  });
+
+  it('uses professional water when switching to neapolitan while oven is professional', () => {
+    render(<Calculator />);
+    // Switch oven to professional while on neapolitan
+    const select = screen.getByLabelText(/oven type/i);
+    fireEvent.change(select, { target: { value: 'professional' } });
+    // Switch to NY (resets to home oven)
+    fireEvent.click(screen.getByText('New York'));
+    // Switch oven back to professional on NY
+    const select2 = screen.getByLabelText(/oven type/i);
+    fireEvent.change(select2, { target: { value: 'professional' } });
+    // Now switch to neapolitan - prev.ovenType is professional so should use 60
+    fireEvent.click(screen.getByText('Neapolitan'));
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    expect(screen.getByLabelText(/water %/i)).toHaveValue('60');
+  });
+
+  it('does not change water when switching oven type for non-neapolitan', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByText('New York'));
+    fireEvent.click(screen.getByText(/adjust hydration/i));
+    expect(screen.getByLabelText(/water %/i)).toHaveValue('63');
+    const select = screen.getByLabelText(/oven type/i);
+    fireEvent.change(select, { target: { value: 'professional' } });
+    expect(screen.getByLabelText(/water %/i)).toHaveValue('63');
+  });
+
   it('updates target time via FermentationInputs', () => {
     render(<Calculator />);
     const input = screen.getByLabelText(/eat at/i);

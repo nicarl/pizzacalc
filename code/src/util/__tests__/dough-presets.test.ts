@@ -65,4 +65,22 @@ describe('doughPresets', () => {
     expect(getDoughPreset('neapolitan').name).toBe('Neapolitan');
     expect(getDoughPreset('detroit').name).toBe('Detroit');
   });
+
+  it('neapolitan has professionalWaterPercent set to 60', () => {
+    expect(doughPresets.neapolitan.professionalWaterPercent).toBe(60);
+  });
+
+  it('other presets do not define professionalWaterPercent', () => {
+    expect(doughPresets['new-york'].professionalWaterPercent).toBeUndefined();
+    expect(doughPresets.detroit.professionalWaterPercent).toBeUndefined();
+    expect(doughPresets.focaccia.professionalWaterPercent).toBeUndefined();
+  });
+
+  it('fermentation descriptions do not contain hardcoded durations', () => {
+    for (const preset of Object.values(doughPresets)) {
+      for (const phase of preset.fermentation.phases) {
+        expect(phase.description).not.toMatch(/\d+\s*hours?/i);
+      }
+    }
+  });
 });

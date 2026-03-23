@@ -30,6 +30,7 @@ export interface DoughPreset {
   oilPercent: number;
   ovenDefault: OvenType;
   isPanStyle: boolean;
+  professionalWaterPercent?: number;
   fermentation: FermentationProfile;
   steps: PreparationStep[];
 }
@@ -44,6 +45,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
     oilPercent: 0,
     ovenDefault: 'home',
     isPanStyle: false,
+    professionalWaterPercent: 60,
     fermentation: {
       referenceTemp: 20,
       phases: [
@@ -120,7 +122,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
           name: 'Cold ferment',
           environment: 'fridge',
           baseDurationMin: 2880,
-          description: 'Ball immediately and refrigerate for 48 hours',
+          description: 'Ball immediately and refrigerate',
         },
         {
           name: 'Warm up',
@@ -157,7 +159,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
       {
         name: 'Remove and warm up',
         instruction:
-          'Take dough out of the fridge 2 hours before baking. Let come to room temperature.',
+          'Take dough out of the fridge and let come to room temperature before baking.',
       },
       {
         name: 'Stretch and top',
@@ -183,7 +185,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
           name: 'Cold ferment',
           environment: 'fridge',
           baseDurationMin: 1440,
-          description: 'Cover bowl and refrigerate for 24 hours',
+          description: 'Cover bowl and refrigerate',
         },
         {
           name: 'Pan proof',
@@ -251,7 +253,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
           name: 'Bulk ferment',
           environment: 'room',
           baseDurationMin: 720,
-          description: 'Cover and let rise overnight at room temperature',
+          description: 'Cover and let rise at room temperature',
         },
         {
           name: 'Pan proof',
@@ -273,12 +275,11 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
       {
         name: 'Stretch and fold',
         instruction:
-          'Instead of kneading, perform 3-4 sets of stretch-and-folds over the first 2 hours, 30 minutes apart.',
+          'Perform 3-4 sets of stretch-and-folds, about 30 minutes apart, during the first part of the rise.',
       },
       {
         name: 'Overnight rise',
-        instruction:
-          'Cover the bowl and let rise at room temperature overnight (12 hours).',
+        instruction: 'Cover the bowl and let rise at room temperature.',
       },
       {
         name: 'Oil the pan',
@@ -298,7 +299,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
       },
       {
         name: 'Final proof',
-        instruction: 'Let rest 30-60 minutes until slightly puffy, then bake.',
+        instruction: 'Let rest until slightly puffy, then bake.',
       },
     ],
   },
