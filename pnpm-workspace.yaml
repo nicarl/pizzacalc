@@ -4,4 +4,4 @@ packages:
 
 catalog:
   '@types/node': ^25.0.0
-  typescript: ^5.9.0
+  typescript: ^6.0.2
