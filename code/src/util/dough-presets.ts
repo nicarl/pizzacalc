@@ -46,7 +46,7 @@ export interface DoughPreset {
 export const doughPresets: Record<DoughType, DoughPreset> = {
   neapolitan: {
     name: 'Neapolitan',
-    doughballWeight: 250,
+    doughballWeight: 210,
     waterPercent: 65,
     saltPercent: 2.8,
     yeastPercent: 0.05,
@@ -133,7 +133,7 @@ export const doughPresets: Record<DoughType, DoughPreset> = {
   },
   'new-york': {
     name: 'New York',
-    doughballWeight: 350,
+    doughballWeight: 280,
     waterPercent: 63,
     saltPercent: 2.0,
     yeastPercent: 0.4,

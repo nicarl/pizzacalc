@@ -75,6 +75,7 @@ export function Calculator() {
     setState(prev => ({
       ...prev,
       doughType: type,
+      pizzaCount: p.isPanStyle ? '1' : '4',
       doughballWeight: String(p.doughballWeight),
       waterPercent: String(p.waterPercent),
       saltPercent: String(p.saltPercent),

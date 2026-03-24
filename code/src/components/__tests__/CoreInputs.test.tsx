@@ -5,7 +5,7 @@ import { CoreInputs } from '../CoreInputs';
 describe('CoreInputs', () => {
   const defaultProps = {
     pizzaCount: '4',
-    doughballWeight: '250',
+    doughballWeight: '210',
     ovenType: 'home' as const,
     isPanStyle: false,
     units: 'metric' as const,
@@ -21,7 +21,7 @@ describe('CoreInputs', () => {
 
   it('renders doughball weight input', () => {
     render(<CoreInputs {...defaultProps} />);
-    expect(screen.getByLabelText(/doughball/i)).toHaveValue('250');
+    expect(screen.getByLabelText(/doughball/i)).toHaveValue('210');
   });
 
   it('shows "pans" label for pan styles', () => {
@@ -58,8 +58,8 @@ describe('CoreInputs', () => {
 
   it('displays weight in oz when units is imperial', () => {
     render(<CoreInputs {...defaultProps} units="imperial" />);
-    // 250g ≈ 8.8oz
-    expect(screen.getByLabelText(/doughball/i)).toHaveValue('8.8');
+    // 210g ≈ 7.4oz
+    expect(screen.getByLabelText(/doughball/i)).toHaveValue('7.4');
   });
 
   it('shows oz label when units is imperial', () => {

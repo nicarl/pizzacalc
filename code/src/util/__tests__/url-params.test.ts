@@ -8,7 +8,7 @@ import {
 const defaultState: CalculatorState = {
   doughType: 'neapolitan',
   pizzaCount: 4,
-  doughballWeight: 250,
+  doughballWeight: 210,
   waterPercent: 65,
   saltPercent: 2.8,
   yeastPercent: 0.05,
@@ -26,7 +26,7 @@ describe('serializeToParams', () => {
     const params = serializeToParams(defaultState);
     expect(params.get('type')).toBe('neapolitan');
     expect(params.get('n')).toBe('4');
-    expect(params.get('w')).toBe('250');
+    expect(params.get('w')).toBe('210');
     expect(params.get('water')).toBe('65');
     expect(params.get('salt')).toBe('2.8');
     expect(params.get('yeast')).toBe('0.05');
@@ -62,7 +62,7 @@ describe('deserializeFromParams', () => {
     expect(state).not.toBeNull();
     expect(state?.doughType).toBe('neapolitan');
     expect(state?.pizzaCount).toBe(4);
-    expect(state?.doughballWeight).toBe(250);
+    expect(state?.doughballWeight).toBe(210);
     expect(state?.waterPercent).toBe(65);
     expect(state?.oilPercent).toBe(0);
   });
@@ -98,7 +98,7 @@ describe('deserializeFromParams', () => {
     const state = deserializeFromParams(params);
     expect(state).not.toBeNull();
     expect(state?.pizzaCount).toBe(4);
-    expect(state?.doughballWeight).toBe(250);
+    expect(state?.doughballWeight).toBe(210);
   });
 
   it('deserializes professional oven type', () => {
